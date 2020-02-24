@@ -5,4 +5,6 @@
 
 [![dinoanasta](https://circleci.com/gh/dinoanasta/SoftwareDesignProject.svg?style=shield)](https://circleci.com/gh/dinoanasta/SoftwareDesignProject)
 
+[![Coverage Status](https://coveralls.io/repos/github/<github username>/<repo name>/badge.svg?branch=master)](https://coveralls.io/github/<github username>/<repo name>?branch=master)
+
 [![Coverage Status](https://coveralls.io/repos/github/dinoanasta/SoftwareDesignProject/badge.svg?branch=master)](https://coveralls.io/github/dinoanasta/SoftwareDesignProject?branch=master)
