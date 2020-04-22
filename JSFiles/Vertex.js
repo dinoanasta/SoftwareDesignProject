@@ -1,8 +1,9 @@
 class Vertex{
 
-this.AdjacencyList=new Array();
+
 
     constructor(vn,vertexVal,xVal,yVal,color,weight){
+	this.AdjacencyList=new Array();
         this.vertexID=vn;
 	this.vertexVal=vertexVal;
 	this.xVal=xVal;
@@ -12,11 +13,11 @@ this.AdjacencyList=new Array();
     }
 
     addAdjacency(v1){
-        AdjacencyList.push(v1);
+        this.AdjacencyList.push(v1);
     }
 
     getDegree(){
-      return AdjacencyList.length;
+      return this.AdjacencyList.length;
     }
 
     setColor(color){
