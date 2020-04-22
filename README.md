@@ -1,7 +1,7 @@
 # SoftwareDesignProject
 # 2B||!2B
 
-# Resources:
+## Resources:
 H5P plugin repo: https://github.com/h5p/h5p-moodle-plugin
 (Could work for just embedding the final html5 project into a Moodle plugin)
 
