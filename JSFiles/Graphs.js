@@ -34,7 +34,7 @@ class Graph{
 
   totalWeight(){
     var total=0;
-    for(var i=0;i<vertices.length;i++){
+    for(var i=0;i<this.vertices.length;i++){
 	var v=this.vertices[i];
 	var vertexValue=v.getWeight();
 	total+=vertexValue;
