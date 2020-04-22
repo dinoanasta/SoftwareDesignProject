@@ -3,12 +3,12 @@ class Vertex{
 var AdjacencyList=new [];
 
     constructor(vn,vertexVal,xVal,yVal,color,weight){
-        this->vertexID=vn;
-	this->vertexVal=vertexVal;
-	this->xVal=xVal;
-	this->yVal=yVal;
-        this->color=color;
-	this->weight=weight;
+        this.vertexID=vn;
+	this.vertexVal=vertexVal;
+	this.xVal=xVal;
+	this.yVal=yVal;
+        this.color=color;
+	this.weight=weight;
     }
 
     addAdjacency(v1){
@@ -20,19 +20,19 @@ var AdjacencyList=new [];
     }
 
     setColor(color){
-      this->color=color;
+      this.color=color;
     }
 
     setWeight(weight){
-      this->weight=weight;
+      this.weight=weight;
     }
 
     getColor(){
-      return this->color;
+      return this.color;
     }
 
     getColor(){
-      return this->weight;
+      return this.weight;
     }
 
     drawVertex(){
