@@ -1,6 +1,6 @@
 class Vertex{
 
-var AdjacencyList=new [];
+this.AdjacencyList=new Array();
 
     constructor(vn,vertexVal,xVal,yVal,color,weight){
         this.vertexID=vn;
