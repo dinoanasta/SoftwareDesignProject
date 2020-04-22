@@ -4,11 +4,10 @@ class Graph{
 
 
 
-  constructor(numberVertices,sourceNode){
+  constructor(){
     this.vertices=new Array();
     this.edges=new Array();
-    this.verticesNo=numberVertices;
-    this.sourceNode=sourceNode;
+    this.directededges=new Array();
   }
 
 
@@ -25,11 +24,19 @@ class Graph{
   addEdge(n1,n2,weight){
     var v1 = this.vertices[n1];
     var v2 = this.vertices[n2];
-    var e=new Edge(v1,v2);
+    var e=new Edge(v1,v2,weight);
     v1.addAdjacency(v2);
     v2.addAdjacency(v1);
     this.edges.push(e);
     
+  }
+	
+  addDirectedEdge(n1,n2,weightEdge){
+    var v1 = this.vertices[n1];
+    var v2 = this.vertices[n2];
+    var e=new Edge(v1,v2,weightEdge);
+    v1.addAdjacency(v2);
+    this.directededges.push(e);
   }
 
   totalWeight(){
