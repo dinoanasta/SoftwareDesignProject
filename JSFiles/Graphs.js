@@ -14,19 +14,19 @@ class Graph{
 
 
   addVertex(vn,vertexVal,xVal,yVal,color,weight){
-    v = new Vertex(vn,vertexVal,xVal,yVal,color,weight);
+    var v = new Vertex(vn,vertexVal,xVal,yVal,color,weight);
     this.vertices.push(v);
   }
 
   getVertex(index){
-    v = this.vertices[index];
+    var v = this.vertices[index];
     return v;
   }
 
   addEdge(n1,n2){
-    v1 = this.vertices[n1];
-    v2 = this.vertices[n2];
-    e=new Edge(v1,v2);
+    var v1 = this.vertices[n1];
+    var v2 = this.vertices[n2];
+    var e=new Edge(v1,v2);
     this.edges.push(e);
     this.matrix[n1][n2]=1;
     this.matrix[n1][n2]=1;
@@ -35,7 +35,7 @@ class Graph{
   totalWeight(){
     var total=0;
     for(var i=0;i<vertices.length;i++){
-	v=this.vertices[i];
+	var v=this.vertices[i];
 	var vertexValue=v.getWeight();
 	total+=vertexValue;
 	}
