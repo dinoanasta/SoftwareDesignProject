@@ -4,17 +4,16 @@ class Graph{
 
 
 
-  constructor(adjMatrix,numberVertices,sourceNode){
+  constructor(numberVertices,sourceNode){
     this.vertices=new Array();
     this.edges=new Array();
-    this.matrix=adjMatrix;
     this.verticesNo=numberVertices;
     this.sourceNode=sourceNode;
   }
 
 
-  addVertex(vn,vertexVal,xVal,yVal,color,weight){
-    var v = new Vertex(vn,vertexVal,xVal,yVal,color,weight);
+  addVertex(vn,vertexVal,xVal,yVal,color){
+    var v = new Vertex(vn,vertexVal,xVal,yVal,color);
     this.vertices.push(v);
   }
 
@@ -23,13 +22,14 @@ class Graph{
     return v;
   }
 
-  addEdge(n1,n2){
+  addEdge(n1,n2,weight){
     var v1 = this.vertices[n1];
     var v2 = this.vertices[n2];
     var e=new Edge(v1,v2);
+    v1.addAdjacency(v2);
+    v2.addAdjacency(v1);
     this.edges.push(e);
-    this.matrix[n1][n2]=1;
-    this.matrix[n1][n2]=1;
+    
   }
 
   totalWeight(){
