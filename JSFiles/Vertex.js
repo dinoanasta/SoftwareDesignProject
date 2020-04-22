@@ -32,7 +32,7 @@ class Vertex{
       return this.color;
     }
 
-    getColor(){
+    getWeight(){
       return this.weight;
     }
 
