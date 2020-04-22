@@ -2,8 +2,8 @@
 
 class Graph{
 
-var vertices=[]
-var edges=[]
+this.vertices=new Array();
+this.edges=new Array();
 
   constructor(adjMatrix,numberVertices,sourceNode){
     this.matrix=adjMatrix;
