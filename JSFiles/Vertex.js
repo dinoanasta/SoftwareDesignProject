@@ -2,14 +2,13 @@ class Vertex{
 
 
 
-    constructor(vn,vertexVal,xVal,yVal,color,weight){
+    constructor(vn,vertexVal,xVal,yVal,color){
 	this.AdjacencyList=new Array();
         this.vertexID=vn;
 	this.vertexVal=vertexVal;
 	this.xVal=xVal;
 	this.yVal=yVal;
         this.color=color;
-	this.weight=weight;
     }
 
     addAdjacency(v1){
