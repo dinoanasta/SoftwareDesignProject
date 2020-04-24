@@ -1,0 +1,30 @@
+body {
+  font-family: Georgia, serif;
+  font-size: 90%;
+}
+h1, h2, h3 {
+  font-family: Verdana, Arial, sans-serif;
+}
+pre, code {
+ font-family: Courier, monospace;
+}
+pre.code {
+ padding: 0.1cm 0.5cm 0.15cm .5cm;
+ margin: 0 1cm;
+ background-color: white;
+ border: thin solid black;
+ font-size: 90%;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+div.section {
+   border-top: thin solid black;
+}
+li {
+   margin-bottom: 6pt;
+}
+.nb {
+   white-space: pre;
+}

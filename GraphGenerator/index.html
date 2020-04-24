@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+    <script src="js/p5.js"></script>
+
+
+    <meta charset="UTF-8">
+    <title>Graph Generator</title>
+    <style>
+        /* This style section is here to make the canvas more obvious on the
+           page.  It is white on a light gray page background, with a thin
+           black border. */
+        body {
+            background-color: #DDDDDD;
+        }
+
+        canvas {
+            background-color: white;
+            display: block;
+        }
+
+        #canvasholder {
+            border: 5px solid black;
+            float: left; /* This makes the border exactly fit the canvas. */
+        }
+    </style>
+
+    <!--    Main script-->
+    <script src="js/Vertex.js"> </script>
+    <script src="js/Edge.js"> </script>
+    <script src="js/Graph.js"> </script>
+    <script src="js/dragging.js"></script>
+    <script src="js/main.js"> </script>
+
+
+    <script>
+
+        let canvas;   // The canvas that is used as the drawing surface
+        let graphics; // The 2D graphics context for drawing on the canvas.
+
+        const X_LEFT = 0;    // The xy limits for the coordinate system.
+        const X_RIGHT = 700;
+        const Y_BOTTOM = 600;
+        const Y_TOP = 0;
+
+        const vertexRadius = 20;
+
+        const BACKGROUND = "white";  // The display is filled with this color before the scene is drawn.
+
+        let pixelSize;  // The size of one pixel, in the transformed coordinates.
+
+
+
+        function addGraphicsContextExtras(graphics) {
+            graphics.strokeLine = function (x1, y1, x2, y2) {
+                this.beginPath();
+                this.moveTo(x1, y1);
+                this.lineTo(x2, y2);
+                this.stroke();
+            }
+            graphics.fillCircle = function (x, y, r) {
+                this.beginPath();
+                this.arc(x, y, r, 0, 2 * Math.PI, false);
+                this.fill();
+            }
+            graphics.strokeCircle = function (x, y, radius) {
+                this.beginPath();
+                this.arc(x, y, radius, 0, 2 * Math.PI, false);
+                this.stroke();
+            }
+        }
+
+        function applyLimits(g, xleft, xright, ytop, ybottom, preserveAspect) {
+            const width = canvas.width;   // The width of this drawing area, in pixels.
+            const height = canvas.height; // The height of this drawing area, in pixels.
+            if (preserveAspect) {
+                // Adjust the limits to match the aspect ratio of the drawing area.
+                const displayAspect = Math.abs(height / width);
+                const requestedAspect = Math.abs((ybottom - ytop) / (xright - xleft));
+                let excess;
+                if (displayAspect > requestedAspect) {
+                    excess = (ybottom - ytop) * (displayAspect / requestedAspect - 1);
+                    ybottom += excess / 2;
+                    ytop -= excess / 2;
+                } else if (displayAspect < requestedAspect) {
+                    excess = (xright - xleft) * (requestedAspect / displayAspect - 1);
+                    xright += excess / 2;
+                    xleft -= excess / 2;
+                }
+            }
+            const pixelWidth = Math.abs((xright - xleft) / width);
+            const pixelHeight = Math.abs((ybottom - ytop) / height);
+            pixelSize = Math.min(pixelWidth, pixelHeight);
+            g.scale(width / (xright - xleft), height / (ybottom - ytop));
+            g.translate(-xleft, -ytop);
+        }
+
+        function init() {
+            try {
+                canvas = document.getElementById("canvas");
+                graphics = canvas.getContext("2d");
+            } catch (e) {
+                document.getElementById("canvasholder").innerHTML =
+                    "Canvas graphics is not supported.<br>" +
+                    "An error occurred while initializing graphics.";
+            }
+            applyLimits(graphics, X_LEFT, X_RIGHT, Y_TOP, Y_BOTTOM, false);
+            graphics.lineWidth = pixelSize;  // Use 1 pixel as the default line width
+            addGraphicsContextExtras(graphics);
+            installMouseHandler();
+            document.getElementById("addVertexButton").onclick = doAddVertex;
+            document.getElementById("addEdgeButton").onclick = doAddEdge;
+            document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
+            document.getElementById("clearButton").onclick = doClear;
+        }
+    </script>
+</head>
+
+<body onload="init()" style="background-color:#EEEEEE">
+
+    <h1>Graph Generator</h1>
+
+    <div class="row">
+        <div class="col-md-6" >
+            <div id="canvasholder">
+                <canvas id="canvas" width="700" height="600">
+                    <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
+                    Canvas not supported.
+                </canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <p>
+                <h3>Add vertex:</h3>
+
+                <label for="vertexValue">Vertex Value:</label>
+                <input type="text" id="vertexValue" name="vertexValue">
+                <br>
+
+                <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
+            </p>
+
+            <p>
+                <h3>Add edge:</h3>
+
+                <label for="vertex1DD">Vertex 1:</label>
+                <select id="vertex1DD">
+                    <option>Choose first vertex</option>
+                </select>
+                <br>
+
+                <label for="vertex2DD">Vertex 2:</label>
+                <select id="vertex2DD">
+                    <option>Choose second vertex</option>
+                </select>
+                <br>
+
+                <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
+            </p>
+
+            <p>
+                <h3>Delete edge:</h3>
+
+                <label for="deleteEdgeDD">Vertex:</label>
+                <select id="deleteEdgeDD">
+                    <option>Choose edge</option>
+                </select>
+                <br>
+
+                <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
+
+
+            </p>
+
+            <br><br>
+            <button id="clearButton" onclick="doClear()">Clear</button>
+
+        </div>
+    </div>
+
+    <noscript>
+        <!-- This message will be shown in the page if JavaScript is not available. -->
+        <p>JavaScript is required to use this page.</p>
+    </noscript>
+
+</body>
+</html>
