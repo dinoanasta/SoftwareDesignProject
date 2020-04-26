@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Colouring Test</title>
+</head>
+<body>
+
+    <script src="Vertex.js"> </script>
+    <script src="Edge.js"> </script>
+    <script src="Graphs.js"> </script>
+    <script src="Marker.js"> </script>
+
+    <script>
+
+        //create graph
+        let g = new Graph();
+
+        //add vertices
+        g.addVertex(0,0,0,0);
+        g.addVertex(1,0,0,1);
+        g.addVertex(2,0,0,1);
+        g.addVertex(3,0,0,1);
+        g.addVertex(4,0,0,2);
+
+        //add edges
+        g.addEdge(0,1,0);
+        g.addEdge(0,2,0);
+        g.addEdge(0,3,0);
+        g.addEdge(3,4,0);
+        g.addEdge(4,0,0);
+
+        //mark graph
+        let m = new Marker();
+        var flag = m.isColoured(g);
+        var out;
+        if (flag){
+            out="Your Graph is Correct";
+        }else{
+            out="Your Graph is Incorrect";
+        }
+        document.write(out);
+
+    </script>
+</body>
+</html>
