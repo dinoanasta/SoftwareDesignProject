@@ -1,0 +1,20 @@
+{
+  "name": "sdtesting",
+  "version": "1.0.0",
+  "description": "Testing SD Project classes",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "graphs",
+    "vertex",
+    "edges"
+  ],
+  "author": "coms students",
+  "license": "ISC",
+  "devDependencies": {
+    "coveralls": "^3.1.0",
+    "jest": "^25.5.3"
+  }
+}
