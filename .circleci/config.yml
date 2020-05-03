@@ -11,7 +11,7 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
-            - run: npx jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+            #- run: npx jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 workflows:
     build-and-test:
       jobs:
