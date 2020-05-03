@@ -2,7 +2,7 @@
   "name": "sdtesting",
   "version": "1.0.0",
   "description": "Testing SD Project classes",
-  "main": "index.js",
+  "main": "Graph Final Class(No Tests)/Graphs.js",
   "scripts": {
     "test": "jest"
   },
