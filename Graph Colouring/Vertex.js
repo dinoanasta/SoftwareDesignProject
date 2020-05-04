@@ -80,4 +80,4 @@ class Vertex{
     }
 
 }
-exports.Vertex=Vertex;
+//exports.Vertex=Vertex;

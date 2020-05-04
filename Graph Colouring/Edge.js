@@ -40,4 +40,4 @@ class Edge{
 
 }
 
-exports.Edge=Edge;
+//exports.Edge=Edge;
