@@ -33,7 +33,6 @@ function installMouseHandler() {
         }
 
         //TO DO WHEN MOUSE IS PRESSED
-
         function euclideanDistance(point1, point2) {
             let xdiff = Math.pow((point1[0] - point2[0]), 2);
             let ydiff = Math.pow((point1[1] - point2[1]), 2);
@@ -41,24 +40,22 @@ function installMouseHandler() {
             return Math.sqrt(xdiff + ydiff);
         }
 
-        function chooseVertex() {
-            for (let i = 0; i < graph.vertices.length; ++i) {
-                let vertex = graph.vertices[i];
-                let vertexX = vertex.xVal;
-                let vertexY = vertex.yVal;
+        function getVertexIndex() {
+            for (let i = 0; i < graph.getNumberVertices(); ++i) {
+                let vertex = graph.getVertex(i);
 
-                let dist = euclideanDistance([x, y], [vertexX, vertexY]);
+                let dist = euclideanDistance([x, y], [vertex.getXVal(), vertex.getYVal()]);
+                console.log(dist);
                 if (dist < vertexRadius) {
-                    return vertex;
+                    console.log(i);
+                    return i;
                 }
             }
         }
 
-        selectedVertex = chooseVertex();
+        let index = getVertexIndex();
+        selectedVertex = graph.getVertex(index);
         console.log(selectedVertex);
-
-        console.log(x);
-        console.log(y);
     }
 
     function doMouseMove(evt) {
@@ -71,32 +68,13 @@ function installMouseHandler() {
         var x = Math.round(evt.clientX - r.left);
         var y = Math.round(evt.clientY - r.top);
 
-        console.log(x);
-        console.log(y);
+        selectedVertex.updateCoOrds(x,y);
 
-        selectedVertex.updateCoOrds(x, y);
-
-
-        for(let i=0; i<graph.edges.length; ++i){
-            let edge = graph.edges[i];
-
-            let vertex1ID = edge.vertex1ID;
-            let vertex2ID = edge.vertex2ID;
-
-            function findVertex(ID){
-                for (let i = 0; i < graph.vertices.length;++i){
-                    if (graph.vertices[i].ID == ID){
-                        return graph.vertices[i];
-                    }
-                }
-            }
-
-            let vertex1 = findVertex(vertex1ID);
-            let vertex2 = findVertex(vertex2ID);
-
-            edge.updateCoOrds(vertex1.xVal, vertex1.yVal, vertex2.xVal, vertex2.yVal);
+        for(let i=0; i<selectedVertex.getAdjacenyList.size; i++){
+            let adjacent = selectedVertex.getAdjacenyList(i);
+            let edge = graph.getEdge(selectedVertex.getVertexID(), adjacent.getVertexID());
+            edge.updateCoOrds(selectedVertex.getXVal(), selectedVertex.getYVal(), adjacent.getXVal(), adjacent.getYVal());
         }
-
         redraw();
     }
 

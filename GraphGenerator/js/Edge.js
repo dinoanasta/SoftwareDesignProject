@@ -1,24 +1,52 @@
+//Edge class stores two vertices(as vertex class) the edge exists between and the weight of the edge
 class Edge{
-        constructor(vertex1, vertex2) {
-                this.vertex1Val = vertex1.vertexVal;
-                this.vertex1ID = vertex1.ID;
-                this.vertex1x = vertex1.xVal;
-                this.vertex1y = vertex1.yVal;
-                this.vertex2Val = vertex2.vertexVal;
-                this.vertex2ID = vertex2.ID;
-                this.vertex2x = vertex2.xVal;
-                this.vertex2y = vertex2.yVal;
-        }
-        drawEdge(){
-                graphics.strokeLine(this.vertex1x, this.vertex1y, this.vertex2x, this.vertex2y);
-        }
+    constructor(vertexOne,vertexTwo,weight){
+	    this.vertexOne=vertexOne;
+        this.vertexTwo=vertexTwo;
+	    this.weightEdge=weight;
+    }
 
-        updateCoOrds (v1newX, v1newY, v2newX, v2newY){
-                this.vertex1x = v1newX;
-                this.vertex1y = v1newY;
+    setVertexOne(v1){
+        this.vertexOne = v1;
+    }
 
-                this.vertex2x = v2newX;
-                this.vertex2y = v2newY;
-        }
+    setVertexTwo(v2){
+        this.vertexTwo = v2;
+    }
+
+    setWeightEdge(we){
+        this.weightEdge = we;
+    }
+
+    getVertexOne(){
+        return this.vertexOne;
+    }
+
+    getVertexTwo(){
+        return this.vertexTwo;
+    }
+
+    getWeightEdge(){
+        return this.weightEdge;
+    }
+
+    drawEdge(){
+        graphics.font = "20px Comic Sans MS bold";
+        graphics.textAlign = "center";
+
+        graphics.strokeStyle = "black";
+        graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
+
+        graphics.fillStyle = "red";
+        graphics.fillText(this.getWeightEdge(), Math.abs(this.getVertexOne().getXVal() + this.getVertexTwo().getXVal())/2 +20, Math.abs(this.getVertexOne().getYVal() + this.getVertexTwo().getYVal())/2 +20, 20 );
+    }
+
+    updateCoOrds (v1newX, v1newY, v2newX, v2newY){
+        this.getVertexOne().setXVal(v1newX);
+        this.getVertexOne().setYVal(v1newY);
+
+        this.getVertexTwo().setXVal(v2newX);
+        this.getVertexTwo().setYVal(v2newY);
+    }
+
 }
-

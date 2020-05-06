@@ -10,30 +10,38 @@ function doAddVertex() {
     if(valueText.value.length != 0){
 
         let value = valueText.value;
-        let vertex = new Vertex(value);
-        graph.vertices.push(vertex);
-        drawVertices();
 
-        const vertex1DD = document.getElementById("vertex1DD");
-        const vertex2DD = document.getElementById("vertex2DD");
+        let x = Math.random()*200 + 250;
+        let y = Math.random()*200 + 200;
 
-        function addOption(selectbox, value, ID) {
-            let opt = document.createElement("option");
-            opt.textContent = ID.toString() + ": " + value;
-            opt.value = ID;
-            selectbox.options.add(opt);
-        }
+        graph.addVertex(value,x, y, null);
 
-        for (let i=count; i < graph.vertices.length;++i){
-            addOption(vertex1DD, graph.vertices[i].vertexVal, graph.vertices[i].ID );
-            addOption(vertex2DD, graph.vertices[i].vertexVal, graph.vertices[i].ID);
-        }
-
-        count++;
+        populateDropDowns();
+        redraw();
     }else{
         alert("Please enter a value for the vertex");
     }
 
+}
+
+function doDeleteVertex(){
+    let dropDown = document.getElementById("deleteVertexDD");
+
+    if(dropDown.selectedIndex != 0){
+        graphics.save();
+
+        let selected = dropDown.options[dropDown.selectedIndex].textContent;
+        let vertexID = selected.split(":")[0];
+
+        graph.removeVertex(vertexID);
+
+        populateDropDowns();
+        redraw();
+
+        graphics.restore();
+    }else{
+        alert("Please select an edge to delete");
+    }
 }
 
 let edgeCount = 0;
@@ -47,52 +55,41 @@ function doAddEdge() {
 
     function checkExists(first, second){
         for (let i = 0; i<graph.edges.length;++i){
-            if ((graph.edges[i].vertex1ID == first && graph.edges[i].vertex2ID == second) || (graph.edges[i].vertex1ID == second && graph.edges[i].vertex2ID == first)){
+            if ((graph.edges[i].getVertexOne().getVertexID() == first && graph.edges[i].getVertexTwo().getVertexID() == second) || (graph.edges[i].getVertexOne().getVertexID() == second && graph.edges[i].getVertexTwo().getVertexID() == first)){
                 return true;
             }
         }
     }
-
 
     if(!checkExists(firstID, secondID)){
         if(firstDropDown.selectedIndex != secondDropDown.selectedIndex ){
             if(firstDropDown.selectedIndex !=0 ){
                 if(secondDropDown.selectedIndex != 0){
 
-                    function findVertex(ID){
-                        for (let i = 0; i < graph.vertices.length;++i){
-                            if (graph.vertices[i].ID == ID){
-                                return graph.vertices[i];
-                            }
-                        }
-                    }
+                    // console.log("Add edge pressed")
+                    //
+                    // function findVertex(ID){
+                    //     for (let i = 0; i < graph.getNumberVertices();++i){
+                    //         if (graph.getVertex(i).getVertexID() == ID){
+                    //             return graph.getVertex(i);
+                    //         }
+                    //     }
+                    // }
+                    //
+                    // let vertex1 = findVertex(firstID);
+                    // let vertex2 = findVertex(secondID);
+                    //
+                    // vertex1.addAdjacency(vertex2);
+                    // vertex2.addAdjacency(vertex1);
 
-                    let vertex1 = findVertex(firstID);
-                    let vertex2 = findVertex(secondID);
+                    graph.addEdge(firstID, secondID);
 
-                    vertex1.AdjacencyList.push(vertex2.ID);
-                    vertex2.AdjacencyList.push(vertex1.ID);
-
-                    let newEdge = new Edge(vertex1, vertex2);
-
-                    graph.edges.push(newEdge);
+                    populateDropDowns();
                     redraw();
-
-                    function addOption(selectbox, firstID, firstValue, secondID,  secondValue) {
-                        let opt = document.createElement("option");
-                        opt.textContent = "Vertex " + firstID + ": " + firstValue + " <-----> " + "Vertex " + secondID + ": " + secondValue;
-                        selectbox.options.add(opt);
-                    }
-
-                    for(let i  = edgeCount; i< graph.edges.length; ++i){
-                        addOption(deleteEdgeDD, graph.edges[i].vertex1ID, graph.edges[i].vertex1Val, graph.edges[i].vertex2ID, graph.edges[i].vertex2Val );
-                    }
-                    edgeCount++;
 
                 }else{
                     alert("Please select the second vertex");
                 }
-
             }else{
                 alert("Please select the first vertex");
             }
@@ -102,8 +99,6 @@ function doAddEdge() {
     }else{
         alert("This edge already exists");
     }
-
-
 }
 
 function doDeleteEdge() {
@@ -115,35 +110,16 @@ function doDeleteEdge() {
         let selected = dropDown.options[dropDown.selectedIndex].textContent;
         let edgeVertices = selected.split(" <-----> ");
 
-        dropDown.remove(dropDown.selectedIndex);
-
         let edgeVertex1 = edgeVertices[0].split(": ");
         let edgeVertex1ID = edgeVertex1[0].split(" ")[1];
-        let edgeVertex1Val = edgeVertex1[1];
 
         let edgeVertex2 = edgeVertices[1].split(": ");
         let edgeVertex2ID = edgeVertex2[0].split(" ")[1];
-        let edgeVertex2Val = edgeVertex2[1];
 
-        function findEdge(vertex1ID, vertex2ID){
-            for (let i = 0; i<graph.edges.length;++i){
-                if (graph.edges[i].vertex1ID == vertex1ID && graph.edges[i].vertex2ID == vertex2ID){
-                    return i;
-                }
-            }
-        }
+        graph.removeEdge(edgeVertex1ID, edgeVertex2ID);
 
-        console.log(graph.edges.length);
-        console.log(graph.edges);
-
-        let edgeIndex = findEdge(edgeVertex1ID, edgeVertex2ID);
-
-        graph.edges.splice(edgeIndex, 1);
-
+        populateDropDowns();
         redraw();
-
-        console.log(graph.edges.length);
-        console.log(graph.edges);
 
         graphics.restore();
     }else{
@@ -159,36 +135,71 @@ function redraw(){
 
 }
 
+function clearDropDown (DDB) {
+    while (DDB.options.length > 1) {
+        DDB.remove(1);
+    }
+}
+
+function populateDropDowns(){
+    const deleteVertexDD = document.getElementById("deleteVertexDD");
+    const deleteEdgeDD = document.getElementById("deleteEdgeDD");
+    const vertex1DD = document.getElementById("vertex1DD");
+    const vertex2DD = document.getElementById("vertex2DD");
+
+    clearDropDown(vertex1DD);
+    clearDropDown(vertex2DD);
+    clearDropDown(deleteVertexDD);
+    clearDropDown(deleteEdgeDD);
+
+    //Add vertices to delete vertex and add edge drop downs
+    function addVertexOption(DDB, value, ID) {
+        let opt = document.createElement("option");
+        opt.textContent = ID.toString() + ": " + value;
+        opt.value = ID;
+        DDB.options.add(opt);
+    }
+
+    for (let i=0; i < graph.getNumberVertices();++i){
+        addVertexOption(vertex1DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID());
+        addVertexOption(vertex2DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID());
+        addVertexOption(deleteVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID());
+    }
+
+    //Add edges to delete edge drop downs
+    function addEdgeOption(DDB, v1, v2) {
+        let opt = document.createElement("option");
+        opt.textContent = "Vertex " + v1.getVertexID() + ": " + v1.getVertexVal() + " <-----> " + "Vertex " + v2.getVertexID() + ": " + v2.getVertexVal();
+        DDB.options.add(opt);
+    }
+
+    for(let i  = 0; i< graph.edges.length; ++i){
+        addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo());
+    }
+}
+
 function doClear() {
     graphics.fillStyle = "white";
     graphics.fillRect(0, 0, canvas.width, canvas.height);
     graph.vertices = [];
     graph.edges = [];
 
-    let firstDropDown = document.getElementById("vertex1DD");
-    let secondDropDown = document.getElementById("vertex2DD");
-    let deleteEdgeDropDown = document.getElementById("deleteEdgeDD");
+    const deleteVertexDD = document.getElementById("deleteVertexDD");
+    const deleteEdgeDD = document.getElementById("deleteEdgeDD");
+    const vertex1DD = document.getElementById("vertex1DD");
+    const vertex2DD = document.getElementById("vertex2DD");
 
-    function clearDropDown (DDB) {
-        while (DDB.options.length > 1) {
-            DDB.remove(1);
-        }
-    }
-
-    clearDropDown(firstDropDown);
-    clearDropDown(secondDropDown);
-    clearDropDown(deleteEdgeDropDown);
-
-    ID = 0;
-    count = 0;
-    edgeCount = 0;
+    clearDropDown(vertex1DD);
+    clearDropDown(vertex2DD);
+    clearDropDown(deleteVertexDD);
+    clearDropDown(deleteEdgeDD);
 }
 
 
 function drawVertices(){
     for(let i  = 0; i< graph.vertices.length; ++i){
         graphics.save();
-        graph.vertices[i].drawVertex();
+        graph.getVertex(i).drawVertex();
         graphics.restore();
     }
 }
@@ -199,6 +210,10 @@ function drawEdges(){
         graph.edges[i].drawEdge();
         graphics.restore();
     }
+}
+
+function doSubmit(){
+    console.log(graph.getAdjacenyMatrix());
 }
 
 
