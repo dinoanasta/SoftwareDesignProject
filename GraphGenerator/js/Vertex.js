@@ -91,5 +91,10 @@ class Vertex{
 
         graphics.fillStyle = "black";
         graphics.fillText("ID: " + this.getVertexID().toString(), this.getXVal() -35, this.getYVal() - 15, 30 );
+
+        if(colored){
+            graphics.fillStyle = "black";
+            graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 15, 40 );
+        }
     }
 }

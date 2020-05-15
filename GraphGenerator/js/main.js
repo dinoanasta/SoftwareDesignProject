@@ -1,27 +1,46 @@
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 
-let ID = 0;
+let color = -1;
 
-let count = 0;
+let colored = false;
+
+function doColored() {
+    let colorCB = document.getElementById('coloredCB');
+    let colorText = document.getElementById('vertexColor');
+
+    if (colorCB.checked) {
+        colorText.disabled = false;
+        colored = true;
+    } else if (!colorCB.checked) {
+        colorText.disabled = true;
+        colored = false;
+    }
+}
 
 function doAddVertex() {
     let valueText = document.getElementById("vertexValue");
+    let colorText = document.getElementById("vertexColor");
 
     if(valueText.value.length != 0){
 
         let value = valueText.value;
 
+        if(colored){
+            color = colorText.value;
+        }
+
         let x = Math.random()*200 + 250;
         let y = Math.random()*200 + 200;
 
-        graph.addVertex(value,x, y, null);
+        graph.addVertex(value,x, y, color);
 
         populateDropDowns();
         redraw();
+
+        console.log(graph.getAdjacenyMatrix());
     }else{
         alert("Please enter a value for the vertex");
     }
-
 }
 
 function doDeleteVertex(){
@@ -44,7 +63,33 @@ function doDeleteVertex(){
     }
 }
 
-let edgeCount = 0;
+let weight = 0;
+let weighted = false;
+function doWeighted(){
+    let weightedCB = document.getElementById('weightedCB');
+    let weightText = document.getElementById('edgeWeight');
+
+    if (weightedCB.checked) {
+        weightText.disabled = false;
+        weighted = true;
+    } else if (!weightedCB.checked) {
+        weightText.disabled = true;
+        weighted = false;
+    }
+}
+
+let directed = false;
+function doDirected(){
+    let directedCB = document.getElementById('directedCB');
+    let vertex1 = document.getElementById('vertex1DD');
+    let vertex2 = document.getElementById('vertex2DD');
+
+    if (directedCB.checked) {
+        directed = true;
+    } else if (!directedCB.checked) {
+        directed = false;
+    }
+}
 
 function doAddEdge() {
     let firstDropDown = document.getElementById("vertex1DD");
@@ -52,6 +97,8 @@ function doAddEdge() {
 
     let firstID = firstDropDown.options[firstDropDown.selectedIndex].value;
     let secondID = secondDropDown.options[secondDropDown.selectedIndex].value;
+
+    let weighted = document.getElementById("edgeWeight");
 
     function checkExists(first, second){
         for (let i = 0; i<graph.edges.length;++i){
@@ -66,24 +113,10 @@ function doAddEdge() {
             if(firstDropDown.selectedIndex !=0 ){
                 if(secondDropDown.selectedIndex != 0){
 
-                    // console.log("Add edge pressed")
-                    //
-                    // function findVertex(ID){
-                    //     for (let i = 0; i < graph.getNumberVertices();++i){
-                    //         if (graph.getVertex(i).getVertexID() == ID){
-                    //             return graph.getVertex(i);
-                    //         }
-                    //     }
-                    // }
-                    //
-                    // let vertex1 = findVertex(firstID);
-                    // let vertex2 = findVertex(secondID);
-                    //
-                    // vertex1.addAdjacency(vertex2);
-                    // vertex2.addAdjacency(vertex1);
-
-                    graph.addEdge(firstID, secondID);
-
+                    if(weighted){
+                        weight = weighted.value;
+                    }
+                    graph.addEdge(firstID, secondID, weight);
                     populateDropDowns();
                     redraw();
 
@@ -153,28 +186,34 @@ function populateDropDowns(){
     clearDropDown(deleteEdgeDD);
 
     //Add vertices to delete vertex and add edge drop downs
-    function addVertexOption(DDB, value, ID) {
+    function addVertexOption(DDB, value, ID, color) {
         let opt = document.createElement("option");
-        opt.textContent = ID.toString() + ": " + value;
+        opt.textContent = "Vertex " + ID.toString() + ": " + value;
+        if(colored){
+            opt.textContent = "Vertex " + ID.toString() + ": " + value + " (Color: " + color.toString() + ")";
+        }
         opt.value = ID;
         DDB.options.add(opt);
     }
 
     for (let i=0; i < graph.getNumberVertices();++i){
-        addVertexOption(vertex1DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID());
-        addVertexOption(vertex2DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID());
-        addVertexOption(deleteVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID());
+        addVertexOption(vertex1DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
+        addVertexOption(vertex2DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
+        addVertexOption(deleteVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
     }
 
     //Add edges to delete edge drop downs
-    function addEdgeOption(DDB, v1, v2) {
+    function addEdgeOption(DDB, v1, v2, weight) {
         let opt = document.createElement("option");
-        opt.textContent = "Vertex " + v1.getVertexID() + ": " + v1.getVertexVal() + " <-----> " + "Vertex " + v2.getVertexID() + ": " + v2.getVertexVal();
+        opt.textContent = "Vertex " + v1.getVertexID() + ": " + v1.getVertexVal() + " <-------> " + "Vertex " + v2.getVertexID() + ": " + v2.getVertexVal();
+        if(weighted){
+            opt.textContent = "Vertex " + v1.getVertexID() + ": " + v1.getVertexVal() + " <---" + weight + "---> " + "Vertex " + v2.getVertexID() + ": " + v2.getVertexVal();
+        }
         DDB.options.add(opt);
     }
 
     for(let i  = 0; i< graph.edges.length; ++i){
-        addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo());
+        addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
     }
 }
 

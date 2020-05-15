@@ -12,6 +12,8 @@
            page.  It is white on a light gray page background, with a thin
            black border. */
         body {
+            margin-left: 20px;
+            margin-top: 20px;
             background-color: #DDDDDD;
         }
 
@@ -49,7 +51,6 @@
         const BACKGROUND = "white";  // The display is filled with this color before the scene is drawn.
 
         let pixelSize;  // The size of one pixel, in the transformed coordinates.
-
 
 
         function addGraphicsContextExtras(graphics) {
@@ -115,6 +116,9 @@
             document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
             document.getElementById("clearButton").onclick = doClear;
             document.getElementById("submitButton").onclick = doSubmit;
+            document.getElementById("weightedCB").onchange = doWeighted;
+            document.getElementById("coloredCB").onchange = doColored;
+            document.getElementById("directedCB").onchange = doDirected;
 
         }
     </script>
@@ -125,7 +129,8 @@
     <h1>Graph Generator</h1>
 
     <div class="row">
-        <div class="col-md-6" >
+<!--        Canvas - 1st column-->
+        <div class="col-md-5" >
             <div id="canvasholder">
                 <canvas id="canvas" width="700" height="600">
                     <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
@@ -133,74 +138,114 @@
                 </canvas>
             </div>
         </div>
-        <div class="col-md-6">
+
+<!--        Vertex stuff - 2nd column-->
+        <div class="col-md-3" style="margin-left:30px">
 
             <p>
-                <h3>Add vertex:</h3>
+            <h3>Add vertex:</h3>
 
-                <label for="vertexValue">Vertex Value:</label>
-                <input type="text" id="vertexValue" name="vertexValue">
-                <br>
+            <input type="checkbox" id="coloredCB" name="color" value="color" onchange="doColored()">
+            <label for="coloredCB">Colored</label>
+            <br>
 
-                <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
+            <label for="vertexValue">Vertex Value:</label>
+            <input type="text" id="vertexValue" name="vertexValue">
+            <br>
+
+            <label for="vertexColor">Vertex Color:</label>
+            <input type="text" id="vertexColor" name="vertexColor" disabled>
+            <br>
+
+            <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
             </p>
 
             <p>
-                <h3>Delete vertex:</h3>
+            <h3>Delete vertex:</h3>
 
-                <label for="deleteVertexDD">Vertex:</label>
-                <select id="deleteVertexDD">
-                    <option>Choose vertex</option>
-                </select>
-                <br>
+            <label for="deleteVertexDD">Vertex:</label>
+            <select id="deleteVertexDD">
+                <option>Choose vertex</option>
+            </select>
+            <br>
 
-                <button id="deleteVertexButton" onclick="doDeleteVertex()">Delete vertex</button>
-
-
+            <button id="deleteVertexButton" onclick="doDeleteVertex()">Delete vertex</button>
             </p>
+
+            <br>
+            <br>
             <br>
 
             <p>
-                <h3>Add edge:</h3>
-
-                <label for="vertex1DD">Vertex 1:</label>
-                <select id="vertex1DD">
-                    <option>Choose first vertex</option>
-                </select>
+                <label for="adjMatrix">Current Adjacency Matrix:</label>
                 <br>
-
-                <label for="vertex2DD">Vertex 2:</label>
-                <select id="vertex2DD">
-                    <option>Choose second vertex</option>
-                </select>
+                <input style="height:200px", size="50px", type="text" id="adjMatrix" name="adjMatrix">
                 <br>
+            </p>
 
-                <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
+
+
+            <br>
+        </div>
+
+<!--        Edge stuff - 3rd column-->
+        <div class="col-md-3" style="margin-left:30px">
+
+            <p>
+            <h3>Add edge:</h3>
+
+            <input type="checkbox" id="weightedCB" name="weighted" value="weighted" onchange="doWeighted()">
+            <label for="weightedCB">Weighted</label>
+            <br>
+
+            <input type="checkbox" id="directedCB" name="directed" value="directed" onchange="doDirected()">
+            <label for="directedCB">Directed</label>
+            <br>
+
+            <label for="vertex1DD">Vertex 1:</label>
+            <select id="vertex1DD">
+                <option>Choose first vertex</option>
+            </select>
+            <br>
+
+            <label for="vertex2DD">Vertex 2:</label>
+            <select id="vertex2DD">
+                <option>Choose second vertex</option>
+            </select>
+            <br>
+
+            <label for="edgeWeight">Edge weight:</label>
+            <input type="text" id="edgeWeight" name="edgeWeight" disabled>
+            <br>
+
+            <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
             </p>
 
             <p>
-                <h3>Delete edge:</h3>
+            <h3>Delete edge:</h3>
 
-                <label for="deleteEdgeDD">Edge:</label>
-                <select id="deleteEdgeDD">
-                    <option>Choose edge</option>
-                </select>
-                <br>
+            <label for="deleteEdgeDD">Edge:</label>
+            <select id="deleteEdgeDD">
+                <option>Choose edge</option>
+            </select>
+            <br>
 
-                <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
+            <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
 
-
-            </p>
-
-            <br><br>
-            <button id="clearButton" onclick="doClear()">Clear</button>
-
-            <br><br>
-            <button id="submitButton" onclick="doSubmit()">Submit</button>
-
-            <p>
 
             </p>
+
+            <p style="margin-left: 100px">
+                <!--            Clear Button-->
+                <br><br>
+                <button style="height:50px", id="clearButton" onclick="doClear()">Clear</button>
+
+                <!--            Submit Button-->
+                <br><br>
+                <button style="height:50px", id="submitButton", onclick="doSubmit()">Submit</button>
+            </p>
+
+
         </div>
     </div>
 
