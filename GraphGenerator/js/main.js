@@ -152,13 +152,11 @@ function doDeleteEdge() {
         graphics.save();
 
         let selected = dropDown.options[dropDown.selectedIndex].textContent;
-        let edgeVertices = selected.split(" <-----> ");
 
-        let edgeVertex1 = edgeVertices[0].split(": ");
-        let edgeVertex1ID = edgeVertex1[0].split(" ")[1];
+        let splitted = selected.split(" ");
 
-        let edgeVertex2 = edgeVertices[1].split(": ");
-        let edgeVertex2ID = edgeVertex2[0].split(" ")[1];
+        let edgeVertex1ID = splitted[1];
+        let edgeVertex2ID = splitted[6];
 
         graph.removeEdge(edgeVertex1ID, edgeVertex2ID);
 
@@ -216,9 +214,9 @@ function populateDropDowns(){
     //Add edges to delete edge drop downs
     function addEdgeOption(DDB, v1, v2, weight) {
         let opt = document.createElement("option");
-        opt.textContent = "Vertex " + v1.getVertexID() + ": " + v1.getVertexVal() + " <-------> " + "Vertex " + v2.getVertexID() + ": " + v2.getVertexVal();
+        opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " <-------> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
         if(weighted){
-            opt.textContent = "Vertex " + v1.getVertexID() + ": " + v1.getVertexVal() + " <---" + weight + "---> " + "Vertex " + v2.getVertexID() + ": " + v2.getVertexVal();
+            opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " <---" + weight + "---> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
         }
         DDB.options.add(opt);
     }
