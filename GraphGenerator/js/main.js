@@ -22,25 +22,34 @@ function doAddVertex() {
     let colorText = document.getElementById("vertexColor");
 
     if(valueText.value.length != 0){
-
         let value = valueText.value;
-
-        if(colored){
-            color = colorText.value;
-        }
-
         let x = Math.random()*200 + 250;
         let y = Math.random()*200 + 200;
+        if(colored){
+            if(colorText.value.length != 0){
+                color = colorText.value;
 
-        graph.addVertex(value,x, y, color);
+                graph.addVertex(value,x, y, color);
 
-        populateDropDowns();
-        redraw();
+                populateDropDowns();
+                redraw();
 
-        console.log(graph.getAdjacenyMatrix());
+                console.log(graph.getAdjacenyMatrix());
+            }else{
+                alert("Please enter a value for the color");
+            }
+        }else{
+           graph.addVertex(value,x, y, color);
+
+            populateDropDowns();
+            redraw();
+
+            console.log(graph.getAdjacenyMatrix());
+        }
     }else{
         alert("Please enter a value for the vertex");
     }
+
 }
 
 function doDeleteVertex(){
@@ -50,7 +59,8 @@ function doDeleteVertex(){
         graphics.save();
 
         let selected = dropDown.options[dropDown.selectedIndex].textContent;
-        let vertexID = selected.split(":")[0];
+        let vertex = selected.split(":", 1)[0];
+        let vertexID = vertex.split(" ")[1];
 
         graph.removeVertex(vertexID);
 
@@ -59,12 +69,13 @@ function doDeleteVertex(){
 
         graphics.restore();
     }else{
-        alert("Please select an edge to delete");
+        alert("Please select a vertex to delete");
     }
 }
 
 let weight = 0;
 let weighted = false;
+
 function doWeighted(){
     let weightedCB = document.getElementById('weightedCB');
     let weightText = document.getElementById('edgeWeight');
