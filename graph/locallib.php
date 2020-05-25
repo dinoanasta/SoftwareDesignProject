@@ -165,7 +165,7 @@ class assign_submission_graph extends assign_submission_plugin {
 
         // TODO load JS in submission form
 
-        $PAGE->requires-js('graphgenerator/js/dragging.js');
+        $PAGE->requires-js('graphgenerator/js/handlers.js');
         $PAGE->requires-js('graphgenerator/js/Edge.js');
         $PAGE->requires-js('graphgenerator/js/Graph.js');
         $PAGE->requires-js('graphgenerator/js/main.js');

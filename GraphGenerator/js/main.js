@@ -1,8 +1,16 @@
+//Global variables
+var selectedVertex;
+let space = 4;
+
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 
 let color = -1;
-
 let colored = false;
+
+let weight = 0;
+let weighted = false;
+
+let directed = false;
 
 function doColored() {
     let colorCB = document.getElementById('coloredCB');
@@ -49,15 +57,12 @@ function doAddVertex() {
     }else{
         alert("Please enter a value for the vertex");
     }
-
 }
 
 function doDeleteVertex(){
     let dropDown = document.getElementById("deleteVertexDD");
 
     if(dropDown.selectedIndex != 0){
-        graphics.save();
-
         let selected = dropDown.options[dropDown.selectedIndex].textContent;
         let vertex = selected.split(":", 1)[0];
         let vertexID = vertex.split(" ")[1];
@@ -66,15 +71,10 @@ function doDeleteVertex(){
 
         populateDropDowns();
         redraw();
-
-        graphics.restore();
     }else{
         alert("Please select a vertex to delete");
     }
 }
-
-let weight = 0;
-let weighted = false;
 
 function doWeighted(){
     let weightedCB = document.getElementById('weightedCB');
@@ -89,7 +89,6 @@ function doWeighted(){
     }
 }
 
-let directed = false;
 function doDirected(){
     let directedCB = document.getElementById('directedCB');
     let vertex1 = document.getElementById('vertex1DD');
@@ -263,5 +262,6 @@ function drawEdges(){
 function doSubmit(){
     console.log(graph.getAdjacenyMatrix());
 }
+
 
 
