@@ -289,3 +289,19 @@ test("getTotalWeight works", () => {
     [0, 0, 0, 0, 0, 0],
   ]);
 });
+
+test("convertGraphToString works", () => {
+  var g = getFilledGraph();
+  var expected_string =
+  '{"vertices":[[0,1,0,0,0],[1,2,0,0,10],[2,3,0,0,14],[3,4,0,0,5],[4,5,0,0,4],[5,6,0,0,12],[6,7,0,0,64],[7,8,0,0,6]],"adjacency_matrix":[[0,1,4,0,0,0,0,0],[1,0,0,0,1,0,0,0],[4,0,0,0,0,0,0,0],[0,3,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]],"source_node":0,"question":"Create DFS graph","questionType":"DFS"}';
+  expect(g.convertGraphToString("Create DFS graph", "DFS")).toBe(expected_string);
+});
+
+test("fillGraphWithString works", () => {
+  var g = new Graph();
+  var fill_string =
+  '{"vertices":[[0,1,0,0,0],[1,2,0,0,10],[2,3,0,0,14],[3,4,0,0,5],[4,5,0,0,4],[5,6,0,0,12],[6,7,0,0,64],[7,8,0,0,6]],"adjacency_matrix":[[0,1,4,0,0,0,0,0],[1,0,0,0,1,0,0,0],[4,0,0,0,0,0,0,0],[0,3,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]],"source_node":0,"question":"Create DFS graph","questionType":"DFS"}';
+  
+  g.fillGraphWithString(fill_string);
+  expect(g.convertGraphToString("Create DFS graph", "DFS")).toBe(fill_string);
+});
