@@ -26,7 +26,7 @@ test("constructor works", () => {
   expect(g.vertices.length).toBe(0);
   expect(g.edges.length).toBe(0);
   expect(g.directedEdges.length).toBe(0);
-  expect(g.sourceNode).toBe(null);
+  expect(g.sourceNode).toBe(0);
 });
 
 test("setSourceNode works", () => {
@@ -37,9 +37,8 @@ test("setSourceNode works", () => {
 
 test("getSourceNode works", () => {
   var g = new Graph();
-  expect(g.getSourceNode()).toBe(null);
-  g.setSourceNode(0);
-  expect(g.getSourceNode()).toBe(0);
+  g.setSourceNode(1);
+  expect(g.getSourceNode()).toBe(1);
 });
 
 test("getNumberVertices empty graph works", () => {
