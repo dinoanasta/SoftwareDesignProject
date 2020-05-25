@@ -26,7 +26,7 @@ test("constructor works", () => {
   expect(g.vertices.length).toBe(0);
   expect(g.edges.length).toBe(0);
   expect(g.directedEdges.length).toBe(0);
-  expect(g.sourceNode).toBe(null);
+  expect(g.sourceNode).toBe(0);
 });
 
 test("setSourceNode works", () => {
@@ -37,9 +37,8 @@ test("setSourceNode works", () => {
 
 test("getSourceNode works", () => {
   var g = new Graph();
-  expect(g.getSourceNode()).toBe(null);
-  g.setSourceNode(0);
-  expect(g.getSourceNode()).toBe(0);
+  g.setSourceNode(1);
+  expect(g.getSourceNode()).toBe(1);
 });
 
 test("getNumberVertices empty graph works", () => {
@@ -289,4 +288,20 @@ test("getTotalWeight works", () => {
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0],
   ]);
+});
+
+test("convertGraphToString works", () => {
+  var g = getFilledGraph();
+  var expected_string =
+  '{"vertices":[[0,1,0,0,0],[1,2,0,0,10],[2,3,0,0,14],[3,4,0,0,5],[4,5,0,0,4],[5,6,0,0,12],[6,7,0,0,64],[7,8,0,0,6]],"adjacency_matrix":[[0,1,4,0,0,0,0,0],[1,0,0,0,1,0,0,0],[4,0,0,0,0,0,0,0],[0,3,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]],"source_node":0,"question":"Create DFS graph","questionType":"DFS"}';
+  expect(g.convertGraphToString("Create DFS graph", "DFS")).toBe(expected_string);
+});
+
+test("fillGraphWithString works", () => {
+  var g = new Graph();
+  var fill_string =
+  '{"vertices":[[0,1,0,0,0],[1,2,0,0,10],[2,3,0,0,14],[3,4,0,0,5],[4,5,0,0,4],[5,6,0,0,12],[6,7,0,0,64],[7,8,0,0,6]],"adjacency_matrix":[[0,1,4,0,0,0,0,0],[1,0,0,0,1,0,0,0],[4,0,0,0,0,0,0,0],[0,3,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]],"source_node":0,"question":"Create DFS graph","questionType":"DFS"}';
+  
+  g.fillGraphWithString(fill_string);
+  expect(g.convertGraphToString("Create DFS graph", "DFS")).toBe(fill_string);
 });
