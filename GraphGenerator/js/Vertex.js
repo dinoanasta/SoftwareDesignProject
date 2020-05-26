@@ -96,5 +96,9 @@ class Vertex{
             graphics.fillStyle = "black";
             graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 15, 40 );
         }
+        // if(questionType == "mwst"){
+        //     graphics.fillStyle = "black";
+        //     graphics.fillText("Dist: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 30, 40 );
+        //}
     }
 }

@@ -2,10 +2,16 @@
 var selectedVertex;
 let space = 4;
 
+const vertexRadius = 20;
+
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 
 let color = -1;
 let colored = false;
+
+//Question Setup
+let questionType;
+let questionCode;
 
 let weight = 0;
 let weighted = false;
@@ -261,6 +267,88 @@ function drawEdges(){
 
 function doSubmit(){
     console.log(graph.getAdjacenyMatrix());
+}
+
+function setupInterface(){
+    switch (questionType) {
+        case "bfs":
+            document.getElementById("coloredCB").style.visibility = "hidden";
+            document.getElementById("coloredCBLabel").style.visibility = "hidden";
+            document.getElementById("vertexColor").style.visibility = "hidden";
+            document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            break;
+        case "dfs":
+            document.getElementById("coloredCB").style.visibility = "hidden";
+            document.getElementById("coloredCBLabel").style.visibility = "hidden";
+            document.getElementById("vertexColor").style.visibility = "hidden";
+            document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            break;
+        case "mwst":
+            document.getElementById("coloredCB").style.visibility = "hidden";
+            document.getElementById("coloredCBLabel").style.visibility = "hidden";
+            document.getElementById("vertexColor").style.visibility = "hidden";
+            document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            break;
+        case "graphcolouring":
+            document.getElementById("coloredCB").style.visibility = "visible";
+            document.getElementById("coloredCBLabel").style.visibility = "visible";
+            document.getElementById("vertexColor").style.visibility = "visible";
+            document.getElementById("vertexColorLabel").style.visibility = "visible";
+            break;
+        case "shortestpath":
+            document.getElementById("coloredCB").style.visibility = "hidden";
+            document.getElementById("coloredCBLabel").style.visibility = "hidden";
+            document.getElementById("vertexColor").style.visibility = "hidden";
+            document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            break;
+    }
+
+
+}
+//
+// function setUserType(userType){
+//     switch (userType) {
+//         //If user is a lecturer
+//         case "lecturer":
+//             document.getElementById("lecturerDiv").style.visibility = "visible";
+//             document.getElementById("studentDiv").style.visibility = "hidden";
+//
+//         //If user is a student
+//         case "student":
+//             document.getElementById("lecturerDiv").style.visibility = "hidden";
+//             document.getElementById("studentDiv").style.visibility = "visible";
+//     }
+// }
+
+function doSetQuestion(){
+    let dropDown = document.getElementById("questionTypeDD");
+    let qCode = document.getElementById("questionCode");
+    if(dropDown.selectedIndex != 0 && qCode.value.length != 0){
+        switch (dropDown.selectedIndex) {
+            case 1:
+                questionType = "bfs";
+                break;
+            case 2:
+                questionType = "dfs";
+                break;
+            case 3:
+                questionType = "mwst";
+                break;
+            case 4:
+                questionType = "graphcolouring";
+                break;
+            case 5:
+                questionType = "shortestpath";
+                break;
+        }
+        setupInterface(questionType);
+
+        questionCode = qCode.value;
+
+        alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
+    }else{
+        alert("Please select a question type and enter a code");
+    }
 }
 
 

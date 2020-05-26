@@ -27,6 +27,7 @@ function installMouseHandler() {
         var y = Math.round(evt.clientY - r.top);   // round to integer values; some browsers would give non-integers.
         dragging = true;  // (this won't be the case for all mousedowns in all programs)
 
+        console.log(x, y);
         if (dragging) {
             document.addEventListener("mousemove", doMouseMove, false);
             document.addEventListener("mouseup", doMouseUp, false);
