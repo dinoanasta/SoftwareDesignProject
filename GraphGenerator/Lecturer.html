@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
+
 
     <meta charset="UTF-8">
     <title>Graph Generator - Lecturer</title>
@@ -24,12 +27,35 @@
         let canvas;   // The canvas that is used as the drawing surface
         let graphics; // The 2D graphics context for drawing on the canvas.
 
+        //Variables used for database
+        let firebaseConfig;
+        let database;
+        let ref;
+
         const X_LEFT = 0;    // The xy limits for the coordinate system.
         const X_RIGHT = 800;
         const Y_BOTTOM = 600;
         const Y_TOP = 0;
 
         let pixelSize;  // The size of one pixel, in the transformed coordinates.
+
+        //Initialize database
+        function initialiseDB() {
+          firebaseConfig = {
+            apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
+            authDomain: "graphmarker.firebaseapp.com",
+            databaseURL: "https://graphmarker.firebaseio.com",
+            projectId: "graphmarker",
+            storageBucket: "graphmarker.appspot.com",
+            messagingSenderId: "980362787898",
+            appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
+          };
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+
+          database = firebase.database();
+          ref = database.ref("scores");
+        }
 
         function init() {
             try {
@@ -39,6 +65,7 @@
                 applyLimits(graphics, X_LEFT, X_RIGHT, Y_TOP, Y_BOTTOM, false);
                 graphics.lineWidth = pixelSize;  // Use 1 pixel as the default line width
                 addGraphicsContextExtras(graphics);
+                initialiseDB();
                 installMouseHandler();
                 document.getElementById("addVertexButton").onclick = doAddVertex;
                 document.getElementById("deleteVertexButton").onclick = doDeleteVertex;

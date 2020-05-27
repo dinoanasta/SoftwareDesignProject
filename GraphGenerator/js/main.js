@@ -5,6 +5,7 @@ let space = 4;
 const vertexRadius = 20;
 
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
+let questionGraph = new Graph();
 
 let color = -1;
 let colored = false;
@@ -12,6 +13,7 @@ let colored = false;
 //Question Setup
 let questionType;
 let questionCode;
+let questionLoaded = false;
 
 let weight = 0;
 let weighted = false;
@@ -114,7 +116,7 @@ function doAddEdge() {
     let firstID = firstDropDown.options[firstDropDown.selectedIndex].value;
     let secondID = secondDropDown.options[secondDropDown.selectedIndex].value;
 
-    let weighted = document.getElementById("edgeWeight");
+    //let weighted = document.getElementById("edgeWeight");
 
     function checkExists(first, second){
         for (let i = 0; i<graph.edges.length;++i){
@@ -129,8 +131,9 @@ function doAddEdge() {
             if(firstDropDown.selectedIndex !=0 ){
                 if(secondDropDown.selectedIndex != 0){
 
+                    weight = 1;
                     if(weighted){
-                        weight = weighted.value;
+                        weight = parseInt(weighted.value);
                     }
                     graph.addEdge(firstID, secondID, weight);
                     populateDropDowns();
@@ -315,7 +318,3 @@ function setupInterface(){
 //             document.getElementById("studentDiv").style.visibility = "visible";
 //     }
 // }
-
-
-
-

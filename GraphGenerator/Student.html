@@ -1,214 +1,247 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
-    <meta charset="UTF-8">
-    <title>Graph Generator - Student</title>
+  <meta charset="UTF-8">
+  <title>Graph Generator - Student</title>
 
-    <link href="css/style.css" rel = "stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 
-    <!--    Main script-->
+  <!--    Main script-->
 
-    <script src="js/Vertex.js"> </script>
-    <script src="js/Edge.js"> </script>
-    <script src="js/Graph.js"> </script>
-    <script src="js/student.js"> </script>
-    <script src="js/main.js"> </script>
-    <script src="js/handlers.js"></script>
+  <script src="js/Vertex.js"> </script>
+  <script src="js/Edge.js"> </script>
+  <script src="js/Graph.js"> </script>
+  <script src="js/student.js"> </script>
+  <script src="js/main.js"> </script>
+  <script src="js/handlers.js"></script>
+  <script src="js/PriorityQueue.js"> </script>
+  <script src="js/ColMarker.js"> </script>
+  <script src="js/MWSTMarker.js"> </script>
+  <script src="js/dfsChecker.js"> </script>
+  <script src="js/ShortestPathMarker.js"> </script>
+  <script src="js/Marker.js"> </script>
 
-    <script>
+  <script>
+    let canvas; // The canvas that is used as the drawing surface
+    let graphics; // The 2D graphics context for drawing on the canvas.
 
-        let canvas;   // The canvas that is used as the drawing surface
-        let graphics; // The 2D graphics context for drawing on the canvas.
+    //Variables used for database
+    let firebaseConfig;
+    let database;
+    let ref;
 
-        const X_LEFT = 0;    // The xy limits for the coordinate system.
-        const X_RIGHT = 800;
-        const Y_BOTTOM = 600;
-        const Y_TOP = 0;
+    const X_LEFT = 0; // The xy limits for the coordinate system.
+    const X_RIGHT = 800;
+    const Y_BOTTOM = 600;
+    const Y_TOP = 0;
 
-        let pixelSize;  // The size of one pixel, in the transformed coordinates.
+    let pixelSize; // The size of one pixel, in the transformed coordinates.
 
-        function init() {
-            try {
-                canvas = document.getElementById("canvas");
-                graphics = canvas.getContext("2d");
+    //Initialize database
+    function initialiseDB() {
+      firebaseConfig = {
+        apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
+        authDomain: "graphmarker.firebaseapp.com",
+        databaseURL: "https://graphmarker.firebaseio.com",
+        projectId: "graphmarker",
+        storageBucket: "graphmarker.appspot.com",
+        messagingSenderId: "980362787898",
+        appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
 
-                applyLimits(graphics, X_LEFT, X_RIGHT, Y_TOP, Y_BOTTOM, false);
-                graphics.lineWidth = pixelSize;  // Use 1 pixel as the default line width
-                addGraphicsContextExtras(graphics);
-                installMouseHandler();
-                document.getElementById("addVertexButton").onclick = doAddVertex;
-                document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
-                document.getElementById("addEdgeButton").onclick = doAddEdge;
-                document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
-                document.getElementById("clearButton").onclick = doClear;
-                document.getElementById("submitButton").onclick = doSubmit;
-                document.getElementById("weightedCB").onchange = doWeighted;
-                document.getElementById("coloredCB").onchange = doColored;
-                document.getElementById("directedCB").onchange = doDirected;
-                document.getElementById("loadGraphButton").onclick = doLoadGraph;
-                window.addEventListener('keydown', handleKeyDown, false);
+      database = firebase.database();
+      ref = database.ref("scores");
+    }
 
-                // setUserType("lecturer");
-                setupInterface(questionType);
+    function init() {
+      try {
+        canvas = document.getElementById("canvas");
+        graphics = canvas.getContext("2d");
 
-            } catch (e) {
-                document.getElementById("canvas").innerHTML =
-                    "Canvas graphics is not supported.<br>" +
-                    "An error occurred while initializing graphics.";
-            }
-        }
-    </script>
+        applyLimits(graphics, X_LEFT, X_RIGHT, Y_TOP, Y_BOTTOM, false);
+        graphics.lineWidth = pixelSize; // Use 1 pixel as the default line width
+        addGraphicsContextExtras(graphics);
+        initialiseDB();
+        installMouseHandler();
+        document.getElementById("addVertexButton").onclick = doAddVertex;
+        document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
+        document.getElementById("addEdgeButton").onclick = doAddEdge;
+        document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
+        document.getElementById("clearButton").onclick = doClear;
+        document.getElementById("submitButton").onclick = doSubmit;
+        document.getElementById("weightedCB").onchange = doWeighted;
+        document.getElementById("coloredCB").onchange = doColored;
+        document.getElementById("directedCB").onchange = doDirected;
+        document.getElementById("loadGraphButton").onclick = doLoadGraph;
+        window.addEventListener('keydown', handleKeyDown, false);
+
+        // setUserType("lecturer");
+        setupInterface(questionType);
+
+      } catch (e) {
+        document.getElementById("canvas").innerHTML =
+          "Canvas graphics is not supported.<br>" +
+          "An error occurred while initializing graphics.";
+      }
+    }
+  </script>
 </head>
 
 <body onload="init()" style="background-color:#EEEEEE">
 
-<div id="lecturerDiv" class="row">
+  <div id="lecturerDiv" class="row">
 
     <!--        Canvas - 1st column-->
     <div class="col-sm-6" id="canvasDiv">
-        <h1>Graph Generator - Student Interface</h1>
+      <h1>Graph Generator - Student Interface</h1>
 
-        <canvas id="canvas" width="800" height="600">
-            <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
-            Canvas not supported.
-        </canvas>
+      <canvas id="canvas" width="800" height="600">
+        <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
+        Canvas not supported.
+      </canvas>
     </div>
 
     <!--        Vertex stuff - 2nd column-->
     <div class="col-sm-2" id="vertexDiv">
 
-        <p>
-        <h3>Question setup:</h3>
+      <p>
+      <h3>Question setup:</h3>
 
-        <label id="questionCodeLabel">Question Code:</label>
-        <input type="text" id="questionCodeStudent" name="vertexValue">
+      <label id="questionCodeLabel">Question Code:</label>
+      <input type="text" id="questionCodeStudent" name="vertexValue">
 
-        <button id="loadGraphButton" onclick="doLoadGraph()">Load graph</button>
+      <button id="loadGraphButton" onclick="doLoadGraph()">Load graph</button>
 
-        </p>
+      </p>
 
-        <br>
+      <br>
 
-        <p>
-        <h3>Add vertex:</h3>
+      <p>
+      <h3>Add vertex:</h3>
 
-        <input type="checkbox" id="coloredCB" name="color" value="color" onchange="doColored()">
-        <label id="coloredCBLabel">Colored</label>
-        <br>
+      <input type="checkbox" id="coloredCB" name="color" value="color" onchange="doColored()">
+      <label id="coloredCBLabel">Colored</label>
+      <br>
 
-        <label id="vertexValueLabel">Vertex Value:</label>
-        <input type="text" id="vertexValue">
-        <br>
+      <label id="vertexValueLabel">Vertex Value:</label>
+      <input type="text" id="vertexValue">
+      <br>
 
-        <label id="vertexColorLabel">Vertex Color:</label>
-        <input type="text" id="vertexColor" disabled>
+      <label id="vertexColorLabel">Vertex Color:</label>
+      <input type="text" id="vertexColor" disabled>
 
-        <label id="distFromRootLabel">Distance from root:</label>
-        <input type="text" id="distFromRoot">
-        <br>
+      <label id="distFromRootLabel">Distance from root:</label>
+      <input type="text" id="distFromRoot">
+      <br>
 
-        <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
-        </p>
+      <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
+      </p>
 
-        <br>
+      <br>
 
-        <p>
-        <h3>Delete vertex:</h3>
+      <p>
+      <h3>Delete vertex:</h3>
 
-        <label id="deleteVertexDDLabel">Vertex:</label>
-        <select id="deleteVertexDD">
-            <option>Choose vertex</option>
-        </select>
-        <br>
+      <label id="deleteVertexDDLabel">Vertex:</label>
+      <select id="deleteVertexDD">
+        <option>Choose vertex</option>
+      </select>
+      <br>
 
-        <button id="deleteVertexButton" onclick="doDeleteVertex()">Delete vertex</button>
-        </p>
+      <button id="deleteVertexButton" onclick="doDeleteVertex()">Delete vertex</button>
+      </p>
 
-        <br>
-        <br>
-        <br>
+      <br>
+      <br>
+      <br>
 
-        <!--            <p>-->
-        <!--                <label for="adjMatrix">Current Adjacency Matrix:</label>-->
-        <!--                <br>-->
-        <!--                <input style="height:25vh", width="40vh", type="text" id="adjMatrix" name="adjMatrix">-->
-        <!--                <br>-->
-        <!--            </p>-->
+      <!--            <p>-->
+      <!--                <label for="adjMatrix">Current Adjacency Matrix:</label>-->
+      <!--                <br>-->
+      <!--                <input style="height:25vh", width="40vh", type="text" id="adjMatrix" name="adjMatrix">-->
+      <!--                <br>-->
+      <!--            </p>-->
 
-        <br>
+      <br>
     </div>
 
     <!--        Edge stuff - 3rd column-->
     <div class="col-sm-2" id="edgeDiv">
 
-        <p>
-        <h3>Add edge:</h3>
+      <p>
+      <h3>Add edge:</h3>
 
-        <input type="checkbox" id="weightedCB" name="weighted" value="weighted" onchange="doWeighted()">
-        <label id="weightedCBLabel">Weighted</label>
-        <br>
+      <input type="checkbox" id="weightedCB" name="weighted" value="weighted" onchange="doWeighted()">
+      <label id="weightedCBLabel">Weighted</label>
+      <br>
 
-        <input type="checkbox" id="directedCB" name="directed" value="directed" onchange="doDirected()">
-        <label id="directedCBLabel">Directed</label>
-        <br>
+      <input type="checkbox" id="directedCB" name="directed" value="directed" onchange="doDirected()">
+      <label id="directedCBLabel">Directed</label>
+      <br>
 
-        <label id="vertex1DDLabel">Vertex 1:</label>
-        <select id="vertex1DD">
-            <option>Choose first vertex</option>
-        </select>
-        <br>
+      <label id="vertex1DDLabel">Vertex 1:</label>
+      <select id="vertex1DD">
+        <option>Choose first vertex</option>
+      </select>
+      <br>
 
-        <label id="vertex2DDLabel">Vertex 2:</label>
-        <select id="vertex2DD">
-            <option>Choose second vertex</option>
-        </select>
-        <br>
+      <label id="vertex2DDLabel">Vertex 2:</label>
+      <select id="vertex2DD">
+        <option>Choose second vertex</option>
+      </select>
+      <br>
 
-        <label id="edgeWeightLabel">Edge weight:</label>
-        <input type="text" id="edgeWeight" name="edgeWeight" disabled>
-        <br>
+      <label id="edgeWeightLabel">Edge weight:</label>
+      <input type="text" id="edgeWeight" name="edgeWeight" disabled>
+      <br>
 
-        <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
-        </p>
+      <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
+      </p>
 
-        <br>
+      <br>
 
-        <p>
-        <h3>Delete edge:</h3>
+      <p>
+      <h3>Delete edge:</h3>
 
-        <label id="deleteEdgeDDLabel">Edge:</label>
-        <select id="deleteEdgeDD">
-            <option>Choose edge</option>
-        </select>
-        <br>
+      <label id="deleteEdgeDDLabel">Edge:</label>
+      <select id="deleteEdgeDD">
+        <option>Choose edge</option>
+      </select>
+      <br>
 
-        <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
+      <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
 
 
-        </p>
+      </p>
 
-        <p style="margin-right: 15vw">
-            <!--            Clear Button-->
-            <br><br>
-            <button style="height:5vh" , id="clearButton" onclick="doClear()">Clear</button>
+      <p style="margin-right: 15vw">
+        <!--            Clear Button-->
+        <br><br>
+        <button style="height:5vh" , id="clearButton" onclick="doClear()">Clear</button>
 
-            <!--            Submit Button-->
-            <br><br>
-            <button style="height:5vh", id="submitButton", onclick="doSubmit()">Submit</button>
-        </p>
+        <!--            Submit Button-->
+        <br><br>
+        <button style="height:5vh" , id="submitButton" , onclick="doSubmit()">Submit</button>
+      </p>
 
     </div>
-</div>
+  </div>
 
 
-    <noscript>
-        <!-- This message will be shown in the page if JavaScript is not available. -->
-        <p>JavaScript is required to use this page.</p>
-    </noscript>
+  <noscript>
+    <!-- This message will be shown in the page if JavaScript is not available. -->
+    <p>JavaScript is required to use this page.</p>
+  </noscript>
 
 </body>
+
 </html>
