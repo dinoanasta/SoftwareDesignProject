@@ -1,6 +1,5 @@
 //When student submits graph
 function doSubmit(){
-    alert("Student answer submitted");
     if(questionLoaded){
     	//Initiliaze marker
       	let m = new Marker();
@@ -23,7 +22,11 @@ function doSubmit(){
                 isCorrect = m.markShortestPath(questionGraph,graph,true);
         		break;
     	}
-    	console.log("Graph Correct?",isCorrect);
+    	if (isCorrect){
+        alert("Your answer is correct");
+      }else{
+        alert("Your answer is incorrect");  
+      }
     }else{
       alert("Question graph has not been loaded.");
     }
