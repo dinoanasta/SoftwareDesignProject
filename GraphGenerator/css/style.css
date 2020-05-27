@@ -3,6 +3,7 @@ body{
     margin-top: 2vmin;
     background-color: #c71010;
     user-select: none;
+    font-family: "Corbel";
 }
 
 #lecturerDiv{
@@ -13,6 +14,10 @@ body{
 canvas {
     background-color: white;
     display: inline-block;
+}
+
+h1{
+    font-size: 6vmin;
 }
 
 h3{
@@ -29,8 +34,8 @@ input[type=text]{
 
 
 button{
-    width: 17vmin;
-    height: 5vmin;
+    min-width: 17vmin;
+    min-height: 5vmin;
     border-radius: 2vmin;
 
     transition-duration: 0.1s;

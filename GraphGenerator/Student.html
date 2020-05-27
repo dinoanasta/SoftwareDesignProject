@@ -6,7 +6,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
-    <title>Graph Generator - Lecturer Interface</title>
+    <title>Graph Generator - Student</title>
 
     <link href="css/style.css" rel = "stylesheet">
 
@@ -15,6 +15,7 @@
     <script src="js/Vertex.js"> </script>
     <script src="js/Edge.js"> </script>
     <script src="js/Graph.js"> </script>
+    <script src="js/student.js"> </script>
     <script src="js/main.js"> </script>
     <script src="js/handlers.js"></script>
 
@@ -48,7 +49,7 @@
                 document.getElementById("weightedCB").onchange = doWeighted;
                 document.getElementById("coloredCB").onchange = doColored;
                 document.getElementById("directedCB").onchange = doDirected;
-                document.getElementById("setQuestionButton").onclick = doSetQuestion;
+                document.getElementById("loadGraphButton").onclick = doLoadGraph;
                 window.addEventListener('keydown', handleKeyDown, false);
 
                 // setUserType("lecturer");
@@ -69,7 +70,7 @@
 
     <!--        Canvas - 1st column-->
     <div class="col-sm-6" id="canvasDiv">
-        <h1>Graph Generator - Lecturer Interface</h1>
+        <h1>Graph Generator - Student Interface</h1>
 
         <canvas id="canvas" width="800" height="600">
             <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
@@ -82,20 +83,11 @@
 
         <p>
         <h3>Question setup:</h3>
-        <label id="questionTypeDDLabel">Question type:</label>
-        <select id="questionTypeDD">
-            <option>Select type</option>
-            <option>BFS</option>
-            <option>DFS</option>
-            <option>MWST</option>
-            <option>Graph Colouring</option>
-            <option>Shortest Path</option>
-        </select>
 
         <label id="questionCodeLabel">Question Code:</label>
-        <input type="text" id="questionCode" name="vertexValue">
+        <input type="text" id="questionCodeStudent" name="vertexValue">
 
-        <button id="setQuestionButton" onclick="doSetQuestion()">Confirm</button>
+        <button id="loadGraphButton" onclick="doLoadGraph()">Load graph</button>
 
         </p>
 
