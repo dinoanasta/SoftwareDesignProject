@@ -11,9 +11,26 @@ body{
     background-color: rgba(255, 0, 0, 0.5);
 }
 
+#studentDiv{
+    position: fixed;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
 canvas {
     background-color: white;
     display: inline-block;
+}
+
+input{
+    font-size: 2vmin;
+}
+
+select{
+    font-size: 2vmin;
+}
+
+button{
+    font-size: 2vmin;
 }
 
 h1{
@@ -29,9 +46,8 @@ label{
 }
 
 input[type=text]{
-    width: 5vw
+    width: 7vw
 }
-
 
 button{
     min-width: 17vmin;

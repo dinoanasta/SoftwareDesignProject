@@ -34,7 +34,7 @@ class Edge{
         graphics.font = "20px Comic Sans MS bold";
         graphics.textAlign = "center";
 
-        graphics.strokeStyle = "black";
+        graphics.strokeStyle = "lightgrey";
         graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
 
         if(weighted){

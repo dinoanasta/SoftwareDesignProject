@@ -70,6 +70,11 @@ function doLoadGraph(){
     if(qCode.value.length != 0){
         questionCode = qCode.value;
         fetchQuestionGraph();
+        console.log(questionGraph);
+        graph = questionGraph;
+        console.log(graph);
+        populateDropDowns();
+        redraw();
     }else{
         alert("Please enter the question code");
     }

@@ -86,18 +86,27 @@ class Vertex{
         graphics.fillStyle = "white";
         graphics.fillCircle(this.getXVal(), this.getYVal(), vertexRadius);
 
+        // graphics.fillStyle = "white";
+        // graphics.fillPoly(this.getXVal() + 22.5,this.getYVal() - 25,
+        //             this.getXVal() + 85,this.getYVal() - 25,
+        //             this.getXVal() + 85,this.getYVal() + 25,
+        //             this.getXVal() + 22.5,this.getYVal() + 25);
+
+        //Draw vertex with value in center
+        graphics.textAlign = "center";
         graphics.fillStyle = "red";
         graphics.fillText(this.getVertexVal(), this.getXVal(), this.getYVal()+5, 20 );
 
+        //Draw properties: ID, color, distance from root
+        graphics.textAlign = "left";
+        graphics.textBaseline = "top";
         graphics.fillStyle = "black";
-        graphics.fillText("ID: " + this.getVertexID().toString(), this.getXVal() -35, this.getYVal() - 15, 30 );
+        graphics.fillText("ID: " + this.getVertexID().toString(), this.getXVal() + 25 , this.getYVal() - 25);
 
         if(colored){
-            graphics.fillStyle = "black";
-            graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 15, 40 );
+            graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 25, this.getYVal());
         }
         // if(questionType == "mwst"){
-        //     graphics.fillStyle = "black";
         //     graphics.fillText("Dist: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 30, 40 );
         //}
     }
