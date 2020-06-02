@@ -88,9 +88,11 @@ function doUpdateVertex(){
     if(dropDown.selectedIndex != 0){
         let vertexID = dropDown.options[dropDown.selectedIndex].value;
 
-        graph.getVertex(vertexID).setVertexVal(newValue);
+        graph.updateVertexVal(vertexID, newValue);
+
         if(colored){
-            graph.getVertex(vertexID).setColor(newColor);
+            graph.updateVertexColor(vertexID, newColor);
+
         }
         // graph.getVertex(vertexID).setDistance(newDist);
 
@@ -173,20 +175,26 @@ function doAddEdge() {
         if(firstDropDown.selectedIndex != secondDropDown.selectedIndex ){
             if(firstDropDown.selectedIndex !=0 ){
                 if(secondDropDown.selectedIndex != 0){
-
                     weight = 1;
                     if(weighted){
                         if(edgeWeight.value.length !=0){
                             weight = parseInt(edgeWeight.value);
-                            graph.addEdge(firstID, secondID, weight);
+                            if(directed){
+                                graph.addDirectedEdge(firstID, secondID, weight);
+                            }else{
+                                graph.addEdge(firstID, secondID, weight);
+                            }
                             populateDropDowns();
                             redraw();
                         }else{
                             alert("Please enter a weight for the edge")
                         }
                     }else{
-                        weight = parseInt(edgeWeight.value);
-                        graph.addEdge(firstID, secondID, weight);
+                        if(directed){
+                            graph.addDirectedEdge(firstID, secondID, weight);
+                        }else{
+                            graph.addEdge(firstID, secondID, weight);
+                        }
                         populateDropDowns();
                         redraw();
                     }
@@ -276,9 +284,20 @@ function populateDropDowns(){
     //Add edges to delete edge drop downs
     function addEdgeOption(DDB, v1, v2, weight) {
         let opt = document.createElement("option");
-        opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " <-------> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
         if(weighted){
             opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " <---" + weight + "---> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
+        }else{
+            opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " <-------> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
+        }
+        DDB.options.add(opt);
+    }
+
+    function addDirectedEdgeOption(DDB, v1, v2, weight) {
+        let opt = document.createElement("option");
+        if(weighted){
+                opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " ||---" + weight + "---> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
+        }else{
+                opt.textContent = "Vertex " + v1.getVertexID() + " : " + v1.getVertexVal() + " ||-------> " + "Vertex " + v2.getVertexID() + " : " + v2.getVertexVal();
         }
         DDB.options.add(opt);
     }
@@ -286,23 +305,20 @@ function populateDropDowns(){
     for(let i  = 0; i< graph.edges.length; ++i){
         addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
     }
+
+    for(let i  = 0; i< graph.directedEdges.length; ++i){
+        addDirectedEdgeOption(deleteEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
+    }
+
+
 }
 
 function doClear() {
     graphics.fillStyle = "white";
     graphics.fillRect(0, 0, canvas.width, canvas.height);
-    graph.vertices = [];
-    graph.edges = [];
 
-    const deleteVertexDD = document.getElementById("deleteVertexDD");
-    const deleteEdgeDD = document.getElementById("deleteEdgeDD");
-    const vertex1DD = document.getElementById("vertex1DD");
-    const vertex2DD = document.getElementById("vertex2DD");
-
-    clearDropDown(vertex1DD);
-    clearDropDown(vertex2DD);
-    clearDropDown(deleteVertexDD);
-    clearDropDown(deleteEdgeDD);
+    graph = new Graph();
+    populateDropDowns();
 }
 
 
@@ -318,6 +334,13 @@ function drawEdges(){
     for(let i  = 0; i< graph.edges.length; ++i){
         graphics.save();
         graph.edges[i].drawEdge();
+        graphics.restore();
+    }
+
+
+    for(let i  = 0; i< graph.directedEdges.length; ++i){
+        graphics.save();
+        graph.directedEdges[i].drawEdge();
         graphics.restore();
     }
 }
@@ -355,20 +378,4 @@ function setupInterface(){
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
             break;
     }
-
-
 }
-//
-// function setUserType(userType){
-//     switch (userType) {
-//         //If user is a lecturer
-//         case "lecturer":
-//             document.getElementById("lecturerDiv").style.visibility = "visible";
-//             document.getElementById("studentDiv").style.visibility = "hidden";
-//
-//         //If user is a student
-//         case "student":
-//             document.getElementById("lecturerDiv").style.visibility = "hidden";
-//             document.getElementById("studentDiv").style.visibility = "visible";
-//     }
-// }

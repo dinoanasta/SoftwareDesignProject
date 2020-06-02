@@ -41,14 +41,11 @@ class Edge{
             graphics.fillStyle = "red";
             graphics.fillText(this.getWeightEdge(), Math.abs(this.getVertexOne().getXVal() + this.getVertexTwo().getXVal())/2 +20, Math.abs(this.getVertexOne().getYVal() + this.getVertexTwo().getYVal())/2 +20, 20 );
         }
+
+        if(directed){
+
+        }
+
+
     }
-
-    updateCoOrds (v1newX, v1newY, v2newX, v2newY){
-        this.getVertexOne().setXVal(v1newX);
-        this.getVertexOne().setYVal(v1newY);
-
-        this.getVertexTwo().setXVal(v2newX);
-        this.getVertexTwo().setYVal(v2newY);
-    }
-
 }

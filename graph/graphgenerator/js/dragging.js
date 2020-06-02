@@ -68,13 +68,14 @@ function installMouseHandler() {
         var x = Math.round(evt.clientX - r.left);
         var y = Math.round(evt.clientY - r.top);
 
-        selectedVertex.updateCoOrds(x,y);
-
-        for(let i=0; i<selectedVertex.getAdjacenyList.size; i++){
-            let adjacent = selectedVertex.getAdjacenyList(i);
-            let edge = graph.getEdge(selectedVertex.getVertexID(), adjacent.getVertexID());
-            edge.updateCoOrds(selectedVertex.getXVal(), selectedVertex.getYVal(), adjacent.getXVal(), adjacent.getYVal());
-        }
+        // selectedVertex.updateCoOrds(x,y);
+        graph.updateXandYVal(selectedVertex.vertexID, x, y);
+        //
+        // for(let i=0; i<selectedVertex.getAdjacenyList.size; i++){
+        //     let adjacent = selectedVertex.getAdjacenyList(i);
+        //     // let edge = graph.getEdge(selectedVertex.getVertexID(), adjacent.getVertexID());
+        //     // edge.updateCoOrds(selectedVertex.getXVal(), selectedVertex.getYVal(), adjacent.getXVal(), adjacent.getYVal());
+        // }
         redraw();
     }
 

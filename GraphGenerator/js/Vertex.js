@@ -70,11 +70,6 @@ class Vertex{
       return this.AdjacencyList;
     }
 
-    updateCoOrds (newX, newY){
-        this.xVal = newX;
-        this.yVal = newY;
-    }
-
     drawVertex (){
         graphics.font = "20px Comic Sans MS bold";
         graphics.textAlign = "center";
