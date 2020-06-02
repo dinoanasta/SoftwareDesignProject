@@ -77,6 +77,8 @@
                 document.getElementById("coloredCB").onchange = doColored;
                 document.getElementById("directedCB").onchange = doDirected;
                 document.getElementById("setQuestionButton").onclick = doSetQuestion;
+                document.getElementById("updateVertexButton").onclick = doUpdateVertex;
+                document.getElementById("editVertexDD").onchange = editVertexSelected;
                 window.addEventListener('keydown', handleKeyDown, false);
 
                 // setUserType("lecturer");
@@ -142,12 +144,40 @@
 
         <label id="vertexColorLabel">Vertex Color:</label>
         <input type="text" id="vertexColor" disabled>
+        <br>
 
         <label id="distFromRootLabel">Distance from root:</label>
         <input type="text" id="distFromRoot">
         <br>
 
         <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
+        </p>
+
+        <br>
+
+
+        <p>
+        <h3>Edit vertex:</h3>
+
+        <label id="editVertexDDLabel">Vertex:</label>
+        <select id="editVertexDD" onchange="editVertexSelected">
+            <option>Choose vertex</option>
+        </select>
+        <br>
+
+        <label id="editvertexValueLabel">Value:</label>
+        <input type="text" id="editvertexValue">
+        <br>
+
+        <label id="editvertexColorLabel">Color:</label>
+        <input type="text" id="editvertexColor">
+        <br>
+
+        <label id="editdistFromRootLabel">Distance:</label>
+        <input type="text" id="editdistFromRoot">
+        <br>
+
+        <button id="updateVertexButton" onclick="doUpdateVertex()">Update vertex</button>
         </p>
 
         <br>

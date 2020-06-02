@@ -9,7 +9,6 @@
 function installMouseHandler() {
 
     var dragging = false;  // set to true when a drag action is in progress.
-    let index = null;
 
     function doMouseDown(evt) {
         // This function is called when the user presses a button on the mouse.
@@ -43,35 +42,40 @@ function installMouseHandler() {
 
         function getVertexIndex() {
             for (let i = 0; i < graph.getNumberVertices(); ++i) {
-                let vertex = graph.getVertex(i);
-
-                let dist = euclideanDistance([x, y], [vertex.getXVal(), vertex.getYVal()]);
-                console.log(dist);
-                if (dist < vertexRadius) {
-                    console.log(i);
+                let dist = euclideanDistance([x, y], [graph.getVertex(i).getXVal(), graph.getVertex(i).getYVal()]);
+                if (dist <= vertexRadius) {
                     return i;
                 }
             }
+            return -1;
         }
 
-        index = getVertexIndex();
-        selectedVertex = graph.getVertex(index);
-        console.log(selectedVertex);
+        clickedVertexIndex = getVertexIndex();
+        selectedVertex = graph.getVertex(clickedVertexIndex);
 
         graphics.strokeStyle = "red";
         graphics.lineWidth = 2;
 
-        if(index != null){
+        redraw();
+
+        if(clickedVertexIndex != -1){
             graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
                 selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
                 selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
                 selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
             );
+
+            // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
+
+            document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
+            document.getElementById("editvertexColor").value = selectedVertex.getColor();
+
         }else{
+            document.getElementById("editvertexValue").value = null;
+            document.getElementById("editvertexColor").value = null;
+
             redraw();
         }
-
-        index = null;
     }
 
     function doMouseMove(evt) {
@@ -84,13 +88,15 @@ function installMouseHandler() {
         var x = Math.round(evt.clientX - r.left);
         var y = Math.round(evt.clientY - r.top);
 
-        graph.updateXandYVal(selectedVertex, x, y);
-        redraw();
-        graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
-            selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
-            selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-            selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
-        );
+        if(clickedVertexIndex != -1){
+            graph.updateXandYVal(selectedVertex, x, y);
+            redraw();
+            graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+                selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
+                selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
+                selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
+            );
+        }
     }
 
     function doMouseUp(evt) {

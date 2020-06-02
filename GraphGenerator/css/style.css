@@ -3,17 +3,20 @@ body{
     margin-top: 2vmin;
     background-color: #c71010;
     user-select: none;
-    font-family: "Corbel";
+    font-family: "Eras Bold ITC";
+    overflow: scroll;
 }
 
 #lecturerDiv{
     position: fixed;
     background-color: rgba(255, 0, 0, 0.5);
+    overflow: scroll;
 }
 
 #studentDiv{
     position: fixed;
     background-color: rgba(255, 0, 0, 0.5);
+    overflow: scroll;
 }
 
 canvas {
