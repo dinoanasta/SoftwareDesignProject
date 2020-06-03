@@ -2,7 +2,7 @@
 var selectedVertex = null;
 let space = 4;
 
-const vertexRadius = 20;
+const vertexRadius = 15;
 
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 let questionGraph = new Graph();
@@ -212,6 +212,27 @@ function doAddEdge() {
     }
 }
 
+function editEdgeSelected(){
+    let dropDown = document.getElementById("updateEdgeDD");
+    let weight = graph.edges[dropDown.selectedIndex -1].getWeightEdge();
+
+    document.getElementById("editWeight").value = weight;
+}
+
+function doUpdateEdge(){
+    let dropDown = document.getElementById("updateEdgeDD");
+
+    let newWeight = document.getElementById("editWeight").value;
+
+    if(dropDown.selectedIndex != 0){
+        graph.edges[dropDown.selectedIndex - 1 ].setWeightEdge(newWeight);
+        populateDropDowns();
+        redraw();
+    }else{
+            alert("Please select an edge to edit");
+    }
+}
+
 function doDeleteEdge() {
     let dropDown = document.getElementById("deleteEdgeDD");
 
@@ -256,12 +277,15 @@ function populateDropDowns(){
     const vertex1DD = document.getElementById("vertex1DD");
     const vertex2DD = document.getElementById("vertex2DD");
     const updateVertexDD = document.getElementById("editVertexDD");
+    const editEdgeDD = document.getElementById("updateEdgeDD");
+
 
     clearDropDown(vertex1DD);
     clearDropDown(vertex2DD);
     clearDropDown(deleteVertexDD);
     clearDropDown(deleteEdgeDD);
     clearDropDown(updateVertexDD);
+    clearDropDown(editEdgeDD);
 
     //Add vertices to delete vertex and add edge drop downs
     function addVertexOption(DDB, value, ID, color) {
@@ -304,6 +328,7 @@ function populateDropDowns(){
 
     for(let i  = 0; i< graph.edges.length; ++i){
         addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
+        addEdgeOption(editEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
     }
 
     for(let i  = 0; i< graph.directedEdges.length; ++i){
@@ -320,7 +345,6 @@ function doClear() {
     graph = new Graph();
     populateDropDowns();
 }
-
 
 function drawVertices(){
     for(let i  = 0; i< graph.vertices.length; ++i){

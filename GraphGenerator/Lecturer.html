@@ -33,8 +33,8 @@
         let ref;
 
         const X_LEFT = 0;    // The xy limits for the coordinate system.
-        const X_RIGHT = 800;
-        const Y_BOTTOM = 600;
+        const X_RIGHT = 550;
+        const Y_BOTTOM = 450;
         const Y_TOP = 0;
 
         let pixelSize;  // The size of one pixel, in the transformed coordinates.
@@ -64,6 +64,9 @@
 
                 applyLimits(graphics, X_LEFT, X_RIGHT, Y_TOP, Y_BOTTOM, false);
                 graphics.lineWidth = pixelSize;  // Use 1 pixel as the default line width
+                graphics.font = "15px Comic Sans MS bold";
+                graphics.textAlign = "center";
+
                 addGraphicsContextExtras(graphics);
                 initialiseDB();
                 installMouseHandler();
@@ -79,6 +82,9 @@
                 document.getElementById("setQuestionButton").onclick = doSetQuestion;
                 document.getElementById("updateVertexButton").onclick = doUpdateVertex;
                 document.getElementById("editVertexDD").onchange = editVertexSelected;
+                document.getElementById("updateEdgeButton").onclick = doUpdateEdge;
+                document.getElementById("updateEdgeDD").onchange = editEdgeSelected;
+
                 window.addEventListener('keydown', handleKeyDown, false);
 
                 // setUserType("lecturer");
@@ -98,17 +104,17 @@
 <div id="lecturerDiv" class="row">
 
     <!--        Canvas - 1st column-->
-    <div class="col-sm-6" id="canvasDiv">
+    <div id="canvasDiv">
         <h1>Graph Generator - Lecturer Interface</h1>
 
-        <canvas id="canvas" width="800" height="600">
+        <canvas id="canvas" width="550" height="450">
             <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
             Canvas not supported.
         </canvas>
     </div>
 
     <!--        Vertex stuff - 2nd column-->
-    <div class="col-sm-2" id="vertexDiv">
+    <div id="vertexDiv">
 
         <p>
         <h3>Question setup:</h3>
@@ -122,14 +128,16 @@
             <option>Shortest Path</option>
         </select>
 
+        <br>
+
         <label id="questionCodeLabel">Question Code:</label>
         <input type="text" id="questionCodeLecturer" name="vertexValue">
+
+        <br>
 
         <button id="setQuestionButton" onclick="doSetQuestion()">Confirm</button>
 
         </p>
-
-        <br>
 
         <p>
         <h3>Add vertex:</h3>
@@ -146,15 +154,12 @@
         <input type="text" id="vertexColor" disabled>
         <br>
 
-        <label id="distFromRootLabel">Distance from root:</label>
+        <label id="distFromRootLabel">Distance:</label>
         <input type="text" id="distFromRoot">
         <br>
 
         <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
         </p>
-
-        <br>
-
 
         <p>
         <h3>Edit vertex:</h3>
@@ -179,8 +184,6 @@
 
         <button id="updateVertexButton" onclick="doUpdateVertex()">Update vertex</button>
         </p>
-
-        <br>
 
         <p>
         <h3>Delete vertex:</h3>
@@ -209,7 +212,7 @@
     </div>
 
     <!--        Edge stuff - 3rd column-->
-    <div class="col-sm-2" id="edgeDiv">
+    <div id="edgeDiv">
 
         <p>
         <h3>Add edge:</h3>
@@ -241,7 +244,24 @@
         <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
         </p>
 
+        <p>
+        <h3>Update edge:</h3>
+
+        <label id="updateEdgeDDLabel">Edge:</label>
+        <select id="updateEdgeDD" onchange="editEdgeSelected">
+            <option>Choose edge</option>
+        </select>
         <br>
+
+        <label id="editWeightLabel">Weight:</label>
+        <input type="text" id="editWeight">
+        <br>
+
+
+        <button id="updateEdgeButton" onclick="doUpdateEdge()">Update edge</button>
+
+
+        </p>
 
         <p>
         <h3>Delete edge:</h3>
@@ -257,15 +277,13 @@
 
         </p>
 
-        <p style="margin-right: 15vw">
-            <!--            Clear Button-->
-            <br><br>
-            <button style="height:5vh" , id="clearButton" onclick="doClear()">Clear</button>
+        <!--            Clear Button-->
+        <br><br>
+        <button id="clearButton" onclick="doClear()">Clear</button>
 
-            <!--            Submit Button-->
-            <br><br>
-            <button style="height:5vh", id="createButton", onclick="doCreate()">Create Question</button>
-        </p>
+        <!--            Submit Button-->
+        <br><br>
+        <button id="createButton" onclick="doCreate()">Create Question</button>
 
     </div>
 </div>

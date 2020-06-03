@@ -69,6 +69,8 @@ function installMouseHandler() {
 
             document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
             document.getElementById("editvertexColor").value = selectedVertex.getColor();
+            
+            document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex+1;
 
         }else{
             document.getElementById("editvertexValue").value = null;
@@ -88,15 +90,19 @@ function installMouseHandler() {
         var x = Math.round(evt.clientX - r.left);
         var y = Math.round(evt.clientY - r.top);
 
-        if(clickedVertexIndex != -1){
-            graph.updateXandYVal(selectedVertex, x, y);
-            redraw();
-            graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
-                selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
-                selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-                selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
-            );
+        if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
+            if(clickedVertexIndex != -1){
+                graph.updateXandYVal(selectedVertex, x, y);
+                redraw();
+                graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
+                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
+                    selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
+                );
+            }
         }
+
+
     }
 
     function doMouseUp(evt) {

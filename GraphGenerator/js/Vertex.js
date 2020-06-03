@@ -71,9 +71,6 @@ class Vertex{
     }
 
     drawVertex (){
-        graphics.font = "20px Comic Sans MS bold";
-        graphics.textAlign = "center";
-
         graphics.strokeStyle = "black";
         graphics.lineWidth = 5;
         graphics.strokeCircle(this.getXVal(), this.getYVal(), vertexRadius);
@@ -96,10 +93,10 @@ class Vertex{
         graphics.textAlign = "left";
         graphics.textBaseline = "top";
         graphics.fillStyle = "black";
-        graphics.fillText("ID: " + this.getVertexID().toString(), this.getXVal() + 25 , this.getYVal() - 25);
+        graphics.fillText("ID: " + this.getVertexID().toString(), this.getXVal() + 20 , this.getYVal() - 20);
 
         if(colored){
-            graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 25, this.getYVal());
+            graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 20, this.getYVal());
         }
         // if(questionType == "mwst"){
         //     graphics.fillText("Dist: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 30, 40 );

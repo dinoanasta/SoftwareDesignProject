@@ -4,24 +4,28 @@ body{
     background-color: #c71010;
     user-select: none;
     font-family: "Eras Bold ITC";
-    overflow: scroll;
+
 }
 
 #lecturerDiv{
     position: fixed;
     background-color: rgba(255, 0, 0, 0.5);
+    height: 100vh;
+    width: 100vw;
     overflow: scroll;
 }
 
 #studentDiv{
     position: fixed;
     background-color: rgba(255, 0, 0, 0.5);
+    height: 100vh;
+    width: 100vw;
     overflow: scroll;
 }
 
 canvas {
     background-color: white;
-    display: inline-block;
+    display: block;
 }
 
 input{
@@ -42,14 +46,11 @@ h1{
 
 h3{
     font-size: 4vmin;
+    font-weight: bold;
 }
 
 label{
     font-size: 2vmin;
-}
-
-input[type=text]{
-    width: 7vw
 }
 
 button{
@@ -76,17 +77,42 @@ button:hover{
 }
 
 #canvasDiv{
-    margin-left:2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+
     background-color: rgba(0,0,0,0.2);
 
+    width: available;
+
+    height: 100vh;
+    overflow: scroll;
 }
 
 #vertexDiv{
-    margin-left:2vw;
+
+    margin-left: 2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+
     background-color: rgba(0, 0, 0, 0.2);
+
+    width: fit-content;
+
+    height: 100vh;
+    overflow: scroll;
 }
 
 #edgeDiv{
+    float: right;
+
     margin-left: 2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+
     background-color: rgba(0,0,0,0.2);
+
+    width: fit-content;
+
+    height: 100vh;
+    overflow: scroll;
 }

@@ -31,9 +31,7 @@ class Edge{
     }
 
     drawEdge(){
-        graphics.font = "20px Comic Sans MS bold";
-        graphics.textAlign = "center";
-
+        graphics.lineWidth = 3;  // Use 1 pixel as the default line width
         graphics.strokeStyle = "lightgrey";
         graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
 
@@ -45,7 +43,5 @@ class Edge{
         if(directed){
 
         }
-
-
     }
 }
