@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
@@ -11,15 +14,15 @@
     <meta charset="UTF-8">
     <title>Graph Generator - Lecturer</title>
 
-    <link href="css/style.css" rel = "stylesheet" type="text/css" media="screen">
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
     <!--    Main script-->
 
-    <script src="js/Vertex.js"> </script>
-    <script src="js/Edge.js"> </script>
-    <script src="js/Graph.js"> </script>
-    <script src="js/lecturer.js"> </script>
-    <script src="js/main.js"> </script>
+    <script src="js/Vertex.js"></script>
+    <script src="js/Edge.js"></script>
+    <script src="js/Graph.js"></script>
+    <script src="js/lecturer.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/handlers.js"></script>
 
     <script>
@@ -41,20 +44,20 @@
 
         //Initialize database
         function initialiseDB() {
-          firebaseConfig = {
-            apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
-            authDomain: "graphmarker.firebaseapp.com",
-            databaseURL: "https://graphmarker.firebaseio.com",
-            projectId: "graphmarker",
-            storageBucket: "graphmarker.appspot.com",
-            messagingSenderId: "980362787898",
-            appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
-          };
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig);
+            firebaseConfig = {
+                apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
+                authDomain: "graphmarker.firebaseapp.com",
+                databaseURL: "https://graphmarker.firebaseio.com",
+                projectId: "graphmarker",
+                storageBucket: "graphmarker.appspot.com",
+                messagingSenderId: "980362787898",
+                appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
 
-          database = firebase.database();
-          ref = database.ref("scores");
+            database = firebase.database();
+            ref = database.ref("scores");
         }
 
         function init() {
@@ -72,7 +75,16 @@
                 installMouseHandler();
                 addBindings();
                 // setUserType("lecturer");
+
+                //Only show question setup stuff
+                // document.getElementById("questionSetupDiv").style.display = "initial";
+                // document.getElementById("edgeDiv").style.display = "none";
+                // document.getElementById("addVertexDiv").style.display = "none";
+                // document.getElementById("editVertexDiv").style.display = "none";
+                // document.getElementById("deleteVertexDiv").style.display = "none";
+
                 setupInterface(questionType);
+
 
             } catch (e) {
                 document.getElementById("canvas").innerHTML =
@@ -100,179 +112,190 @@
     <!--        Vertex stuff - 2nd column-->
     <div id="vertexDiv">
 
-        <p>
-        <h3>Question setup:</h3>
-        <label id="questionTypeDDLabel">Question type:</label>
-        <select id="questionTypeDD" onchange="setQuestionType()">
-            <option>Select type</option>
-            <option>BFS</option>
-            <option>DFS</option>
-            <option>MWST</option>
-            <option>Graph Colouring</option>
-            <option>Shortest Path</option>
-        </select>
+        <!--        Question setup-->
+        <div id="questionSetupDiv">
+            <h3>Question setup:</h3>
+            <label id="questionTypeDDLabel">Question type:</label>
+            <select id="questionTypeDD">
+                <option>Select type</option>
+                <option>BFS</option>
+                <option>DFS</option>
+                <option>MWST</option>
+                <option>Graph Colouring</option>
+                <option>Shortest Path</option>
+            </select>
+
+            <br>
+
+            <label id="questionCodeLabel">Question Code:</label>
+            <input type="text" id="questionCodeLecturer">
+
+            <br>
+
+            <input type="checkbox" id="directedCB">
+            <label id="directedCBLabel">Directed</label>
+            <br>
+
+            <input type="checkbox" id="weightedCB">
+            <label id="weightedCBLabel">Weighted</label>
+            <br>
+
+            <button id="setQuestionButton">Confirm</button>
+
+        </div>
 
         <br>
 
-        <label id="questionCodeLabel">Question Code:</label>
-        <input type="text" id="questionCodeLecturer" >
+        <!--        Adding vertices-->
+        <div id="addVertexDiv">
+            <h3>Add vertex:</h3>
 
+            <label id="vertexValueLabel">Value:</label>
+            <input type="text" id="vertexValue">
+            <br>
+
+            <label id="vertexColorLabel">Color:</label>
+            <input type="text" id="vertexColor">
+            <br>
+
+            <label id="distFromRootLabel">Distance:</label>
+            <input type="text" id="distFromRoot">
+            <br>
+
+            <button id="addVertexButton">Add vertex</button>
+        </div>
+
+<!--        Set root vertex-->
         <br>
-
-        <button id="setQuestionButton" onclick="doSetQuestion()">Confirm</button>
-
-        </p>
-
-        <p>
-        <h3>Add vertex:</h3>
-
-        <label id="vertexValueLabel">Value:</label>
-        <input type="text" id="vertexValue">
-        <br>
-
-        <label id="vertexColorLabel">Color:</label>
-        <input type="text" id="vertexColor">
-        <br>
-
-        <label id="distFromRootLabel">Distance:</label>
-        <input type="text" id="distFromRoot">
-        <br>
-
-        <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
-        </p>
-
-        <p>
-        <h3>Edit vertex:</h3>
-
-        <label id="editVertexDDLabel">Vertex:</label>
-        <select id="editVertexDD" onchange="editVertexSelected">
-            <option>Choose vertex</option>
-        </select>
-        <br>
-
-        <label id="editvertexValueLabel">Value:</label>
-        <input type="text" id="editvertexValue">
-        <br>
-
-        <label id="editvertexColorLabel">Color:</label>
-        <input type="text" id="editvertexColor">
-        <br>
-
-        <label id="editdistFromRootLabel">Distance:</label>
-        <input type="text" id="editdistFromRoot">
-        <br>
-
-        <button id="updateVertexButton" onclick="doUpdateVertex()">Update vertex</button>
-        </p>
-
-        <p>
-        <h3>Delete vertex:</h3>
-
-        <label id="deleteVertexDDLabel">Vertex:</label>
-        <select id="deleteVertexDD">
-            <option>Choose vertex</option>
+        <label id="setRootDDLabel">Set Root:</label>
+        <select id="setRootDD">
+            <option>Choose root vertex</option>
         </select>
         <br>
 
-        <button id="deleteVertexButton" onclick="doDeleteVertex()">Delete vertex</button>
-        </p>
 
         <br>
-        <br>
+
+        <!--        Editing vertices-->
+        <div id="editVertexDiv">
+            <h3>Edit vertex:</h3>
+
+            <label id="editVertexDDLabel">Vertex:</label>
+            <select id="editVertexDD">
+                <option>Choose vertex</option>
+            </select>
+            <br>
+
+            <label id="editvertexValueLabel">Value:</label>
+            <input type="text" id="editvertexValue">
+            <br>
+
+            <label id="editvertexColorLabel">Color:</label>
+            <input type="text" id="editvertexColor">
+            <br>
+
+            <label id="editdistFromRootLabel">Distance:</label>
+            <input type="text" id="editdistFromRoot">
+            <br>
+
+            <button id="updateVertexButton">Update vertex</button>
+        </div>
+
         <br>
 
-        <!--            <p>-->
-        <!--                <label for="adjMatrix">Current Adjacency Matrix:</label>-->
-        <!--                <br>-->
-        <!--                <input style="height:25vh", width="40vh", type="text" id="adjMatrix" name="adjMatrix">-->
-        <!--                <br>-->
-        <!--            </p>-->
+        <!--        Delete vertex-->
+        <div id="deleteVertexDiv">
+            <h3>Delete vertex:</h3>
 
-        <br>
+            <label id="deleteVertexDDLabel">Vertex:</label>
+            <select id="deleteVertexDD">
+                <option>Choose vertex</option>
+            </select>
+            <br>
+
+            <button id="deleteVertexButton">Delete vertex</button>
+        </div>
     </div>
 
     <!--        Edge stuff - 3rd column-->
     <div id="edgeDiv">
 
-        <p>
-        <h3>Add edge:</h3>
+        <!--     Add edge-->
+        <div id="addEdgeDiv">
+            <h3>Add edge:</h3>
 
-        <input type="checkbox" id="weightedCB" name="weighted" value="weighted" onchange="doWeighted()">
-        <label id="weightedCBLabel">Weighted</label>
+            <input type="checkbox" id="biDirectionalCB">
+            <label id="biDirectionalCBLabel">Bi-directional</label>
+            <br>
+
+            <label id="vertex1DDLabel">Vertex 1:</label>
+            <select id="vertex1DD">
+                <option>Choose first vertex</option>
+            </select>
+            <br>
+
+            <label id="vertex2DDLabel">Vertex 2:</label>
+            <select id="vertex2DD">
+                <option>Choose second vertex</option>
+            </select>
+            <br>
+
+            <label id="edgeWeightLabel">Edge weight:</label>
+            <input type="text" id="edgeWeight">
+            <br>
+
+            <button id="addEdgeButton">Add edge</button>
+        </div>
+
         <br>
 
-        <input type="checkbox" id="biDirectionalCB" onchange="doBiDirectional()">
-        <label id="biDirectionalCBLabel">Bi-directional</label>
+        <!--     Update edge-->
+        <div id="updateEdgeDiv">
+            <h3>Update edge:</h3>
+
+            <label id="updateEdgeDDLabel">Edge:</label>
+            <select id="updateEdgeDD">
+                <option>Choose edge</option>
+            </select>
+            <br>
+
+            <label id="editWeightLabel">Weight:</label>
+            <input type="text" id="editWeight">
+            <br>
+
+            <button id="updateEdgeButton">Update edge</button>
+        </div>
+
         <br>
 
-        <label id="vertex1DDLabel">Vertex 1:</label>
-        <select id="vertex1DD">
-            <option>Choose first vertex</option>
-        </select>
-        <br>
+        <!--    Delete edge-->
+        <div id="deleteEdgeDiv">
+            <h3>Delete edge:</h3>
 
-        <label id="vertex2DDLabel">Vertex 2:</label>
-        <select id="vertex2DD">
-            <option>Choose second vertex</option>
-        </select>
-        <br>
+            <label id="deleteEdgeDDLabel">Edge:</label>
+            <select id="deleteEdgeDD">
+                <option>Choose edge</option>
+            </select>
+            <br>
 
-        <label id="edgeWeightLabel">Edge weight:</label>
-        <input type="text" id="edgeWeight" name="edgeWeight" disabled>
-        <br>
+            <button id="deleteEdgeButton">Delete edge</button>
+        </div>
 
-        <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
-        </p>
-
-        <p>
-        <h3>Update edge:</h3>
-
-        <label id="updateEdgeDDLabel">Edge:</label>
-        <select id="updateEdgeDD" onchange="editEdgeSelected">
-            <option>Choose edge</option>
-        </select>
-        <br>
-
-        <label id="editWeightLabel">Weight:</label>
-        <input type="text" id="editWeight">
-        <br>
-
-
-        <button id="updateEdgeButton" onclick="doUpdateEdge()">Update edge</button>
-
-
-        </p>
-
-        <p>
-        <h3>Delete edge:</h3>
-
-        <label id="deleteEdgeDDLabel">Edge:</label>
-        <select id="deleteEdgeDD">
-            <option>Choose edge</option>
-        </select>
-        <br>
-
-        <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
-
-
-        </p>
-
-        <!--            Clear Button-->
+        <!--    Clear Button-->
         <br><br>
-        <button id="clearButton" onclick="doClear()">Clear</button>
+        <button id="clearButton">Clear</button>
 
-        <!--            Submit Button-->
-        <br><br>
-        <button id="createButton" onclick="doCreate()">Create Question</button>
+        <!--     Submit Button-->
+        <button id="createButton">Create Question</button>
 
     </div>
 </div>
 
 
-    <noscript>
-        <!-- This message will be shown in the page if JavaScript is not available. -->
-        <p>JavaScript is required to use this page.</p>
-    </noscript>
+<noscript>
+    <!-- This message will be shown in the page if JavaScript is not available. -->
+    <p>JavaScript is required to use this page.</p>
+</noscript>
 
 </body>
 </html>

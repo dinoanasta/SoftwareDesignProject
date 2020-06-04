@@ -71,7 +71,12 @@ class Vertex{
     }
 
     drawVertex (){
-        graphics.strokeStyle = "black";
+        if(this == graph.getSourceNode()){
+            graphics.strokeStyle = "green";
+
+        }else{
+            graphics.strokeStyle = "black";
+        }
         graphics.lineWidth = 5;
         graphics.strokeCircle(this.getXVal(), this.getYVal(), vertexRadius);
 

@@ -197,20 +197,27 @@ function addBindings(){
     //Question setup
     document.getElementById("questionTypeDD").onchange = setQuestionType;
     document.getElementById("setQuestionButton").onclick = doSetQuestion;
+    document.getElementById("directedCB").onchange = doDirected;
+    document.getElementById("weightedCB").onchange = doWeighted;
 
+    //Vertices
     document.getElementById("addVertexButton").onclick = doAddVertex;
+    document.getElementById("editVertexDD").onchange = editVertexSelected;
+    document.getElementById("updateVertexButton").onclick = doUpdateVertex;
     document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
+    document.getElementById("setRootDD").onchange = setRoot;
+
+
+    //Edges
     document.getElementById("addEdgeButton").onclick = doAddEdge;
+    document.getElementById("biDirectionalCB").onchange = doBiDirectional;
+    document.getElementById("updateEdgeDD").onchange = editEdgeSelected;
+    document.getElementById("updateEdgeButton").onclick = doUpdateEdge;
     document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
+
+    //Interface
     document.getElementById("clearButton").onclick = doClear;
     document.getElementById("createButton").onclick = doCreate;
-    document.getElementById("weightedCB").onchange = doWeighted;
-    document.getElementById("biDirectionalCB").onchange = doBiDirectional;
-    document.getElementById("updateVertexButton").onclick = doUpdateVertex;
-    document.getElementById("editVertexDD").onchange = editVertexSelected;
-    document.getElementById("updateEdgeButton").onclick = doUpdateEdge;
-    document.getElementById("updateEdgeDD").onchange = editEdgeSelected;
-
     window.addEventListener('keydown', handleKeyDown, false);
 }
 

@@ -41,7 +41,11 @@ class Edge{
         }
 
         if(directed){
-            graphics.strokeCircle(this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal(), vertexRadius+5);
+            let xx = ( (1/3)*this.getVertexOne().getXVal() + (2/3)*this.getVertexTwo().getXVal() );
+            let yy = ( (1/3)*this.getVertexOne().getYVal() + (2/3)*this.getVertexTwo().getYVal() );
+            graphics.fillStyle = "red";
+            graphics.fillCircle(xx, yy, 4);
+            // graphics.strokeCircle(this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal(), vertexRadius+5);
         }
     }
 }

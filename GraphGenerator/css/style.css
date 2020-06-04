@@ -4,7 +4,6 @@ body{
     background-color: #c71010;
     user-select: none;
     font-family: "Eras Bold ITC";
-
 }
 
 #lecturerDiv{
@@ -25,7 +24,6 @@ body{
 
 canvas {
     background-color: white;
-    display: block;
 }
 
 input{
@@ -41,21 +39,28 @@ button{
 }
 
 h1{
-    font-size: 6vmin;
+    font-size: 5vmin;
+    font-weight: bold;
+    text-align: center;
 }
 
 h3{
     font-size: 4vmin;
     font-weight: bold;
+    text-align: center;
+    display: block;
 }
 
 label{
     font-size: 2vmin;
+    display: inline;
 }
 
 button{
-    min-width: 17vmin;
-    min-height: 5vmin;
+    margin-top: 1vh;
+
+    width: 100%;
+    /*min-height: 5vmin;*/
     border-radius: 2vmin;
 
     transition-duration: 0.1s;
@@ -64,6 +69,8 @@ button{
     background-color: transparent;
     color: black;
     border: 0.6vmin solid black;
+
+    display: block;
 }
 
 button:hover{
@@ -72,8 +79,6 @@ button:hover{
 
 #canvas {
     border: 5px solid black;
-    /*width: 700px;*/
-    /*height: 80vh;*/
 }
 
 #canvasDiv{
@@ -89,10 +94,8 @@ button:hover{
 }
 
 #vertexDiv{
-
     margin-left: 2vw;
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding: 1vh 2vw;
 
     background-color: rgba(0, 0, 0, 0.2);
 
@@ -106,8 +109,7 @@ button:hover{
     float: right;
 
     margin-left: 2vw;
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding: 1vh 2vw;
 
     background-color: rgba(0,0,0,0.2);
 

@@ -1,14 +1,12 @@
 //Global variables
 var selectedVertex = null;
-let space = 4;
+const space = 4;
 
 const vertexRadius = 15;
 
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 let questionGraph = new Graph();
 
-let color = "null";
-let colored = false;
 
 let clickedVertexIndex = -1;
 
@@ -17,12 +15,19 @@ let questionType;
 let questionCode;
 let questionLoaded = false;
 
+//Weighted
 let weight = 0;
 let weighted = false;
 
+//Directed
 let directed = false;
 let biDirectional = false;
 
+//Colored
+let color = "0";
+let colored = false;
+
+//Question setup
 function setQuestionType(){
     let dropDown = document.getElementById("questionTypeDD");
     switch (dropDown.selectedIndex) {
@@ -46,6 +51,31 @@ function setQuestionType(){
     setupInterface(questionType);
 }
 
+function doDirected(){
+    let directedCB = document.getElementById('directedCB');
+
+    if (directedCB.checked) {
+        directed = true;
+    } else if (!directedCB.checked) {
+        directed = false;
+    }
+
+    setupInterface(questionType);
+}
+
+function doWeighted(){
+    let weightedCB = document.getElementById('weightedCB');
+
+    if (weightedCB.checked) {
+        weighted = true;
+    } else if (!weightedCB.checked) {
+        weighted = false;
+    }
+
+    setupInterface(questionType);
+}
+
+//Vertices
 function doAddVertex() {
     let valueText = document.getElementById("vertexValue");
     let colorText = document.getElementById("vertexColor");
@@ -78,6 +108,8 @@ function doAddVertex() {
     }else{
         alert("Please enter a value for the vertex");
     }
+
+
 }
 
 function editVertexSelected(){
@@ -140,19 +172,21 @@ function doDeleteVertex(){
     }
 }
 
-function doWeighted(){
-    let weightedCB = document.getElementById('weightedCB');
-    let weightText = document.getElementById('edgeWeight');
+function setRoot(){
+    let dropDown = document.getElementById("setRootDD");
 
-    if (weightedCB.checked) {
-        weightText.disabled = false;
-        weighted = true;
-    } else if (!weightedCB.checked) {
-        weightText.disabled = true;
-        weighted = false;
+    if(dropDown.selectedIndex != 0){
+        let vertexID = dropDown.options[dropDown.selectedIndex].value;
+        graph.setSourceNode(graph.getVertex(vertexID));
+
+        populateDropDowns();
+        redraw();
+    }else{
+        alert("Please select a vertex to set as the root");
     }
 }
 
+//Edges
 function doBiDirectional(){
     let biDirectionalCB = document.getElementById('biDirectionalCB');
 
@@ -280,6 +314,7 @@ function doDeleteEdge() {
     }
 }
 
+//Interface
 function redraw(){
     graphics.fillStyle = "white";
     graphics.fillRect(0, 0, canvas.width, canvas.height);
@@ -301,6 +336,8 @@ function populateDropDowns(){
     const vertex2DD = document.getElementById("vertex2DD");
     const updateVertexDD = document.getElementById("editVertexDD");
     const editEdgeDD = document.getElementById("updateEdgeDD");
+    const setRootDD = document.getElementById("setRootDD");
+
 
 
     clearDropDown(vertex1DD);
@@ -309,6 +346,7 @@ function populateDropDowns(){
     clearDropDown(deleteEdgeDD);
     clearDropDown(updateVertexDD);
     clearDropDown(editEdgeDD);
+    clearDropDown(setRootDD);
 
     //Add vertices to delete vertex and add edge drop downs
     function addVertexOption(DDB, value, ID, color) {
@@ -326,6 +364,7 @@ function populateDropDowns(){
         addVertexOption(vertex2DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
         addVertexOption(deleteVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
         addVertexOption(updateVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
+        addVertexOption(setRootDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
     }
 
     //Add edges to delete edge drop downs
@@ -367,7 +406,37 @@ function doClear() {
     graphics.fillStyle = "white";
     graphics.fillRect(0, 0, canvas.width, canvas.height);
 
-    graph = new Graph();
+    //Enable question setup stuff
+    document.getElementById("questionSetupDiv").style.display = "initial";
+    document.getElementById("edgeDiv").style.display = "none";
+    document.getElementById("addVertexDiv").style.display = "none";
+    document.getElementById("editVertexDiv").style.display = "none";
+    document.getElementById("deleteVertexDiv").style.display = "none";
+
+    setupInterface(questionType);
+
+    //Reset variables
+    selectedVertex = null;
+
+    graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
+    questionGraph = new Graph();
+
+    clickedVertexIndex = -1;
+
+    questionType;
+    questionCode;
+    questionLoaded = false;
+
+    weight = 0;
+    weighted = true;
+
+    directed = true;
+    biDirectional = false;
+
+    color = "0";
+    colored = true;
+
+    //Clear dropdowns
     populateDropDowns();
 }
 
@@ -397,50 +466,130 @@ function drawEdges(){
 function setupInterface(){
     switch (questionType) {
         case "bfs":
-            document.getElementById("vertexColor").style.visibility = "hidden";
-            document.getElementById("vertexColorLabel").style.visibility = "hidden";
-            document.getElementById("editvertexColor").style.visibility = "hidden";
-            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+            //Directed
+            document.getElementById("directedCB").style.display = "initial";
+            document.getElementById("directedCBLabel").style.display = "initial";
 
+            //Colored
             colored = false;
 
-            directed = true;
+            //Weighted
+            document.getElementById("weightedCB").style.display = "initial";
+            document.getElementById("weightedCBLabel").style.display = "initial";
+
+            document.getElementById("distFromRoot").style.display = "none";
+            document.getElementById("distFromRootLabel").style.display = "none";
+            document.getElementById("editdistFromRoot").style.display = "none";
+            document.getElementById("editdistFromRootLabel").style.display = "none";
+
             break;
         case "dfs":
-            document.getElementById("vertexColor").style.visibility = "hidden";
-            document.getElementById("vertexColorLabel").style.visibility = "hidden";
-            document.getElementById("editvertexColor").style.visibility = "hidden";
-            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+            //Directed
+            document.getElementById("directedCB").style.display = "initial";
+            document.getElementById("directedCBLabel").style.display = "initial";
 
+            //Colored
             colored = false;
 
-            directed = true;
+            //Weighted
+            document.getElementById("weightedCB").style.display = "initial";
+            document.getElementById("weightedCBLabel").style.display = "initial";
+
+            document.getElementById("distFromRoot").style.display = "none";
+            document.getElementById("distFromRootLabel").style.display = "none";
+            document.getElementById("editdistFromRoot").style.display = "none";
+            document.getElementById("editdistFromRootLabel").style.display = "none";
+
             break;
         case "mwst":
-            document.getElementById("vertexColor").style.visibility = "hidden";
-            document.getElementById("vertexColorLabel").style.visibility = "hidden";
-            document.getElementById("editvertexColor").style.visibility = "hidden";
-            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+            //Directed
+            document.getElementById("directedCB").style.display = "initial";
+            document.getElementById("directedCBLabel").style.display = "initial";
 
+            //Colored
             colored = false;
+
+            //Weighted
+            document.getElementById("weightedCB").style.display = "initial";
+            document.getElementById("weightedCBLabel").style.display = "initial";
+            document.getElementById("weightedCB").checked = true;
+            weighted = true;
+
+            document.getElementById("distFromRoot").style.display = "initial";
+            document.getElementById("distFromRootLabel").style.display = "initial";
+            document.getElementById("editdistFromRoot").style.display = "initial";
+            document.getElementById("editdistFromRootLabel").style.display = "initial";
 
             break;
         case "graphcolouring":
-            document.getElementById("vertexColor").style.visibility = "visible";
-            document.getElementById("vertexColorLabel").style.visibility = "visible";
-            document.getElementById("editvertexColor").style.visibility = "visible";
-            document.getElementById("editvertexColorLabel").style.visibility = "visible";
+            //Directed
+            document.getElementById("directedCB").style.display = "none";
+            document.getElementById("directedCBLabel").style.display = "none";
+            directed = false;
 
+            //Colored
             colored = true;
+
+            //Weighted
+            document.getElementById("weightedCB").style.display = "none";
+            document.getElementById("weightedCBLabel").style.display = "none";
+            weighted = false;
+
+            document.getElementById("distFromRoot").style.display = "none";
+            document.getElementById("distFromRootLabel").style.display = "none";
+            document.getElementById("editdistFromRoot").style.display = "none";
+            document.getElementById("editdistFromRootLabel").style.display = "none";
 
             break;
         case "shortestpath":
-            document.getElementById("vertexColor").style.visibility = "hidden";
-            document.getElementById("vertexColorLabel").style.visibility = "hidden";
-            document.getElementById("editvertexColor").style.visibility = "hidden";
-            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+            //Directed
+            document.getElementById("directedCB").style.display = "initial";
+            document.getElementById("directedCBLabel").style.display = "initial";
+
+            //Colored
             colored = false;
 
+            //Weighted
+            document.getElementById("weightedCB").style.display = "initial";
+            document.getElementById("weightedCBLabel").style.display = "initial";
+            document.getElementById("weightedCB").checked = true;
+            weighted = true;
+
+            document.getElementById("distFromRoot").style.display = "initial";
+            document.getElementById("distFromRootLabel").style.display = "initial";
+            document.getElementById("editdistFromRoot").style.display = "initial";
+            document.getElementById("editdistFromRootLabel").style.display = "initial";
+
             break;
+    }
+
+    if(directed){
+        document.getElementById("biDirectionalCB").style.display = "initial";
+        document.getElementById("biDirectionalCBLabel").style.display = "initial";
+    }else if(!directed){
+        document.getElementById("biDirectionalCB").style.display = "none";
+        document.getElementById("biDirectionalCBLabel").style.display = "none";
+    }
+
+    if(colored){
+        document.getElementById("vertexColor").style.display = "initial";
+        document.getElementById("vertexColorLabel").style.display = "initial";
+        document.getElementById("editvertexColor").style.display = "initial";
+        document.getElementById("editvertexColorLabel").style.display = "initial";
+    }else if(!colored){
+        document.getElementById("vertexColor").style.display = "none";
+        document.getElementById("vertexColorLabel").style.display = "none";
+        document.getElementById("editvertexColor").style.display = "none";
+        document.getElementById("editvertexColorLabel").style.display = "none";
+    }
+
+    if(weighted){
+        document.getElementById("edgeWeight").style.display = "initial";
+        document.getElementById("edgeWeightLabel").style.display = "initial";
+        document.getElementById("updateEdgeDiv").style.display = "initial";
+    }else if(!weighted){
+        document.getElementById("edgeWeight").style.display = "none";
+        document.getElementById("edgeWeightLabel").style.display = "none";
+        document.getElementById("updateEdgeDiv").style.display = "none";
     }
 }
