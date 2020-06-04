@@ -23,19 +23,6 @@ let weighted = false;
 let directed = false;
 let biDirectional = false;
 
-function doColored() {
-    let colorCB = document.getElementById('coloredCB');
-    let colorText = document.getElementById('vertexColor');
-
-    if (colorCB.checked) {
-        colorText.disabled = false;
-        colored = true;
-    } else if (!colorCB.checked) {
-        colorText.disabled = true;
-        colored = false;
-    }
-}
-
 function doAddVertex() {
     let valueText = document.getElementById("vertexValue");
     let colorText = document.getElementById("vertexColor");
@@ -248,7 +235,6 @@ function doDeleteEdge() {
     let dropDown = document.getElementById("deleteEdgeDD");
 
     if(dropDown.selectedIndex != 0){
-        graphics.save();
 
         let selected = dropDown.options[dropDown.selectedIndex].textContent;
 
@@ -257,12 +243,15 @@ function doDeleteEdge() {
         let edgeVertex1ID = splitted[1];
         let edgeVertex2ID = splitted[6];
 
-        graph.removeEdge(edgeVertex1ID, edgeVertex2ID);
+        if(directed){
+            graph.removeDirectedEdge(edgeVertex1ID, edgeVertex2ID);
+        }else{
+            graph.removeEdge(edgeVertex1ID, edgeVertex2ID);
+        }
 
         populateDropDowns();
         redraw();
 
-        graphics.restore();
     }else{
         alert("Please select an edge to delete");
     }
@@ -409,6 +398,9 @@ function setupInterface(){
             document.getElementById("coloredCBLabel").style.visibility = "visible";
             document.getElementById("vertexColor").style.visibility = "visible";
             document.getElementById("vertexColorLabel").style.visibility = "visible";
+
+            colored = true;
+
             break;
         case "shortestpath":
             document.getElementById("coloredCB").style.visibility = "hidden";
