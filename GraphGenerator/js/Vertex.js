@@ -72,7 +72,7 @@ class Vertex{
 
     drawVertex (){
         if(this == graph.getSourceNode()){
-            graphics.strokeStyle = "green";
+            graphics.strokeStyle = "red";
 
         }else{
             graphics.strokeStyle = "black";

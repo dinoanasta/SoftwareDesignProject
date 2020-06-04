@@ -36,16 +36,25 @@ class Edge{
         graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
 
         if(weighted){
-            graphics.fillStyle = "red";
-            graphics.fillText(this.getWeightEdge(), Math.abs(this.getVertexOne().getXVal() + this.getVertexTwo().getXVal())/2 +20, Math.abs(this.getVertexOne().getYVal() + this.getVertexTwo().getYVal())/2 +20, 20 );
+
+
         }
 
         if(directed){
+            if(weighted){
+                graphics.fillStyle = "black";
+                graphics.fillText(this.getWeightEdge(), (1/3)*this.getVertexOne().getXVal() + (2/3)*this.getVertexTwo().getXVal() +15 ,  (1/3)*this.getVertexOne().getYVal() + (2/3)*this.getVertexTwo().getYVal()+15, 20 );
+            }
             let xx = ( (1/3)*this.getVertexOne().getXVal() + (2/3)*this.getVertexTwo().getXVal() );
             let yy = ( (1/3)*this.getVertexOne().getYVal() + (2/3)*this.getVertexTwo().getYVal() );
-            graphics.fillStyle = "red";
+            graphics.fillStyle = "lightgray";
             graphics.fillCircle(xx, yy, 4);
-            // graphics.strokeCircle(this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal(), vertexRadius+5);
+        }else{
+            if(weighted){
+                graphics.fillStyle = "black";
+                graphics.fillText(this.getWeightEdge(), Math.abs(this.getVertexOne().getXVal() + this.getVertexTwo().getXVal())/2 +15, Math.abs(this.getVertexOne().getYVal() + this.getVertexTwo().getYVal())/2 +15, 20 );
+            }
         }
+
     }
 }

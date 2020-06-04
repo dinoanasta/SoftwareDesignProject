@@ -225,8 +225,8 @@ function doAddEdge() {
                             weight = parseInt(edgeWeight.value);
                             if(directed){
                                 if(biDirectional){
-                                    graph.addDirectedEdge(firstID, secondID , weight);
-                                    graph.addDirectedEdge(secondID, firstID, weight);
+                                    graph.addEdge(firstID, secondID , weight);
+                                    // graph.addDirectedEdge(secondID, firstID, weight);
                                 }else{
                                     graph.addDirectedEdge(firstID, secondID, weight);
                                 }
@@ -269,7 +269,17 @@ function doAddEdge() {
 
 function editEdgeSelected(){
     let dropDown = document.getElementById("updateEdgeDD");
-    let weight = graph.edges[dropDown.selectedIndex -1].getWeightEdge();
+
+    let weight;
+
+    console.log(graph.directedEdges[dropDown.selectedIndex -1]);
+    console.log(graph.edges[dropDown.selectedIndex -1]);
+
+    if(directed){
+        weight = graph.directedEdges[dropDown.selectedIndex -1].getWeightEdge();
+    }else if(!directed){
+        weight = graph.edges[dropDown.selectedIndex -1].getWeightEdge();
+    }
 
     document.getElementById("editWeight").value = weight;
 }
@@ -280,7 +290,11 @@ function doUpdateEdge(){
     let newWeight = document.getElementById("editWeight").value;
 
     if(dropDown.selectedIndex != 0){
-        graph.edges[dropDown.selectedIndex - 1 ].setWeightEdge(newWeight);
+        if(directed){
+            graph.directedEdges[dropDown.selectedIndex - 1 ].setWeightEdge(newWeight);
+        }else if(!directed){
+            graph.edges[dropDown.selectedIndex - 1 ].setWeightEdge(newWeight);
+        }
         populateDropDowns();
         redraw();
     }else{
@@ -337,8 +351,6 @@ function populateDropDowns(){
     const updateVertexDD = document.getElementById("editVertexDD");
     const editEdgeDD = document.getElementById("updateEdgeDD");
     const setRootDD = document.getElementById("setRootDD");
-
-
 
     clearDropDown(vertex1DD);
     clearDropDown(vertex2DD);
@@ -564,11 +576,9 @@ function setupInterface(){
     }
 
     if(directed){
-        document.getElementById("biDirectionalCB").style.display = "initial";
-        document.getElementById("biDirectionalCBLabel").style.display = "initial";
+
     }else if(!directed){
-        document.getElementById("biDirectionalCB").style.display = "none";
-        document.getElementById("biDirectionalCBLabel").style.display = "none";
+
     }
 
     if(colored){

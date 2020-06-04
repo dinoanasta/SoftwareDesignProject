@@ -210,7 +210,6 @@ function addBindings(){
 
     //Edges
     document.getElementById("addEdgeButton").onclick = doAddEdge;
-    document.getElementById("biDirectionalCB").onchange = doBiDirectional;
     document.getElementById("updateEdgeDD").onchange = editEdgeSelected;
     document.getElementById("updateEdgeButton").onclick = doUpdateEdge;
     document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
