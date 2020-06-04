@@ -41,7 +41,7 @@ class Edge{
         }
 
         if(directed){
-            graphics.strokeCircle(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), vertexRadius+5);
+            graphics.strokeCircle(this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal(), vertexRadius+5);
         }
     }
 }

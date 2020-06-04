@@ -23,6 +23,29 @@ let weighted = false;
 let directed = false;
 let biDirectional = false;
 
+function setQuestionType(){
+    let dropDown = document.getElementById("questionTypeDD");
+    switch (dropDown.selectedIndex) {
+        case 1:
+            questionType = "bfs";
+            break;
+        case 2:
+            questionType = "dfs";
+            break;
+        case 3:
+            questionType = "mwst";
+            break;
+        case 4:
+            questionType = "graphcolouring";
+            break;
+        case 5:
+            questionType = "shortestpath";
+            break;
+    }
+
+    setupInterface(questionType);
+}
+
 function doAddVertex() {
     let valueText = document.getElementById("vertexValue");
     let colorText = document.getElementById("vertexColor");
@@ -374,39 +397,50 @@ function drawEdges(){
 function setupInterface(){
     switch (questionType) {
         case "bfs":
-            document.getElementById("coloredCB").style.visibility = "hidden";
-            document.getElementById("coloredCBLabel").style.visibility = "hidden";
             document.getElementById("vertexColor").style.visibility = "hidden";
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            document.getElementById("editvertexColor").style.visibility = "hidden";
+            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+
+            colored = false;
+
             directed = true;
             break;
         case "dfs":
-            document.getElementById("coloredCB").style.visibility = "hidden";
-            document.getElementById("coloredCBLabel").style.visibility = "hidden";
             document.getElementById("vertexColor").style.visibility = "hidden";
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            document.getElementById("editvertexColor").style.visibility = "hidden";
+            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+
+            colored = false;
+
             directed = true;
             break;
         case "mwst":
-            document.getElementById("coloredCB").style.visibility = "hidden";
-            document.getElementById("coloredCBLabel").style.visibility = "hidden";
             document.getElementById("vertexColor").style.visibility = "hidden";
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            document.getElementById("editvertexColor").style.visibility = "hidden";
+            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+
+            colored = false;
+
             break;
         case "graphcolouring":
-            document.getElementById("coloredCB").style.visibility = "visible";
-            document.getElementById("coloredCBLabel").style.visibility = "visible";
             document.getElementById("vertexColor").style.visibility = "visible";
             document.getElementById("vertexColorLabel").style.visibility = "visible";
+            document.getElementById("editvertexColor").style.visibility = "visible";
+            document.getElementById("editvertexColorLabel").style.visibility = "visible";
 
             colored = true;
 
             break;
         case "shortestpath":
-            document.getElementById("coloredCB").style.visibility = "hidden";
-            document.getElementById("coloredCBLabel").style.visibility = "hidden";
             document.getElementById("vertexColor").style.visibility = "hidden";
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            document.getElementById("editvertexColor").style.visibility = "hidden";
+            document.getElementById("editvertexColorLabel").style.visibility = "hidden";
+            colored = false;
+
             break;
     }
 }
