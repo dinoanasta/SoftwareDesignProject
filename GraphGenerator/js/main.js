@@ -21,6 +21,7 @@ let weight = 0;
 let weighted = false;
 
 let directed = false;
+let biDirectional = false;
 
 function doColored() {
     let colorCB = document.getElementById('coloredCB');
@@ -142,15 +143,13 @@ function doWeighted(){
     }
 }
 
-function doDirected(){
-    let directedCB = document.getElementById('directedCB');
-    let vertex1 = document.getElementById('vertex1DD');
-    let vertex2 = document.getElementById('vertex2DD');
+function doBiDirectional(){
+    let biDirectionalCB = document.getElementById('biDirectionalCB');
 
-    if (directedCB.checked) {
-        directed = true;
-    } else if (!directedCB.checked) {
-        directed = false;
+    if (biDirectionalCB.checked) {
+        biDirectional = true;
+    } else if (!biDirectionalCB.checked) {
+        biDirectional = false;
     }
 }
 
@@ -178,12 +177,19 @@ function doAddEdge() {
                     weight = 1;
                     if(weighted){
                         if(edgeWeight.value.length !=0){
+
                             weight = parseInt(edgeWeight.value);
                             if(directed){
-                                graph.addDirectedEdge(firstID, secondID, weight);
+                                if(biDirectional){
+                                    graph.addDirectedEdge(firstID, secondID , weight);
+                                    graph.addDirectedEdge(secondID, firstID, weight);
+                                }else{
+                                    graph.addDirectedEdge(firstID, secondID, weight);
+                                }
                             }else{
                                 graph.addEdge(firstID, secondID, weight);
                             }
+
                             populateDropDowns();
                             redraw();
                         }else{
@@ -191,7 +197,12 @@ function doAddEdge() {
                         }
                     }else{
                         if(directed){
-                            graph.addDirectedEdge(firstID, secondID, weight);
+                            if(biDirectional){
+                                graph.addDirectedEdge(firstID, secondID , weight);
+                                graph.addDirectedEdge(secondID, firstID, weight);
+                            }else{
+                                graph.addDirectedEdge(firstID, secondID, weight);
+                            }
                         }else{
                             graph.addEdge(firstID, secondID, weight);
                         }
@@ -333,6 +344,8 @@ function populateDropDowns(){
 
     for(let i  = 0; i< graph.directedEdges.length; ++i){
         addDirectedEdgeOption(deleteEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
+        addDirectedEdgeOption(editEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
+
     }
 
 
@@ -376,12 +389,14 @@ function setupInterface(){
             document.getElementById("coloredCBLabel").style.visibility = "hidden";
             document.getElementById("vertexColor").style.visibility = "hidden";
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            directed = true;
             break;
         case "dfs":
             document.getElementById("coloredCB").style.visibility = "hidden";
             document.getElementById("coloredCBLabel").style.visibility = "hidden";
             document.getElementById("vertexColor").style.visibility = "hidden";
             document.getElementById("vertexColorLabel").style.visibility = "hidden";
+            directed = true;
             break;
         case "mwst":
             document.getElementById("coloredCB").style.visibility = "hidden";

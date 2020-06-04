@@ -193,4 +193,23 @@ function applyLimits(g, xleft, xright, ytop, ybottom, preserveAspect) {
     g.translate(-xleft, -ytop);
 }
 
+function addBindings(){
+    document.getElementById("addVertexButton").onclick = doAddVertex;
+    document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
+    document.getElementById("addEdgeButton").onclick = doAddEdge;
+    document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
+    document.getElementById("clearButton").onclick = doClear;
+    document.getElementById("createButton").onclick = doCreate;
+    document.getElementById("weightedCB").onchange = doWeighted;
+    document.getElementById("coloredCB").onchange = doColored;
+    document.getElementById("biDirectionalCB").onchange = doBiDirectional;
+    document.getElementById("setQuestionButton").onclick = doSetQuestion;
+    document.getElementById("updateVertexButton").onclick = doUpdateVertex;
+    document.getElementById("editVertexDD").onchange = editVertexSelected;
+    document.getElementById("updateEdgeButton").onclick = doUpdateEdge;
+    document.getElementById("updateEdgeDD").onchange = editEdgeSelected;
+
+    window.addEventListener('keydown', handleKeyDown, false);
+}
+
 

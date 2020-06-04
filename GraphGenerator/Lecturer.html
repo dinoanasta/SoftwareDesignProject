@@ -70,23 +70,7 @@
                 addGraphicsContextExtras(graphics);
                 initialiseDB();
                 installMouseHandler();
-                document.getElementById("addVertexButton").onclick = doAddVertex;
-                document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
-                document.getElementById("addEdgeButton").onclick = doAddEdge;
-                document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
-                document.getElementById("clearButton").onclick = doClear;
-                document.getElementById("createButton").onclick = doCreate;
-                document.getElementById("weightedCB").onchange = doWeighted;
-                document.getElementById("coloredCB").onchange = doColored;
-                document.getElementById("directedCB").onchange = doDirected;
-                document.getElementById("setQuestionButton").onclick = doSetQuestion;
-                document.getElementById("updateVertexButton").onclick = doUpdateVertex;
-                document.getElementById("editVertexDD").onchange = editVertexSelected;
-                document.getElementById("updateEdgeButton").onclick = doUpdateEdge;
-                document.getElementById("updateEdgeDD").onchange = editEdgeSelected;
-
-                window.addEventListener('keydown', handleKeyDown, false);
-
+                addBindings();
                 // setUserType("lecturer");
                 setupInterface(questionType);
 
@@ -221,8 +205,8 @@
         <label id="weightedCBLabel">Weighted</label>
         <br>
 
-        <input type="checkbox" id="directedCB" name="directed" value="directed" onchange="doDirected()">
-        <label id="directedCBLabel">Directed</label>
+        <input type="checkbox" id="biDirectionalCB" onchange="doBiDirectional()">
+        <label id="biDirectionalCBLabel">Bi-directional</label>
         <br>
 
         <label id="vertex1DDLabel">Vertex 1:</label>
