@@ -13,13 +13,13 @@
 
   <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
-  <!--    Main script-->
+  <!--    Scripts -->
 
   <script src="js/Vertex.js"> </script>
   <script src="js/Edge.js"> </script>
   <script src="js/Graph.js"> </script>
   <script src="js/student.js"> </script>
-  <script src="js/main.js"> </script>
+<!--  <script src="js/main.js"> </script>-->
   <script src="js/handlers.js"></script>
   <script src="js/PriorityQueue.js"> </script>
   <script src="js/ColMarker.js"> </script>
@@ -37,9 +37,9 @@
     let database;
     let ref;
 
-    const X_LEFT = 0; // The xy limits for the coordinate system.
-    const X_RIGHT = 800;
-    const Y_BOTTOM = 600;
+    const X_LEFT = 0;    // The xy limits for the coordinate system.
+    const X_RIGHT = 550;
+    const Y_BOTTOM = 450;
     const Y_TOP = 0;
 
     let pixelSize; // The size of one pixel, in the transformed coordinates.
@@ -72,21 +72,7 @@
         addGraphicsContextExtras(graphics);
         initialiseDB();
         installMouseHandler();
-        document.getElementById("addVertexButton").onclick = doAddVertex;
-        document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
-        document.getElementById("addEdgeButton").onclick = doAddEdge;
-        document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
-        document.getElementById("clearButton").onclick = doClear;
-        document.getElementById("submitButton").onclick = doSubmit;
-        document.getElementById("weightedCB").onchange = doWeighted;
-        document.getElementById("coloredCB").onchange = doColored;
-        document.getElementById("directedCB").onchange = doDirected;
-        document.getElementById("loadGraphButton").onclick = doLoadGraph;
-        window.addEventListener('keydown', handleKeyDown, false);
-
-        // setUserType("lecturer");
-        setupInterface(questionType);
-
+        addBindings();
       } catch (e) {
         document.getElementById("canvas").innerHTML =
           "Canvas graphics is not supported.<br>" +
@@ -97,140 +83,175 @@
 </head>
 
 <body onload="init()" style="background-color:#EEEEEE">
-
   <div id="studentDiv" class="row">
 
     <!--        Canvas - 1st column-->
-    <div class="col-md-6" id="canvasDiv">
+    <div id="canvasDiv">
       <h1>Graph Generator - Student Interface</h1>
 
-      <canvas id="canvas" width="800" height="600">
+      <canvas id="canvas" width="550" height="450">
         <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
         Canvas not supported.
       </canvas>
     </div>
 
     <!--        Vertex stuff - 2nd column-->
-    <div class="col-md-2" id="vertexDiv">
+    <div id="vertexDiv">
 
-      <p>
-      <h3>Question setup:</h3>
+      <!--        Question setup-->
+      <div id="questionSetupDiv">
+        <h3>Question setup:</h3>
 
-      <label id="questionCodeLabel">Question Code:</label>
-      <input type="text" id="questionCodeStudent" name="vertexValue">
+        <label id="questionCodeLabel">Question Code:</label>
+        <input type="text" id="questionCodeStudent" name="vertexValue">
 
-      <button id="loadGraphButton" onclick="doLoadGraph()">Load graph</button>
+        <br>
 
-      </p>
+        <label id="questionTypeLabel">Question Type:</label>
 
-      <br>
+        <button id="loadGraphButton" onclick="doLoadGraph()">Load graph</button>
 
-      <p>
-      <h3>Add vertex:</h3>
-
-      <input type="checkbox" id="coloredCB" name="color" value="color" onchange="doColored()">
-      <label id="coloredCBLabel">Colored</label>
-      <br>
-
-      <label id="vertexValueLabel">Vertex Value:</label>
-      <input type="text" id="vertexValue">
-      <br>
-
-      <label id="vertexColorLabel">Vertex Color:</label>
-      <input type="text" id="vertexColor" disabled>
-
-      <label id="distFromRootLabel">Distance from root:</label>
-      <input type="text" id="distFromRoot">
-      <br>
-
-      <button id="addVertexButton" onclick="doAddVertex()">Add vertex</button>
-      </p>
+      </div>
 
       <br>
 
-      <p>
-      <h3>Delete vertex:</h3>
+      <!--        Adding vertices-->
+      <div id="addVertexDiv">
+        <h3>Add vertex:</h3>
 
-      <label id="deleteVertexDDLabel">Vertex:</label>
-      <select id="deleteVertexDD">
-        <option>Choose vertex</option>
+        <label id="vertexValueLabel">Value:</label>
+        <input type="text" id="vertexValue">
+        <br>
+
+        <label id="vertexColorLabel">Color:</label>
+        <input type="text" id="vertexColor">
+        <br>
+
+        <label id="distFromRootLabel">Distance:</label>
+        <input type="text" id="distFromRoot">
+        <br>
+
+        <button id="addVertexButton">Add vertex</button>
+      </div>
+
+      <!--        Set root vertex-->
+      <br>
+      <label id="setRootDDLabel">Set Root:</label>
+      <select id="setRootDD">
+        <option>Choose root vertex</option>
       </select>
       <br>
 
-      <button id="deleteVertexButton" onclick="doDeleteVertex()">Delete vertex</button>
-      </p>
 
       <br>
-      <br>
+
+      <!--        Editing vertices-->
+      <div id="editVertexDiv">
+        <h3>Edit vertex:</h3>
+
+        <label id="editVertexDDLabel">Vertex:</label>
+        <select id="editVertexDD">
+          <option>Choose vertex</option>
+        </select>
+        <br>
+
+        <label id="editvertexValueLabel">Value:</label>
+        <input type="text" id="editvertexValue">
+        <br>
+
+        <label id="editvertexColorLabel">Color:</label>
+        <input type="text" id="editvertexColor">
+        <br>
+
+        <label id="editdistFromRootLabel">Distance:</label>
+        <input type="text" id="editdistFromRoot">
+        <br>
+
+        <button id="updateVertexButton">Update vertex</button>
+      </div>
+
       <br>
 
-      <!--            <p>-->
-      <!--                <label for="adjMatrix">Current Adjacency Matrix:</label>-->
-      <!--                <br>-->
-      <!--                <input style="height:25vh", width="40vh", type="text" id="adjMatrix" name="adjMatrix">-->
-      <!--                <br>-->
-      <!--            </p>-->
+      <!--        Delete vertex-->
+      <div id="deleteVertexDiv">
+        <h3>Delete vertex:</h3>
 
-      <br>
+        <label id="deleteVertexDDLabel">Vertex:</label>
+        <select id="deleteVertexDD">
+          <option>Choose vertex</option>
+        </select>
+        <br>
+
+        <button id="deleteVertexButton">Delete vertex</button>
+      </div>
     </div>
 
     <!--        Edge stuff - 3rd column-->
-    <div class="col-md-2" id="edgeDiv">
+    <div id="edgeDiv">
 
-      <p>
-      <h3>Add edge:</h3>
+      <!--     Add edge-->
+      <div id="addEdgeDiv">
+        <h3>Add edge:</h3>
 
-      <input type="checkbox" id="weightedCB" name="weighted" value="weighted" onchange="doWeighted()">
-      <label id="weightedCBLabel">Weighted</label>
-      <br>
+        <label id="vertex1DDLabel">Vertex 1:</label>
+        <select id="vertex1DD">
+          <option>Choose first vertex</option>
+        </select>
+        <br>
 
-      <input type="checkbox" id="directedCB" name="directed" value="directed" onchange="doDirected()">
-      <label id="directedCBLabel">Directed</label>
-      <br>
+        <label id="vertex2DDLabel">Vertex 2:</label>
+        <select id="vertex2DD">
+          <option>Choose second vertex</option>
+        </select>
+        <br>
 
-      <label id="vertex1DDLabel">Vertex 1:</label>
-      <select id="vertex1DD">
-        <option>Choose first vertex</option>
-      </select>
-      <br>
+        <label id="edgeWeightLabel">Edge weight:</label>
+        <input type="text" id="edgeWeight">
+        <br>
 
-      <label id="vertex2DDLabel">Vertex 2:</label>
-      <select id="vertex2DD">
-        <option>Choose second vertex</option>
-      </select>
-      <br>
-
-      <label id="edgeWeightLabel">Edge weight:</label>
-      <input type="text" id="edgeWeight" name="edgeWeight" disabled>
-      <br>
-
-      <button id="addEdgeButton" onclick="doAddEdge()">Add edge</button>
-      </p>
+        <button id="addEdgeButton">Add edge</button>
+      </div>
 
       <br>
 
-      <p>
-      <h3>Delete edge:</h3>
+      <!--     Update edge-->
+      <div id="updateEdgeDiv">
+        <h3>Update edge:</h3>
 
-      <label id="deleteEdgeDDLabel">Edge:</label>
-      <select id="deleteEdgeDD">
-        <option>Choose edge</option>
-      </select>
+        <label id="updateEdgeDDLabel">Edge:</label>
+        <select id="updateEdgeDD">
+          <option>Choose edge</option>
+        </select>
+        <br>
+
+        <label id="editWeightLabel">Weight:</label>
+        <input type="text" id="editWeight">
+        <br>
+
+        <button id="updateEdgeButton">Update edge</button>
+      </div>
+
       <br>
 
-      <button id="deleteEdgeButton" onclick="doDeleteEdge()">Delete edge</button>
+      <!--    Delete edge-->
+      <div id="deleteEdgeDiv">
+        <h3>Delete edge:</h3>
 
-      </p>
+        <label id="deleteEdgeDDLabel">Edge:</label>
+        <select id="deleteEdgeDD">
+          <option>Choose edge</option>
+        </select>
+        <br>
 
-      <p style="margin-right: 15vw">
-        <!--            Clear Button-->
-        <br><br>
-        <button style="height:5vh" , id="clearButton" onclick="doClear()">Clear</button>
+        <button id="deleteEdgeButton">Delete edge</button>
+      </div>
 
-        <!--            Submit Button-->
-        <br><br>
-        <button style="height:5vh" , id="submitButton" , onclick="doSubmit()">Submit</button>
-      </p>
+      <!--            Clear Button-->
+      <br><br>
+      <button style="height:5vh" , id="clearButton" onclick="doClear()">Clear</button>
+
+      <!--            Submit Button-->
+      <button style="height:5vh" , id="submitButton" , onclick="doSubmit()">Submit</button>
 
     </div>
   </div>

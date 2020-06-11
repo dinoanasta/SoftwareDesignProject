@@ -16,13 +16,13 @@
 
     <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
-    <!--    Main script-->
+    <!--    Scripts -->
 
     <script src="js/Vertex.js"></script>
     <script src="js/Edge.js"></script>
     <script src="js/Graph.js"></script>
     <script src="js/lecturer.js"></script>
-    <script src="js/main.js"></script>
+<!--    <script src="js/main.js"></script>-->
     <script src="js/handlers.js"></script>
 
     <script>
@@ -74,7 +74,6 @@
                 initialiseDB();
                 installMouseHandler();
                 addBindings();
-                // setUserType("lecturer");
 
                 //Only show question setup stuff
                 // document.getElementById("questionSetupDiv").style.display = "initial";
@@ -82,9 +81,6 @@
                 // document.getElementById("addVertexDiv").style.display = "none";
                 // document.getElementById("editVertexDiv").style.display = "none";
                 // document.getElementById("deleteVertexDiv").style.display = "none";
-
-                setupInterface(questionType);
-
 
             } catch (e) {
                 document.getElementById("canvas").innerHTML =

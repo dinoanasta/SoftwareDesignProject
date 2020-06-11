@@ -8,7 +8,7 @@ body{
 
 #lecturerDiv{
     position: fixed;
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(240, 20, 20, 0.5);
     height: 100vh;
     width: 100vw;
     overflow: scroll;
@@ -16,7 +16,7 @@ body{
 
 #studentDiv{
     position: fixed;
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(20, 240, 220, 0.5);
     height: 100vh;
     width: 100vw;
     overflow: scroll;
@@ -82,6 +82,7 @@ button:hover{
 }
 
 #canvasDiv{
+    padding-top: 2vh;
     padding-left: 2vw;
     padding-right: 2vw;
 
@@ -95,7 +96,7 @@ button:hover{
 
 #vertexDiv{
     margin-left: 2vw;
-    padding: 1vh 2vw;
+    padding: 2vh 2vw;
 
     background-color: rgba(0, 0, 0, 0.2);
 
@@ -109,7 +110,7 @@ button:hover{
     float: right;
 
     margin-left: 2vw;
-    padding: 1vh 2vw;
+    padding: 2vh 2vw;
 
     background-color: rgba(0,0,0,0.2);
 
