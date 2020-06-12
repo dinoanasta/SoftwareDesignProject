@@ -506,4 +506,34 @@ class Graph {
 
     this.setSourceNode(converted_obj.source_node);
   }
+
+  isWeighted() {
+    return this.isWeightedOrDirected()[0];
+  }
+
+  isDirected() {
+    return this.isWeightedOrDirected()[1];
+  }
+
+  isWeightedOrDirected() {
+    var adj_matrix = this.getAdjacenyMatrix();
+    var is_weighted = false;
+    var is_directed = false;
+    for (var i = 0; i < adj_matrix.length; i++) {
+      for (var j = 0; j < adj_matrix[i].length; j++) {
+        if(adj_matrix[i][j]>1){
+          is_weighted = true;
+        }
+        if(adj_matrix[i][j]!=adj_matrix[j][i]){
+          is_directed = true;
+        }
+      }
+    }
+    var return_arr = [];
+    return_arr.push(is_weighted);
+    return_arr.push(is_directed);
+    return return_arr;
+  }
+
+
 }

@@ -1,4 +1,6 @@
 //Global variables
+const userType = "lecturer";
+
 var selectedVertex = null;
 const space = 4;
 
@@ -39,6 +41,8 @@ function addBindings(){
   document.getElementById("updateVertexButton").onclick = doUpdateVertex;
   document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
   document.getElementById("setRootDD").onchange = setRoot;
+  document.getElementById("clearRootButton").onclick = removeRootVertex;
+
 
 
   //Edges
@@ -210,6 +214,11 @@ function setRoot(){
   }else{
     alert("Please select a vertex to set as the root");
   }
+}
+
+function removeRootVertex(){
+  graph.setSourceNode(0);
+  redraw();
 }
 
 //Edges
@@ -578,12 +587,6 @@ function setupInterface(){
       document.getElementById("editdistFromRootLabel").style.display = "initial";
 
       break;
-  }
-
-  if(directed){
-
-  }else if(!directed){
-
   }
 
   if(colored){

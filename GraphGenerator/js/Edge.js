@@ -48,7 +48,7 @@ class Edge{
             let xx = ( (1/3)*this.getVertexOne().getXVal() + (2/3)*this.getVertexTwo().getXVal() );
             let yy = ( (1/3)*this.getVertexOne().getYVal() + (2/3)*this.getVertexTwo().getYVal() );
             graphics.fillStyle = "lightgray";
-            graphics.fillCircle(xx, yy, 4);
+            graphics.fillCircle(xx, yy, 6);
         }else{
             if(weighted){
                 graphics.fillStyle = "black";

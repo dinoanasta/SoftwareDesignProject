@@ -26,7 +26,6 @@ function installMouseHandler() {
         var y = Math.round(evt.clientY - r.top);   // round to integer values; some browsers would give non-integers.
         dragging = true;  // (this won't be the case for all mousedowns in all programs)
 
-        console.log(x, y);
         if (dragging) {
             document.addEventListener("mousemove", doMouseMove, false);
             document.addEventListener("mouseup", doMouseUp, false);
@@ -51,7 +50,7 @@ function installMouseHandler() {
         }
 
         clickedVertexIndex = getVertexIndex();
-        selectedVertex = graph.getVertex(clickedVertexIndex);
+        selectedVertex =  graph.getVertex(clickedVertexIndex);
 
         graphics.strokeStyle = "red";
         graphics.lineWidth = 2;
@@ -67,17 +66,30 @@ function installMouseHandler() {
 
             // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
 
-            document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
-            document.getElementById("editvertexColor").value = selectedVertex.getColor();
-            
-            document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex+1;
+            if(userType=="student"){
+                document.getElementById("editvertexValueLabel").innerHTML = "Value: " + graph.getVertex(clickedVertexIndex).getVertexVal();
+                document.getElementById("editvertexColor").value = selectedVertex.getColor();
+            }else if (userType=="lecturer"){
+                document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
+                document.getElementById("editvertexColor").value = selectedVertex.getColor();
+            }
 
+            document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex+1;
         }else{
-            document.getElementById("editvertexValue").value = null;
-            document.getElementById("editvertexColor").value = null;
+            if(userType=="student"){
+                document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
+                document.getElementById("editvertexColor").value = "";
+            }else if (userType=="lecturer"){
+                document.getElementById("editvertexValue").value = "";
+                document.getElementById("editvertexColor").value = "";
+            }
+
+            document.getElementById("deleteVertexDD").selectedIndex = 0;
 
             redraw();
+
         }
+
     }
 
     function doMouseMove(evt) {
@@ -101,7 +113,6 @@ function installMouseHandler() {
                 );
             }
         }
-
 
     }
 
