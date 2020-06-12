@@ -132,7 +132,17 @@ function handleKeyDown(event) {
     let keyCode = event.keyCode;
     switch (keyCode) {
         case 46: //Delete
+            addedVertices.push(selectedVertex.getVertexID());
+            unusedVertices.push(selectedVertex.getVertexID());
+
             graph.removeVertex(selectedVertex.getVertexID());
+
+            for(let i=0;i<addedVertices.length;i++){
+                if(addedVertices[i] == selectedVertex.getVertexID()){
+                    addedVertices.splice(i, 1);
+                }
+            }
+
             populateDropDowns();
             redraw();
     }

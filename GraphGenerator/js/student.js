@@ -285,7 +285,6 @@ function doDeleteVertex(){
         let vertexIndex = findVertex(graph, vertexID);
 
         addedVertices.push(graph.getVertex(vertexIndex).getVertexID());
-
         unusedVertices.push(graph.getVertex(vertexIndex).getVertexID());
 
         graph.removeVertex(vertexIndex);
@@ -446,25 +445,22 @@ function doDeleteEdge() {
         let vertex1ID = parseInt(splitted[1]);
         let vertex2ID = parseInt(splitted[6]);
 
-        console.log(questionGraph.getDirectedEdges());
-
         if(directed){
-            graph.removeDirectedEdge(vertex1ID, vertex2ID);
-
-            let edgeIndex = findEdgeIndex(graph.getDirectedEdges(), vertex1ID, vertex2ID);
+            let edgeIndex = findEdgeIndex(graph.directedEdges, vertex1ID, vertex2ID);
 
             unusedDirectedEdges.push([vertex1ID, vertex2ID]);
             addedDirectedEdges.splice(edgeIndex,1);
-        }else{
-            graph.removeEdge(vertex1ID, vertex2ID);
 
-            let edgeIndex = findEdgeIndex(graph.getEdges(), vertex1ID, vertex2ID);
+            graph.removeDirectedEdge(vertex1ID, vertex2ID);
+
+        }else{
+            let edgeIndex = findEdgeIndex(graph.edges, vertex1ID, vertex2ID);
 
             unusedEdges.push([vertex1ID, vertex2ID]);
             addedEdges.splice(edgeIndex,1);
-        }
 
-        console.log(questionGraph.getDirectedEdges());
+            graph.removeEdge(vertex1ID, vertex2ID);
+        }
 
         populateDropDowns();
         redraw();
