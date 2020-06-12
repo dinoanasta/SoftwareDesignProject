@@ -35,11 +35,6 @@ class Edge{
         graphics.strokeStyle = "lightgrey";
         graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
 
-        if(weighted){
-
-
-        }
-
         if(directed){
             if(weighted){
                 graphics.fillStyle = "black";

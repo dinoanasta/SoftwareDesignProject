@@ -366,9 +366,11 @@ class Graph {
       this.vertices.splice(vertex_id, 1);
 
       //Change all vertex indices to fill hole in array
-      for (var i = 0; i < this.vertices.length; i++) {
-        var curr_vertex = this.vertices[i];
-        curr_vertex.setVertexID(i);
+      if(userType=="lecturer"){
+        for (var i = 0; i < this.vertices.length; i++) {
+          var curr_vertex = this.vertices[i];
+          curr_vertex.setVertexID(i);
+        }
       }
 
       //Set vertex = null to avoid memory leak

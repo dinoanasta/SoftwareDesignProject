@@ -122,6 +122,8 @@
 
         <button id="loadGraphButton" onclick="doLoadGraph()">Load graph</button>
 
+        <button id="drawGraphButton" onclick="doDrawGraph()">Draw graph</button>
+
       </div>
 
       <br>
@@ -132,7 +134,7 @@
 
         <label id="addVertexDDLabel">Vertex:</label>
         <select id="addVertexDD">
-          <option>Choose vertex</option>
+          <option>Choose vertex to add</option>
         </select>
         <br>
 
@@ -158,7 +160,7 @@
 
         <label id="editVertexDDLabel">Vertex:</label>
         <select id="editVertexDD">
-          <option>Choose vertex</option>
+          <option>Choose vertex to edit</option>
         </select>
         <br>
 
@@ -184,7 +186,7 @@
 
         <label id="deleteVertexDDLabel">Vertex:</label>
         <select id="deleteVertexDD">
-          <option>Choose vertex</option>
+          <option>Choose vertex to delete</option>
         </select>
         <br>
 
@@ -199,20 +201,10 @@
       <div id="addEdgeDiv">
         <h3>Add edge:</h3>
 
-        <label id="vertex1DDLabel">Vertex 1:</label>
-        <select id="vertex1DD">
-          <option>Choose first vertex</option>
+        <label id="addEdgeDDLabel">Edge:</label>
+        <select id="addEdgeDD">
+          <option>Choose edge to add</option>
         </select>
-        <br>
-
-        <label id="vertex2DDLabel">Vertex 2:</label>
-        <select id="vertex2DD">
-          <option>Choose second vertex</option>
-        </select>
-        <br>
-
-        <label id="edgeWeightLabel">Edge weight:</label>
-        <input type="text" id="edgeWeight">
         <br>
 
         <button id="addEdgeButton">Add edge</button>
@@ -226,7 +218,7 @@
 
         <label id="updateEdgeDDLabel">Edge:</label>
         <select id="updateEdgeDD">
-          <option>Choose edge</option>
+          <option>Choose edge to upate</option>
         </select>
         <br>
 
@@ -245,7 +237,7 @@
 
         <label id="deleteEdgeDDLabel">Edge:</label>
         <select id="deleteEdgeDD">
-          <option>Choose edge</option>
+          <option>Choose edge to delete</option>
         </select>
         <br>
 
