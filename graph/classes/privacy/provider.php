@@ -53,7 +53,7 @@ class provider implements
         $detail = [
                     'assignment' => 'privacy:metadata:assignmentid',
                     'submission' => 'privacy:metadata:submissionpurpose',
-                    'graph' => 'privacy:metadata:graphpurpose'
+                    'answerGraph' => 'privacy:metadata:graphpurpose'
                   ];
         $collection->add_database_table('assignsubmission_graph', $detail, 'privacy:metadata:tablepurpose');
         $collection->link_subsystem('core_files', 'privacy:metadata:filepurpose');
@@ -102,7 +102,7 @@ class provider implements
         }
         // Retrieve data for this submission.
         $assign = $exportdata->get_assign();
-        $plugin = $assign->get_plugin_by_type('assignsubmission', 'graph');
+        $plugin = $assign->get_plugin_by_type('assignsubmission', 'answerGraph');
         $submission = $exportdata->get_pluginobject();
         $context = $exportdata->get_context();
 

@@ -40,8 +40,8 @@ function installMouseHandler() {
         }
 
         function getVertexIndex() {
-            for (let i = 0; i < graph.getNumberVertices(); ++i) {
-                let dist = euclideanDistance([x, y], [graph.getVertex(i).getXVal(), graph.getVertex(i).getYVal()]);
+            for (let i = 0; i < answerGraph.getNumberVertices(); ++i) {
+                let dist = euclideanDistance([x, y], [answerGraph.getVertex(i).getXVal(), answerGraph.getVertex(i).getYVal()]);
                 if (dist <= vertexRadius) {
                     return i;
                 }
@@ -50,7 +50,7 @@ function installMouseHandler() {
         }
 
         clickedVertexIndex = getVertexIndex();
-        selectedVertex =  graph.getVertex(clickedVertexIndex);
+        selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
 
         graphics.strokeStyle = "red";
         graphics.lineWidth = 2;
@@ -67,7 +67,7 @@ function installMouseHandler() {
             // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
 
             if(userType=="student"){
-                document.getElementById("editvertexValueLabel").innerHTML = "Value: " + graph.getVertex(clickedVertexIndex).getVertexVal();
+                document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
                 document.getElementById("editvertexColor").value = selectedVertex.getColor();
             }else if (userType=="lecturer"){
                 document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
@@ -104,7 +104,7 @@ function installMouseHandler() {
 
         if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
             if(clickedVertexIndex != -1){
-                graph.updateXandYVal(selectedVertex, x, y);
+                answerGraph.updateXandYVal(selectedVertex, x, y);
                 redraw();
                 graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
                     selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
@@ -135,7 +135,7 @@ function handleKeyDown(event) {
             addedVertices.push(selectedVertex.getVertexID());
             unusedVertices.push(selectedVertex.getVertexID());
 
-            graph.removeVertex(selectedVertex.getVertexID());
+            answerGraph.removeVertex(selectedVertex.getVertexID());
 
             for(let i=0;i<addedVertices.length;i++){
                 if(addedVertices[i] == selectedVertex.getVertexID()){

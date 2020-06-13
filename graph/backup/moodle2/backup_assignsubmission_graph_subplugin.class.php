@@ -23,7 +23,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Provides the information to backup graph submissions
+ * Provides the information to backup answerGraph submissions
  *
  * This just adds its filearea to the annotations and records the submissiongraph and format
  *
@@ -43,7 +43,7 @@ class backup_assignsubmission_graph_subplugin extends backup_subplugin {
         $subpluginwrapper = new backup_nested_element($this->get_recommended_name());
         $subpluginelement = new backup_nested_element('submission_graph',
                                                       null,
-                                                      array('graph', 'graphformat', 'submission'));
+                                                      array('answerGraph', 'graphformat', 'submission'));
 
         // Connect XML elements into the tree.
         $subplugin->add_child($subpluginwrapper);

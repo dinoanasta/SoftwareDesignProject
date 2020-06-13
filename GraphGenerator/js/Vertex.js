@@ -71,7 +71,7 @@ class Vertex{
     }
 
     drawVertex (){
-        if(this == graph.getSourceNode()){
+        if(this == answerGraph.getSourceNode()){
             graphics.strokeStyle = "red";
 
         }else{

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Tests for mod/assign/submission/graph/locallib.php
+ * Tests for mod/assign/submission/answerGraph/locallib.php
  *
  * @package   assignsubmission_graph
  * @copyright 2016 Cameron Ball
@@ -28,7 +28,7 @@ global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/generator.php');
 
 /**
- * Unit tests for mod/assign/submission/graph/locallib.php
+ * Unit tests for mod/assign/submission/answerGraph/locallib.php
  *
  * @copyright  2016 Cameron Ball
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -56,7 +56,7 @@ class assignsubmission_graph_locallib_testcase extends advanced_testcase {
 
         $this->setUser($student->id);
 
-        $plugin = $assign->get_submission_plugin_by_type('graph');
+        $plugin = $assign->get_submission_plugin_by_type('answerGraph');
         $result = $plugin->submission_is_empty((object) [
                 'graph_editor' => [
                     'text' => $submissiontext,

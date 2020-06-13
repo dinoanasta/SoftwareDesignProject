@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file contains the definition for the library class for graph submission plugin
+ * This file contains the definition for the library class for answerGraph submission plugin
  *
  * This class provides all the functionality for the new assign module.
  *
@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 define('ASSIGNSUBMISSION_graph_FILEAREA', 'submissions_graph');
 
 /**
- * library class for graph submission plugin extending submission plugin base class
+ * library class for answerGraph submission plugin extending submission plugin base class
  *
  * @package assignsubmission_graph
  * @copyright 2020 Chloë Smith <1877342@students.wits.ac.za>
@@ -42,12 +42,12 @@ class assign_submission_graph extends assign_submission_plugin {
      * @return string
      */
     public function get_name() {
-        return get_string('graph', 'assignsubmission_graph');
+        return get_string('answerGraph', 'assignsubmission_graph');
     }
 
 
     /**
-     * Get graph submission information from the database
+     * Get answerGraph submission information from the database
      *
      * @param  int $submissionid
      * @return mixed
@@ -75,7 +75,7 @@ class assign_submission_graph extends assign_submission_plugin {
     }
 
     /**
-     * Get the settings for graph submission plugin
+     * Get the settings for answerGraph submission plugin
      *
      * @param MoodleQuickForm $mform The form to add elements to
      * @return void
@@ -129,7 +129,7 @@ class assign_submission_graph extends assign_submission_plugin {
     }
 
     /**
-     * Save the settings for graph submission plugin
+     * Save the settings for answerGraph submission plugin
      *
      * @param stdClass $data
      * @return bool
@@ -184,8 +184,8 @@ class assign_submission_graph extends assign_submission_plugin {
         $editoroptions = $this->get_edit_options();
         $submissionid = $submission ? $submission->id : 0;
 
-        if (!isset($data->graph)) {
-            $data->graph = '';
+        if (!isset($data->answerGraph)) {
+            $data->answerGraph = '';
         }
         if (!isset($data->graphformat)) {
             $data->graphformat = editors_get_preferred_format();
@@ -194,14 +194,14 @@ class assign_submission_graph extends assign_submission_plugin {
         if ($submission) {
             $graphsubmission = $this->get_graph_submission($submission->id);
             if ($graphsubmission) {
-                $data->graph = $graphsubmission->graph;
+                $data->answerGraph = $graphsubmission->answerGraph;
                 $data->graphformat = $graphsubmission->graphformat;
             }
 
         }
 
         $data = file_prepare_standard_editor($data,
-                                             'graph',
+                                             'answerGraph',
                                              $editoroptions,
                                              $this->assignment->get_context(),
                                              'assignsubmission_graph',
@@ -295,7 +295,7 @@ class assign_submission_graph extends assign_submission_plugin {
         $editoroptions = $this->get_edit_options();
 
         $data = file_postupdate_standard_editor($data,
-                                                'graph',
+                                                'answerGraph',
                                                 $editoroptions,
                                                 $this->assignment->get_context(),
                                                 'assignsubmission_graph',
@@ -319,7 +319,7 @@ class assign_submission_graph extends assign_submission_plugin {
             'objectid' => $submission->id,
             'other' => array(
                 'pathnamehashes' => array_keys($files),
-                'content' => trim($data->graph),
+                'content' => trim($data->answerGraph),
                 'format' => $data->graph_editor['format']
             )
         );
@@ -355,7 +355,7 @@ class assign_submission_graph extends assign_submission_plugin {
 
         if ($graphsubmission) {
 
-            $graphsubmission->graph = $data->graph;
+            $graphsubmission->answerGraph = $data->answerGraph;
             $graphsubmission->graphformat = $data->graph_editor['format'];
             $params['objectid'] = $graphsubmission->id;
             $updatestatus = $DB->update_record('assignsubmission_graph', $graphsubmission);
@@ -366,7 +366,7 @@ class assign_submission_graph extends assign_submission_plugin {
         } else {
 
             $graphsubmission = new stdClass();
-            $graphsubmission->graph = $data->graph;
+            $graphsubmission->answerGraph = $data->answerGraph;
             $graphsubmission->graphformat = $data->graph_editor['format'];
 
             $graphsubmission->submission = $submission->id;
@@ -386,7 +386,7 @@ class assign_submission_graph extends assign_submission_plugin {
      * @return array An array of field names and descriptions. (name=>description, ...)
      */
     public function get_editor_fields() {
-        return array('graph' => get_string('pluginname', 'assignsubmission_graph'));
+        return array('answerGraph' => get_string('pluginname', 'assignsubmission_graph'));
     }
 
     /**
@@ -434,7 +434,7 @@ class assign_submission_graph extends assign_submission_plugin {
         if ($graphsubmission) {
             // Do not pass the text through format_text. The result may not be displayed in Moodle and
             // may be passed to external services such as document conversion or portfolios.
-            $formattedtext = $this->assignment->download_rewrite_pluginfile_urls($graphsubmission->graph, $user, $this);
+            $formattedtext = $this->assignment->download_rewrite_pluginfile_urls($graphsubmission->answerGraph, $user, $this);
             $head = '<head><meta charset="UTF-8"></head>';
 
             //TODO
@@ -477,7 +477,7 @@ class assign_submission_graph extends assign_submission_plugin {
             $result .= $this->assignment->render_editor_content(ASSIGNSUBMISSION_graph_FILEAREA,
                                                                 $graphsubmission->submission,
                                                                 $this->get_type(),
-                                                                'graph',
+                                                                'answerGraph',
                                                                 'assignsubmission_graph');
 
             //TODO
@@ -530,14 +530,14 @@ class assign_submission_graph extends assign_submission_plugin {
         global $DB;
 
         $graphsubmission = new stdClass();
-        $graphsubmission->graph = $oldsubmission->data1;
+        $graphsubmission->answerGraph = $oldsubmission->data1;
         $graphsubmission->graphformat = $oldsubmission->data2;
 
         $graphsubmission->submission = $submission->id;
         $graphsubmission->assignment = $this->assignment->get_instance()->id;
 
-        if ($graphsubmission->graph === null) {
-            $graphsubmission->graph = '';
+        if ($graphsubmission->answerGraph === null) {
+            $graphsubmission->answerGraph = '';
         }
 
         if ($graphsubmission->graphformat === null) {
@@ -650,12 +650,12 @@ class assign_submission_graph extends assign_submission_plugin {
     }
 
     /**
-     * Return a description of external params suitable for uploading an graph submission from a webservice.
+     * Return a description of external params suitable for uploading an answerGraph submission from a webservice.
      *
      * @return external_description|null
      */
     public function get_external_parameters() {
-        $editorparams = array('text' => new external_value(PARAM_RAW, 'The graph for this submission.'),
+        $editorparams = array('text' => new external_value(PARAM_RAW, 'The answerGraph for this submission.'),
                               'format' => new external_value(PARAM_INT, 'The format for this submission'),
                               'itemid' => new external_value(PARAM_INT, 'The draft area id for files attached to the submission'));
         $editorstructure = new external_single_structure($editorparams, 'Editor structure', VALUE_OPTIONAL);
