@@ -132,16 +132,7 @@ function handleKeyDown(event) {
     let keyCode = event.keyCode;
     switch (keyCode) {
         case 46: //Delete
-            // addedVertices.push(selectedVertex.getVertexID());
-            // unusedVertices.push(selectedVertex.getVertexID());
-            //
-            // graph.removeVertex(vertexIndex);
-            //
-            // for(let i=0;i<addedVertices.length;i++){
-            //     if(addedVertices[i] == vertexID){
-            //         addedVertices.splice(i, 1);
-            //     }
-            // }
+            console.log("FTS")
 
             console.log("Delete button pressed");
 
