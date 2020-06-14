@@ -13,7 +13,9 @@ let clickedVertexIndex = -1;
 
 //Question Setup
 let questionType;
-let questionCode;
+// let questionCode;
+let questionCode = null;
+let isCreate = false;
 let questionLoaded = false;
 
 //Weighted
@@ -112,8 +114,8 @@ function doAddVertex() {
 
   if(valueText.value.length != 0){
     let value = valueText.value;
-    let x = Math.random()*200 + 250;
-    let y = Math.random()*200 + 200;
+    let x = Math.random()*450 + 50;
+    let y = Math.random()*350 + 50;
     if(colored){
       if(colorText.value.length != 0){
         color = colorText.value;
@@ -443,15 +445,18 @@ function doClear() {
   setupInterface(questionType);
 
   //Reset variables
-  selectedVertex = null;
+
 
   graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
   questionGraph = new Graph();
 
   clickedVertexIndex = -1;
 
+  selectedVertex = null;
+
   questionType;
-  questionCode;
+  questionCode = null;
+  isCreate = false;
   questionLoaded = false;
 
   weight = 0;
@@ -613,9 +618,64 @@ function setupInterface(){
 }
 
 
+// function doSetQuestion() {
+//   let dropDown = document.getElementById("questionTypeDD");
+//   let qCode = document.getElementById("questionCodeLecturer");
+//   if (dropDown.selectedIndex != 0 && qCode.value.length != 0) {
+//     switch (dropDown.selectedIndex) {
+//       case 1:
+//         questionType = "bfs";
+//         break;
+//       case 2:
+//         questionType = "dfs";
+//         break;
+//       case 3:
+//         questionType = "mwst";
+//         break;
+//       case 4:
+//         questionType = "graphcolouring";
+//         break;
+//       case 5:
+//         questionType = "shortestpath";
+//         break;
+//     }
+//
+//     //Disable question setup stuff
+//     // document.getElementById("questionSetupDiv").style.display = "none";
+//     // document.getElementById("edgeDiv").style.display = "initial";
+//     // document.getElementById("addVertexDiv").style.display = "initial";
+//     // document.getElementById("editVertexDiv").style.display = "initial";
+//     // document.getElementById("deleteVertexDiv").style.display = "initial";
+//
+//     setupInterface(questionType);
+//
+//     questionCode = qCode.value;
+//
+//     alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
+//
+//   } else {
+//     alert("Please select a question type and enter a code");
+//   }
+// }
+//
+// //When lecturer submits graph
+// function doCreate() {
+//   try {
+//     var data = {
+//       id: questionCode,
+//       graph: graph.convertGraphToString(questionType, questionType)
+//     }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
+//     ref.push(data);
+//     alert("Lecturer question successfully submitted");
+//   } catch (err) {
+//     alert("Error occured while trying to submit lecturer question graph");
+//   }
+// }
+
 function doSetQuestion() {
   let dropDown = document.getElementById("questionTypeDD");
   let qCode = document.getElementById("questionCodeLecturer");
+  isCreate = false;
   if (dropDown.selectedIndex != 0 && qCode.value.length != 0) {
     switch (dropDown.selectedIndex) {
       case 1:
@@ -645,8 +705,8 @@ function doSetQuestion() {
     setupInterface(questionType);
 
     questionCode = qCode.value;
-
-    alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
+    //Jesse_new
+    validifyQuestionCode(questionCode);
 
   } else {
     alert("Please select a question type and enter a code");
@@ -655,15 +715,62 @@ function doSetQuestion() {
 
 //When lecturer submits graph
 function doCreate() {
-  try {
-    var data = {
-      id: questionCode,
-      graph: graph.convertGraphToString(questionType, questionType)
-    }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
-    ref.push(data);
-    alert("Lecturer question successfully submitted");
-  } catch (err) {
-    alert("Error occured while trying to submit lecturer question graph");
+  //Jesse_new
+  if (questionCode!=null) {
+    try {
+      var data = {
+        id: questionCode,
+        graph: graph.convertGraphToString(questionType, questionType)
+      }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
+
+      //Jesse_new
+      isCreate = true;
+      // console.log("isWeighted:",graph.isWeighted(),
+      //   "isDirected:",graph.isDirected(),graph.getAdjacenyMatrix());
+
+      ref.push(data);
+      //Jesse_new
+      alert("Lecturer question successfully submitted");
+    } catch (err) {
+      alert("Error occured while trying to submit lecturer question graph");
+    }
+  }else{
+    alert("Confirm/enter question code.");
   }
+}
+
+//Jesse_new
+function gotData(data) {
+  if (isCreate) {
+    questionCode = null;
+  } else {
+    var data = data.val();
+    var keys = Object.keys(data);
+    var foundQuestionGraph = false;
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      if (data[k].id === questionCode) {
+        foundQuestionGraph = true;
+        break;
+      }
+    }
+    if (foundQuestionGraph) {
+      alert("Question code already exists, please choose a new one.");
+      questionCode = null;
+    } else {
+      alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
+    }
+  }
+}
+
+//Jesse_new
+function errorData(err) {
+  alert("An error has occured while trying to validify the question code. Please try again.");
+}
+
+//Jesse_new
+function validifyQuestionCode(questionCode) {
+  //fetch data, scan if question code has been used
+  ref.on("value", gotData, errorData);
 }
 

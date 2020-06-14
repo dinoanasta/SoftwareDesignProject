@@ -39,7 +39,7 @@ function installMouseHandler() {
             return Math.sqrt(xdiff + ydiff);
         }
 
-        function getVertexIndex() {
+        function getVertexIndex(graph) {
             for (let i = 0; i < graph.getNumberVertices(); ++i) {
                 let dist = euclideanDistance([x, y], [graph.getVertex(i).getXVal(), graph.getVertex(i).getYVal()]);
                 if (dist <= vertexRadius) {
@@ -49,8 +49,13 @@ function installMouseHandler() {
             return -1;
         }
 
-        clickedVertexIndex = getVertexIndex();
-        selectedVertex =  graph.getVertex(clickedVertexIndex);
+        if(userType == "student"){
+            clickedVertexIndex = getVertexIndex(answerGraph);
+            selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
+        }else if (userType=="lecturer"){
+            clickedVertexIndex = getVertexIndex(graph);
+            selectedVertex =  graph.getVertex(clickedVertexIndex);
+        }
 
         graphics.strokeStyle = "red";
         graphics.lineWidth = 2;
@@ -67,14 +72,14 @@ function installMouseHandler() {
             // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
 
             if(userType=="student"){
-                document.getElementById("editvertexValueLabel").innerHTML = "Value: " + graph.getVertex(clickedVertexIndex).getVertexVal();
+                document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
                 document.getElementById("editvertexColor").value = selectedVertex.getColor();
             }else if (userType=="lecturer"){
                 document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
                 document.getElementById("editvertexColor").value = selectedVertex.getColor();
             }
 
-            document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex+1;
+            // document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex+1;
         }else{
             if(userType=="student"){
                 document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
@@ -84,7 +89,7 @@ function installMouseHandler() {
                 document.getElementById("editvertexColor").value = "";
             }
 
-            document.getElementById("deleteVertexDD").selectedIndex = 0;
+            // document.getElementById("deleteVertexDD").selectedIndex = 0;
 
             redraw();
 
@@ -104,7 +109,11 @@ function installMouseHandler() {
 
         if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
             if(clickedVertexIndex != -1){
-                graph.updateXandYVal(selectedVertex, x, y);
+                if(userType=="student"){
+                    answerGraph.updateXandYVal(selectedVertex, x, y);
+                }else if (userType=="lecturer"){
+                    graph.updateXandYVal(selectedVertex, x, y);
+                }
                 redraw();
                 graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
                     selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
@@ -129,15 +138,14 @@ function installMouseHandler() {
 }
 
 function handleKeyDown(event) {
-    let keyCode = event.keyCode;
-    switch (keyCode) {
-        case 46: //Delete
-            console.log("FTS")
-
-            console.log("Delete button pressed");
-
-            populateDropDowns();
-            redraw();
+    if(userType=="lecturer"){
+        let keyCode = event.keyCode;
+        switch (keyCode) {
+            case 46: //Delete
+                graph.removeVertex(selectedVertex.getVertexID());
+                populateDropDowns();
+                redraw();
+        }
     }
 }
 

@@ -8,6 +8,7 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
+
   <meta charset="UTF-8">
   <title>Graph Generator - Student</title>
 
@@ -122,32 +123,39 @@
 
         <button id="loadGraphButton" onclick="doLoadGraph()">Load Graph</button>
 
-        <button id="drawGraphButton" onclick="doDrawGraph()">Draw Graph</button>
+        <button id="drawGraphButton" onclick="doDrawGraph()">Complete Graph</button>
+
+        <!--            Clear Button-->
+        <br>
+        <button style="height:5vh" , id="clearButton" onclick="doClear()">Reset</button>
 
       </div>
 
       <br>
 
       <!--        Adding vertices-->
-      <div id="addVertexDiv">
-        <h3>Add vertex:</h3>
+      <div id="editRootDiv">
+<!--        <h3>Add vertex:</h3>-->
 
-        <label id="addVertexDDLabel">Vertex:</label>
-        <select id="addVertexDD">
-          <option>Choose vertex to add</option>
-        </select>
-        <br>
+<!--        <label id="addVertexDDLabel">Vertex:</label>-->
+<!--        <select id="addVertexDD">-->
+<!--          <option>Choose vertex to add</option>-->
+<!--        </select>-->
+<!--        <br>-->
 
-        <button id="addVertexButton">Add vertex</button>
+<!--        <button id="addVertexButton">Add vertex</button>-->
 
 
         <!--        Set root vertex-->
 
-        <br>
+        <h3>Edit root:</h3>
+
         <label id="setRootDDLabel">Set Root:</label>
         <select id="setRootDD">
           <option>Choose root vertex</option>
         </select>
+<!--        <button id="setRootButton">Set Root</button>-->
+
         <button id="clearRootButton">Clear Root</button>
 
         <br>
@@ -156,7 +164,7 @@
 
       <!--        Editing vertices-->
       <div id="editVertexDiv">
-        <h3>Edit vertex:</h3>
+        <h3>Edit color:</h3>
 
         <label id="editVertexDDLabel">Vertex:</label>
         <select id="editVertexDD">
@@ -171,9 +179,9 @@
         <input type="text" id="editvertexColor">
         <br>
 
-        <label id="editdistFromRootLabel">Distance:</label>
-        <input type="text" id="editdistFromRoot">
-        <br>
+<!--        <label id="editdistFromRootLabel">Distance:</label>-->
+<!--        <input type="text" id="editdistFromRoot">-->
+<!--        <br>-->
 
         <button id="updateVertexButton">Update vertex</button>
       </div>
@@ -181,17 +189,17 @@
       <br>
 
       <!--        Delete vertex-->
-      <div id="deleteVertexDiv">
-        <h3>Delete vertex:</h3>
+<!--      <div id="deleteVertexDiv">-->
+<!--        <h3>Delete vertex:</h3>-->
 
-        <label id="deleteVertexDDLabel">Vertex:</label>
-        <select id="deleteVertexDD">
-          <option>Choose vertex to delete</option>
-        </select>
-        <br>
+<!--        <label id="deleteVertexDDLabel">Vertex:</label>-->
+<!--        <select id="deleteVertexDD">-->
+<!--          <option>Choose vertex to delete</option>-->
+<!--        </select>-->
+<!--        <br>-->
 
-        <button id="deleteVertexButton">Delete vertex</button>
-      </div>
+<!--        <button id="deleteVertexButton">Delete vertex</button>-->
+<!--      </div>-->
     </div>
 
     <!--        Edge stuff - 3rd column-->
@@ -210,24 +218,22 @@
         <button id="addEdgeButton">Add edge</button>
       </div>
 
-      <br>
-
       <!--     Update edge-->
-      <div id="updateEdgeDiv">
-        <h3>Update edge:</h3>
+<!--      <div id="updateEdgeDiv">-->
+<!--        <h3>Update edge:</h3>-->
 
-        <label id="updateEdgeDDLabel">Edge:</label>
-        <select id="updateEdgeDD">
-          <option>Choose edge to upate</option>
-        </select>
-        <br>
+<!--        <label id="updateEdgeDDLabel">Edge:</label>-->
+<!--        <select id="updateEdgeDD">-->
+<!--          <option>Choose edge to upate</option>-->
+<!--        </select>-->
+<!--        <br>-->
 
-        <label id="editWeightLabel">Weight:</label>
-        <input type="text" id="editWeight">
-        <br>
+<!--        <label id="editWeightLabel">Weight:</label>-->
+<!--        <input type="text" id="editWeight">-->
+<!--        <br>-->
 
-        <button id="updateEdgeButton">Update edge</button>
-      </div>
+<!--        <button id="updateEdgeButton">Update edge</button>-->
+<!--      </div>-->
 
       <br>
 
@@ -244,12 +250,10 @@
         <button id="deleteEdgeButton">Delete edge</button>
       </div>
 
-      <!--            Clear Button-->
-      <br><br>
-      <button style="height:5vh" , id="clearButton" onclick="doClear()">Clear</button>
+      <br><br><br>
 
       <!--            Submit Button-->
-      <button style="height:5vh" , id="submitButton" , onclick="doSubmit()">Submit</button>
+      <button style="height:10vh" , id="submitButton" , onclick="doSubmit()">Submit</button>
 
     </div>
   </div>

@@ -5,7 +5,7 @@ class ColMarker{
 
     isColoured(h) {
         //initialize graph
-        var temp = h.convertGraphToString(questionCode,questionType);
+        var temp = h.convertGraphToString("","");
         let g = new Graph();
         g.fillGraphWithString(temp);
         //initialize check variables and vertex array

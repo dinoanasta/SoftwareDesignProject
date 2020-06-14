@@ -79,9 +79,8 @@ class Vertex{
                 graphics.strokeStyle = "black";
             }
         }else if (userType=="student"){
-            if(this == graph.getSourceNode()){
+            if(this == answerGraph.getSourceNode()){
                 graphics.strokeStyle = "red";
-
             }else{
                 graphics.strokeStyle = "black";
             }
