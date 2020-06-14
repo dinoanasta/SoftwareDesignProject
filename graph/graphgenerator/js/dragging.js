@@ -41,8 +41,8 @@ function installMouseHandler() {
         }
 
         function getVertexIndex() {
-            for (let i = 0; i < answerGraph.getNumberVertices(); ++i) {
-                let vertex = answerGraph.getVertex(i);
+            for (let i = 0; i < graph.getNumberVertices(); ++i) {
+                let vertex = graph.getVertex(i);
 
                 let dist = euclideanDistance([x, y], [vertex.getXVal(), vertex.getYVal()]);
                 console.log(dist);
@@ -54,7 +54,7 @@ function installMouseHandler() {
         }
 
         let index = getVertexIndex();
-        selectedVertex = answerGraph.getVertex(index);
+        selectedVertex = graph.getVertex(index);
         console.log(selectedVertex);
     }
 
@@ -69,7 +69,7 @@ function installMouseHandler() {
         var y = Math.round(evt.clientY - r.top);
 
         // selectedVertex.updateCoOrds(x,y);
-        answerGraph.updateXandYVal(selectedVertex.vertexID, x, y);
+        graph.updateXandYVal(selectedVertex.vertexID, x, y);
         //
         // for(let i=0; i<selectedVertex.getAdjacenyList.size; i++){
         //     let adjacent = selectedVertex.getAdjacenyList(i);

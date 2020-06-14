@@ -56,7 +56,7 @@ class assignsubmission_graph_events_testcase extends advanced_testcase {
         ];
 
         $sink = $this->redirectEvents();
-        $plugin = $assign->get_submission_plugin_by_type('answerGraph');
+        $plugin = $assign->get_submission_plugin_by_type('graph');
         $plugin->save($submission, $data);
         $events = $sink->get_events();
 
@@ -80,7 +80,7 @@ class assignsubmission_graph_events_testcase extends advanced_testcase {
     }
 
     /**
-     * Test that the submission_created event is fired when an answerGraph submission is saved.
+     * Test that the submission_created event is fired when an graph submission is saved.
      */
     public function test_submission_created() {
         $this->resetAfterTest();
@@ -102,7 +102,7 @@ class assignsubmission_graph_events_testcase extends advanced_testcase {
         ];
 
         $sink = $this->redirectEvents();
-        $plugin = $assign->get_submission_plugin_by_type('answerGraph');
+        $plugin = $assign->get_submission_plugin_by_type('graph');
         $plugin->save($submission, $data);
         $events = $sink->get_events();
 
@@ -118,7 +118,7 @@ class assignsubmission_graph_events_testcase extends advanced_testcase {
     }
 
     /**
-     * Test that the submission_updated event is fired when an answerGraph
+     * Test that the submission_updated event is fired when an graph
      * submission is saved and an existing submission already exists.
      */
     public function test_submission_updated() {
@@ -141,7 +141,7 @@ class assignsubmission_graph_events_testcase extends advanced_testcase {
         ];
 
         $sink = $this->redirectEvents();
-        $plugin = $assign->get_submission_plugin_by_type('answerGraph');
+        $plugin = $assign->get_submission_plugin_by_type('graph');
         $plugin->save($submission, $data);
         $sink->clear();
 

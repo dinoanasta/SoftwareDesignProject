@@ -28,7 +28,7 @@ global $CFG;
 require_once($CFG->dirroot . '/mod/assign/tests/privacy_test.php');
 
 /**
- * Unit tests for mod/assign/submission/answerGraph/classes/privacy/
+ * Unit tests for mod/assign/submission/graph/classes/privacy/
  *
  * @copyright  2018 Adrian Greeve <adrian@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -57,7 +57,7 @@ class assignsubmission_online_privacy_testcase extends \mod_assign\tests\mod_ass
 
         $submission = $assign->get_user_submission($student->id, true);
 
-        $plugin = $assign->get_submission_plugin_by_type('answerGraph');
+        $plugin = $assign->get_submission_plugin_by_type('graph');
         $plugin->save($submission, $data);
 
         return [$plugin, $submission];

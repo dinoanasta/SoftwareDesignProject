@@ -34,8 +34,8 @@ function xmldb_assignsubmission_graph_install() {
     require_once($CFG->dirroot . '/mod/assign/adminlib.php');
     $pluginmanager = new assign_plugin_manager('assignsubmission');
 
-    $pluginmanager->move_plugin('answerGraph', 'up');
-    $pluginmanager->move_plugin('answerGraph', 'up');
+    $pluginmanager->move_plugin('graph', 'up');
+    $pluginmanager->move_plugin('graph', 'up');
 
     return true;
 }

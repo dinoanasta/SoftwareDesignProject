@@ -51,7 +51,7 @@ class submission_updated extends \mod_assign\event\submission_updated {
      * @return string
      */
     public function get_description() {
-        $descriptionstring = "The user with id '$this->userid' updated a answerGraph submission in the assignment with course module id " .
+        $descriptionstring = "The user with id '$this->userid' updated a graph submission in the assignment with course module id " .
             "'$this->contextinstanceid'";
         if (!empty($this->other['groupid'])) {
             $descriptionstring .= " for the group with id '{$this->other['groupid']}'.";

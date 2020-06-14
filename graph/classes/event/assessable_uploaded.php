@@ -48,7 +48,7 @@ class assessable_uploaded extends \core\event\assessable_uploaded {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' has saved a answerGraph submission with id '$this->objectid' " .
+        return "The user with id '$this->userid' has saved a graph submission with id '$this->objectid' " .
             "in the assignment activity with course module id '$this->contextinstanceid'.";
     }
 

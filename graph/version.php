@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file contains the version information for the answerGraph submission plugin
+ * This file contains the version information for the graph submission plugin
  *
  * @package    assignsubmission_graph
  * @copyright 2020 Chloë Smith <1877342@students.wits.ac.za>

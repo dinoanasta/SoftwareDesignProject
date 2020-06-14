@@ -71,12 +71,22 @@ class Vertex{
     }
 
     drawVertex (){
-        if(this == answerGraph.getSourceNode()){
-            graphics.strokeStyle = "red";
+        if(userType=="lecturer"){
+            if(this == graph.getSourceNode()){
+                graphics.strokeStyle = "red";
 
-        }else{
-            graphics.strokeStyle = "black";
+            }else{
+                graphics.strokeStyle = "black";
+            }
+        }else if (userType=="student"){
+            if(this == graph.getSourceNode()){
+                graphics.strokeStyle = "red";
+
+            }else{
+                graphics.strokeStyle = "black";
+            }
         }
+
         graphics.lineWidth = 5;
         graphics.strokeCircle(this.getXVal(), this.getYVal(), vertexRadius);
 

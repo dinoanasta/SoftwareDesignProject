@@ -43,7 +43,7 @@ class submission_created extends \mod_assign\event\submission_created {
      * @return string
      */
     public function get_description() {
-        $descriptionstring = "The user with id '$this->userid' created a answerGraph submission with course module id " .
+        $descriptionstring = "The user with id '$this->userid' created a graph submission with course module id " .
             "'$this->contextinstanceid'";
         if (!empty($this->other['groupid'])) {
             $descriptionstring .= " for the group with id '{$this->other['groupid']}'.";
