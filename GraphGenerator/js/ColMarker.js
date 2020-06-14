@@ -3,7 +3,11 @@ class ColMarker{
     constructor() {
     }
 
-    isColoured(g) {
+    isColoured(h) {
+        //initialize graph
+        var temp = h.convertGraphToString(questionCode,questionType);
+        let g = new Graph();
+        g.fillGraphWithString(temp);
         //initialize check variables and vertex array
         var flag1 = true;
         var flag2 = true;
