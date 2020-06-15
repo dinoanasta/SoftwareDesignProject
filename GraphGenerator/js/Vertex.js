@@ -72,14 +72,13 @@ class Vertex{
 
     drawVertex (){
         if(userType=="lecturer"){
-            if(this == graph.getSourceNode()){
+            if(this.getVertexID() == graph.getSourceNode()){
                 graphics.strokeStyle = "red";
-
             }else{
                 graphics.strokeStyle = "black";
             }
         }else if (userType=="student"){
-            if(this == answerGraph.getSourceNode()){
+            if(this.getVertexID() == answerGraph.getSourceNode()){
                 graphics.strokeStyle = "red";
             }else{
                 graphics.strokeStyle = "black";

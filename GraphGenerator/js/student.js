@@ -41,7 +41,7 @@ function addBindings(){
     document.getElementById("updateVertexButton").onclick = doUpdateVertex;
     // document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
     document.getElementById("setRootDD").onchange = setRoot;
-    // document.getElementById("setRootButton").onclick = setRoot;
+    document.getElementById("setRootButton").onclick = setRoot;
     document.getElementById("clearRootButton").onclick = removeRootVertex;
     document.getElementById("clearButton").onclick = doClear;
 
@@ -102,6 +102,9 @@ function doLoadGraph(){ //When student enters code and presses the load button
                 answerGraph.edges = [];
                 answerGraph.directedEdges = [];
             }
+
+            answerGraph.setSourceNode(0);
+            questionGraph.setSourceNode(0);
 
             populateDropDowns();
             redraw();
@@ -644,9 +647,9 @@ function setupInterface(){
     }
 
     if(colored){
-        // document.getElementById("editVertexDiv").style.display = "initial";
-        // document.getElementById("editvertexColor").style.display = "initial";
-        // document.getElementById("editvertexColorLabel").style.display = "initial";
+        document.getElementById("editVertexDiv").style.display = "initial";
+        document.getElementById("editvertexColor").style.display = "initial";
+        document.getElementById("editvertexColorLabel").style.display = "initial";
 
         document.getElementById("addEdgeDiv").style.display = "none";
         document.getElementById("deleteEdgeDiv").style.display = "none";
@@ -662,16 +665,15 @@ function setupInterface(){
         document.getElementById("editVertexDiv").appendChild(document.createElement("br"));
         document.getElementById("editVertexDiv").appendChild(document.createElement("br"));
         document.getElementById("editVertexDiv").appendChild(submitButton);
-
     }else if(!colored){
         document.getElementById("editVertexDiv").style.display = "none";
         document.getElementById("editvertexColor").style.display = "none";
         document.getElementById("editvertexColorLabel").style.display = "none";
 
-        // document.getElementById("addEdgeDiv").style.display = "initial";
-        // document.getElementById("deleteEdgeDiv").style.display = "initial";
-        // document.getElementById("drawGraphButton").style.display = "initial";
-        // document.getElementById("clearButton").style.display = "initial";
+        document.getElementById("addEdgeDiv").style.display = "initial";
+        document.getElementById("deleteEdgeDiv").style.display = "initial";
+        document.getElementById("drawGraphButton").style.display = "initial";
+        document.getElementById("clearButton").style.display = "initial";
     }
 
 }

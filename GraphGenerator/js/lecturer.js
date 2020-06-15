@@ -209,7 +209,7 @@ function setRoot(){
 
   if(dropDown.selectedIndex != 0){
     let vertexID = dropDown.options[dropDown.selectedIndex].value;
-    graph.setSourceNode(graph.getVertex(vertexID));
+    graph.setSourceNode(vertexID);
 
     populateDropDowns();
     redraw();
