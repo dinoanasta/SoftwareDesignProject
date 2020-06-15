@@ -1,6 +1,7 @@
 //Graph class stores array of vertices, undirected/directed edges and source node
 const { Vertex } = require("./Vertex");
 const { Edge } = require("./Edge");
+//Graph class stores array of vertices, undirected/directed edges and source node
 class Graph {
   constructor(adjMatrix = null) {
     this.vertices = new Array();
@@ -57,8 +58,8 @@ class Graph {
       var curr_v1_id = curr_edge.getVertexOne().getVertexID();
       var curr_v2_id = curr_edge.getVertexTwo().getVertexID();
       if (
-        (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
-        (curr_v1_id == v2_id && curr_v2_id == v1_id)
+          (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
+          (curr_v1_id == v2_id && curr_v2_id == v1_id)
       ) {
         return curr_edge;
       }
@@ -116,8 +117,8 @@ class Graph {
     var numberVertices = this.getNumberVertices();
     //Initialise matrix and fill with all 0's
     var adjMatrix = new Array(numberVertices)
-      .fill()
-      .map(() => new Array(numberVertices).fill(0));
+        .fill()
+        .map(() => new Array(numberVertices).fill(0));
     //For each undirected edge update matrix
     for (var i = 0; i < this.edges.length; i++) {
       var curr_edge = this.edges[i];
@@ -143,6 +144,15 @@ class Graph {
     this.vertices.push(v);
   }
 
+  // addStudentVertex(vertexID, vertexVal, xVal, yVal, color) {
+  //   var v = new Vertex(vertexID, vertexVal, xVal, yVal, color);
+  //   this.vertices.push(v);
+  // }
+  //
+  // addStudentVertex(vertex) {
+  //   this.vertices.push(vertex);
+  // }
+
   //Add undirected edge between two vertices based on their id's given, with given weight or default weight of 1
   addEdge(v1_id, v2_id, weight = 1) {
     //First check that it doesn't already exist in either undirected/directed edges
@@ -157,8 +167,8 @@ class Graph {
       var curr_v2_id = curr_edge.getVertexTwo().getVertexID();
       //Check if the current edge is the same as the edge we are trying to add
       if (
-        (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
-        (curr_v1_id == v2_id && curr_v2_id == v1_id)
+          (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
+          (curr_v1_id == v2_id && curr_v2_id == v1_id)
       ) {
         edgeExists = true;
         edgeExistsInUndirected = true;
@@ -173,8 +183,8 @@ class Graph {
         var curr_v2_id = curr_edge.getVertexTwo().getVertexID();
         //Check if the current edge is the same as the edge we are trying to add
         if (
-          (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
-          (curr_v1_id == v2_id && curr_v2_id == v1_id)
+            (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
+            (curr_v1_id == v2_id && curr_v2_id == v1_id)
         ) {
           edgeExists = true;
           edgeExistsInDirected = true;
@@ -190,7 +200,7 @@ class Graph {
       if (edgeExistsInUndirected) {
         this.updateEdge(v1_id, v2_id, weight);
       }
-      //Else if the edge exists in directed edges, remove both potential directed edges
+          //Else if the edge exists in directed edges, remove both potential directed edges
       //and add the new edge
       else if (edgeExistsInDirected) {
         this.removeDirectedEdge(v1_id, v2_id);
@@ -227,8 +237,8 @@ class Graph {
       var curr_v2_id = curr_edge.getVertexTwo().getVertexID();
       //Check if the current edge is the same as the edge we are trying to add
       if (
-        (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
-        (curr_v1_id == v2_id && curr_v2_id == v1_id)
+          (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
+          (curr_v1_id == v2_id && curr_v2_id == v1_id)
       ) {
         edgeExists = true;
         edgeExistsInUndirected = true;
@@ -286,12 +296,11 @@ class Graph {
     }
   }
 
-  //Update vertex x and y values if it exists
-  updateXandYVal(vertex_id, new_x_val, new_y_val) {
-    var curr_vertex = this.getVertex(vertex_id);
-    if (curr_vertex !== null) {
-      curr_vertex.setXVal(new_x_val);
-      curr_vertex.setYVal(new_y_val);
+  // //Update vertex x and y values if it exists
+  updateXandYVal(vertex, new_x_val, new_y_val) {
+    if (vertex !== null) {
+      vertex.setXVal(new_x_val);
+      vertex.setYVal(new_y_val);
     }
   }
 
@@ -369,9 +378,11 @@ class Graph {
       this.vertices.splice(vertex_id, 1);
 
       //Change all vertex indices to fill hole in array
-      for (var i = 0; i < this.vertices.length; i++) {
-        var curr_vertex = this.vertices[i];
-        curr_vertex.setVertexID(i);
+      if(userType=="lecturer"){
+        for (var i = 0; i < this.vertices.length; i++) {
+          var curr_vertex = this.vertices[i];
+          curr_vertex.setVertexID(i);
+        }
       }
 
       //Set vertex = null to avoid memory leak
@@ -404,8 +415,8 @@ class Graph {
       var curr_v1_id = curr_edge.getVertexOne().getVertexID();
       var curr_v2_id = curr_edge.getVertexTwo().getVertexID();
       if (
-        (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
-        (curr_v1_id == v2_id && curr_v2_id == v1_id)
+          (curr_v1_id == v1_id && curr_v2_id == v2_id) ||
+          (curr_v1_id == v2_id && curr_v2_id == v1_id)
       ) {
         edge_remove = curr_edge;
         ind_remove = i;
@@ -449,8 +460,8 @@ class Graph {
     var numberVertices = this.getNumberVertices();
     //Initialise matrix and fill with all 0's
     var vertices_array = new Array(numberVertices)
-      .fill()
-      .map(() => new Array(5).fill(0));
+        .fill()
+        .map(() => new Array(5).fill(0));
 
     var curr_vertices = this.getVertices();
     for (var i = 0; i < curr_vertices.length; i++) {
@@ -509,5 +520,96 @@ class Graph {
 
     this.setSourceNode(converted_obj.source_node);
   }
+
+  isWeighted() {
+    return this.isWeightedOrDirected()[0];
+  }
+
+  isDirected() {
+    return this.isWeightedOrDirected()[1];
+  }
+
+  isWeightedOrDirected() {
+    var adj_matrix = this.getAdjacenyMatrix();
+    var is_weighted = false;
+    var is_directed = false;
+    for (var i = 0; i < adj_matrix.length; i++) {
+      for (var j = 0; j < adj_matrix[i].length; j++) {
+        if(adj_matrix[i][j]>1){
+          is_weighted = true;
+        }
+        if(adj_matrix[i][j]!=adj_matrix[j][i]){
+          is_directed = true;
+        }
+      }
+    }
+    var return_arr = [];
+    return_arr.push(is_weighted);
+    return_arr.push(is_directed);
+    return return_arr;
+  }
+
+  getVertexEdgeDifferences(inpGraph){
+    //store both sets of vertices and edges
+    //checking in here and not in inp
+    var edges_1 = this.getEdges();
+    var edges_2 = inpGraph.getEdges();
+
+    var dir_edges_1 = this.getDirectedEdges();
+    var dir_edges_2 = inpGraph.getDirectedEdges();
+
+    var edges_avail = [];
+    var dir_edges_avail = [];
+
+    for(var i=0;i<edges_1.length;i++){
+      //for in here vertexs
+      var found_curr_e = false;
+      for(var j=0;j<edges_2.length;j++){
+        //Properly check
+        var edge_1_min_id = Math.min(edges_1[i].getVertexOne().getVertexID(),edges_1[i].getVertexTwo().getVertexID());
+        var edge_1_max_id = Math.max(edges_1[i].getVertexOne().getVertexID(),edges_1[i].getVertexTwo().getVertexID());
+        var edge_2_min_id = Math.min(edges_2[j].getVertexOne().getVertexID(),edges_2[j].getVertexTwo().getVertexID());
+        var edge_2_max_id = Math.max(edges_2[j].getVertexOne().getVertexID(),edges_2[j].getVertexTwo().getVertexID());
+        if((edge_1_min_id == edge_2_min_id) && (edge_1_max_id == edge_2_max_id)){
+          found_curr_e = true;
+          break;
+        }
+      }
+      if(!found_curr_e){
+        var curr_v_1 = edges_1[i].getVertexOne();
+        var curr_v_2 = edges_1[i].getVertexTwo();
+        var curr_v_1_c = new Vertex(curr_v_1.getVertexID(), curr_v_1.getVertexVal(), curr_v_1.getXVal(), curr_v_1.getYVal(), curr_v_1.getColor());
+        var curr_v_2_c = new Vertex(curr_v_2.getVertexID(), curr_v_2.getVertexVal(), curr_v_2.getXVal(), curr_v_2.getYVal(), curr_v_2.getColor());
+        edges_avail.push(new Edge(curr_v_1_c, curr_v_2_c, edges_1[i].getWeightEdge()));
+      }
+    }
+
+    for(var i=0;i<dir_edges_1.length;i++){
+      //for in here vertexs
+      var found_curr_e = false;
+      for(var j=0;j<dir_edges_2.length;j++){
+        //Properly check
+        var edge_1_first = dir_edges_1[i].getVertexOne().getVertexID();
+        var edge_1_second = dir_edges_1[i].getVertexTwo().getVertexID();
+        var edge_2_first = dir_edges_2[j].getVertexOne().getVertexID();
+        var edge_2_second = dir_edges_2[j].getVertexTwo().getVertexID();
+        if((edge_1_first == edge_2_first) && (edge_1_second == edge_2_second)){
+          found_curr_e = true;
+          break;
+        }
+      }
+      if(!found_curr_e){
+        var curr_v_1 = dir_edges_1[i].getVertexOne();
+        var curr_v_2 = dir_edges_1[i].getVertexTwo();
+        var curr_v_1_c = new Vertex(curr_v_1.getVertexID(), curr_v_1.getVertexVal(), curr_v_1.getXVal(), curr_v_1.getYVal(), curr_v_1.getColor());
+        var curr_v_2_c = new Vertex(curr_v_2.getVertexID(), curr_v_2.getVertexVal(), curr_v_2.getXVal(), curr_v_2.getYVal(), curr_v_2.getColor());
+        dir_edges_avail.push(new Edge(curr_v_1_c, curr_v_2_c, dir_edges_1[i].getWeightEdge()));
+      }
+    }
+
+    return [edges_avail, dir_edges_avail];
+  }
+
+
 }
 exports.Graph = Graph;
