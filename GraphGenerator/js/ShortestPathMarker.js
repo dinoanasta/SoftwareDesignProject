@@ -16,9 +16,14 @@ class ShortestPathMarker {
       this.question_graph = null;
       this.lecturer_answer_graph = lecturer_graph.getAdjacenyMatrix();
     }
+    this.student_answer_graph_full = student_answer_graph;
+    this.lecturer_graph_full = lecturer_graph;
     this.student_answer_graph = student_answer_graph.getAdjacenyMatrix();
     this.start_node = lecturer_graph.getSourceNode();
     this.maxNumber = Math.pow(10, 1000);
+
+    //Jesse_new
+    // console.log("TestJDawg:",this.question_graph,this.student_answer_graph);
   }
 
   //Checks if the answer is correct and then returns a boolean value
@@ -26,11 +31,12 @@ class ShortestPathMarker {
     var answer = null;
     //Check if the answer must be calculated then checked or if the answer must just be compared to the lecturer's answer
     if (this.lecturer_answer_graph == null) {
-      //First check if edges are valid, and if graphs are the same size
+      //First check if edges are valid, if answerGraph has no cycles, and if graphs are the same size
       var edges_valid = this.areGraphEdgesValid();
       var graphs_same_size = this.areGraphsSameSize();
+      var answer_graph_has_suff_edges = this.graphHasSufficientEdges(this.student_answer_graph_full);
 
-      if (edges_valid && graphs_same_size) {
+      if (edges_valid && graphs_same_size && answer_graph_has_suff_edges) {
         //Run shortest path on lecturer graph and get dists/then do the same for student and get dists
         var question_graph_dists = this.getShortestDists(this.question_graph);
         var answer_graph_dists = this.getShortestDists(
@@ -38,6 +44,10 @@ class ShortestPathMarker {
         );
         //console.log(question_graph_dists, answer_graph_dists);
         //Then compare dists
+        //Jesse_new
+        // console.log("TestJesso:",
+        //   JSON.stringify(question_graph_dists),
+        //   JSON.stringify(answer_graph_dists));
         if (
           JSON.stringify(question_graph_dists) ==
           JSON.stringify(answer_graph_dists)
@@ -62,6 +72,18 @@ class ShortestPathMarker {
 
     return answer;
   }
+
+  graphHasSufficientEdges(g){
+    //check if graph has num_edges = num_nodes-1;
+    var total_edges = g.getEdges().length+g.getDirectedEdges().length;
+    var total_vertices = g.getNumberVertices();
+    if(total_edges == total_vertices-1){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   areGraphEdgesValid() {
     for (var i = 0; i < this.student_answer_graph.length; i++) {
@@ -142,4 +164,3 @@ class ShortestPathMarker {
     return neighbours;
   }
 }
-

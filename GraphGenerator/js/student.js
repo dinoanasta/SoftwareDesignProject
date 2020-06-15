@@ -313,8 +313,8 @@ function setRoot(){
 
     if(dropDown.selectedIndex != 0){
         let vertexID = dropDown.options[dropDown.selectedIndex].value;
-        answerGraph.setSourceNode(answerGraph.getVertex(vertexID));
-        questionGraph.setSourceNode(questionGraph.getVertex(vertexID));
+        answerGraph.setSourceNode(vertexID);
+        questionGraph.setSourceNode(vertexID);
 
         populateDropDowns();
         redraw();
@@ -709,4 +709,3 @@ function doSubmit(){ //When student submits graph
         alert("Question graph has not been loaded.");
     }
 }
-
