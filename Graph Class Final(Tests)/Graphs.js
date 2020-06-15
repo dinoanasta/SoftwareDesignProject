@@ -297,13 +297,13 @@ class Graph {
   }
 
   // //Update vertex x and y values if it exists
-  updateXandYVal(vertex, new_x_val, new_y_val) {
-    if (vertex !== null) {
-      vertex.setXVal(new_x_val);
-      vertex.setYVal(new_y_val);
+  updateXandYVal(vertex_id, new_x_val, new_y_val) {
+    var curr_vertex = this.getVertex(vertex_id);
+    if (curr_vertex !== null) {
+      curr_vertex.setXVal(new_x_val);
+      curr_vertex.setYVal(new_y_val);
     }
   }
-
   //Update vertex color if it exists
   updateVertexColor(vertex_id, new_vertex_colour) {
     var curr_vertex = this.getVertex(vertex_id);
@@ -378,12 +378,12 @@ class Graph {
       this.vertices.splice(vertex_id, 1);
 
       //Change all vertex indices to fill hole in array
-      if(userType=="lecturer"){
-        for (var i = 0; i < this.vertices.length; i++) {
-          var curr_vertex = this.vertices[i];
-          curr_vertex.setVertexID(i);
-        }
+      
+      for (var i = 0; i < this.vertices.length; i++) {
+        var curr_vertex = this.vertices[i];
+        curr_vertex.setVertexID(i);
       }
+      
 
       //Set vertex = null to avoid memory leak
       vertex_to_remove = null;
