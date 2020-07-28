@@ -76,7 +76,11 @@ button{
 #submitButton{
     font-size: 5vmin;
     border-radius: 5vmin;
+}
 
+#downloadButton{
+    font-size: 5vmin;
+    border-radius: 5vmin;
 }
 
 button:hover{

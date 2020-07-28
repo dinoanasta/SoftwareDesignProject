@@ -665,6 +665,14 @@ function setupInterface(){
         document.getElementById("editVertexDiv").appendChild(document.createElement("br"));
         document.getElementById("editVertexDiv").appendChild(document.createElement("br"));
         document.getElementById("editVertexDiv").appendChild(submitButton);
+
+        let downloadButton = document.getElementById("downloadButton");
+        document.getElementById("edgeDiv").removeChild(downloadButton);
+        document.getElementById("edgeDiv").style.display = "none";
+
+        document.getElementById("editVertexDiv").appendChild(document.createElement("br"));
+        document.getElementById("editVertexDiv").appendChild(document.createElement("br"));
+        document.getElementById("editVertexDiv").appendChild(downloadButton);
     }else if(!colored){
         document.getElementById("editVertexDiv").style.display = "none";
         document.getElementById("editvertexColor").style.display = "none";
@@ -710,4 +718,11 @@ function doSubmit(){ //When student submits graph
     }else{
         alert("Question graph has not been loaded.");
     }
+}
+
+function doDownload(){
+    var stringed = answerGraph.convertGraphToString(questionType, questionType);
+
+    var blob = new Blob([stringed], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "Graph_" + questionType + "_" + questionCode + ".txt");
 }
