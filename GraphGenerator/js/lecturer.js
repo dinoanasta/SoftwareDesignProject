@@ -17,6 +17,7 @@ let questionType;
 let questionCode = null;
 let isCreate = false;
 let questionLoaded = false;
+let questionUse = "prac";
 
 //Weighted
 let weight = 0;
@@ -36,6 +37,8 @@ function addBindings(){
   document.getElementById("setQuestionButton").onclick = doSetQuestion;
   document.getElementById("directedCB").onchange = doDirected;
   document.getElementById("weightedCB").onchange = doWeighted;
+  document.getElementById("questionUseRG").onchange = doSetQuestionUse;
+
 
   //Vertices
   document.getElementById("addVertexButton").onclick = doAddVertex;
@@ -106,6 +109,16 @@ function doWeighted(){
 
   setupInterface(questionType);
 }
+
+function doSetQuestionUse(){
+  let radioGroup = document.getElementsByName("questionUse")
+  for (let i = 0;i<radioGroup.length;++i){
+    if(radioGroup[i].checked){
+      questionUse = radioGroup[i].value;
+    }
+  }
+}
+
 
 //Vertices
 function doAddVertex() {
@@ -720,7 +733,7 @@ function doCreate() {
     try {
       var data = {
         id: questionCode,
-        graph: graph.convertGraphToString(questionType, questionType)
+        graph: graph.convertGraphToString(questionCode, questionType, questionUse)
       }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
 
       //Jesse_new

@@ -79,6 +79,8 @@
         installMouseHandler();
         addBindings();
 
+        setupInterface();
+
         //Enable question setup stuff
         // document.getElementById("questionSetupDiv").style.display = "initial";
         // document.getElementById("edgeDiv").style.display = "none";
@@ -117,37 +119,27 @@
 
         <label id="questionCodeLabel">Question Code:</label>
         <input type="text" id="questionCodeStudent" name="vertexValue">
+        <br>
 
+        <label id="fileSelectionLabel">Upload file:</label>
+        <input type="file" accept=".txt" id="fileSelection">
         <br>
 
         <label id="questionTypeLabel">Question Type:</label>
 
         <button id="loadGraphButton" onclick="doLoadGraph()">Load Graph</button>
 
-        <button id="drawGraphButton" onclick="doDrawGraph()">Complete Graph</button>
+        <button id="drawGraphButton" onclick="doDrawGraph()">Add edges</button>
 
         <!--            Clear Button-->
-        <br>
         <button style="height:5vh" , id="clearButton" onclick="doClear()">Reset</button>
 
       </div>
 
-      <br>
+      <br><br>
 
-      <!--        Adding vertices-->
+      <!--        Editing root vertex-->
       <div id="editRootDiv">
-<!--        <h3>Add vertex:</h3>-->
-
-<!--        <label id="addVertexDDLabel">Vertex:</label>-->
-<!--        <select id="addVertexDD">-->
-<!--          <option>Choose vertex to add</option>-->
-<!--        </select>-->
-<!--        <br>-->
-
-<!--        <button id="addVertexButton">Add vertex</button>-->
-
-
-        <!--        Set root vertex-->
 
         <h3>Edit root:</h3>
 
@@ -159,11 +151,11 @@
 
         <button id="clearRootButton">Clear Root</button>
 
-        <br>
       </div>
 
+      <br><br>
 
-      <!--        Editing vertices-->
+      <!--        Editing vertices (colors)-->
       <div id="editVertexDiv">
         <h3>Edit color:</h3>
 
@@ -187,20 +179,7 @@
         <button id="updateVertexButton">Update vertex</button>
       </div>
 
-      <br>
 
-      <!--        Delete vertex-->
-<!--      <div id="deleteVertexDiv">-->
-<!--        <h3>Delete vertex:</h3>-->
-
-<!--        <label id="deleteVertexDDLabel">Vertex:</label>-->
-<!--        <select id="deleteVertexDD">-->
-<!--          <option>Choose vertex to delete</option>-->
-<!--        </select>-->
-<!--        <br>-->
-
-<!--        <button id="deleteVertexButton">Delete vertex</button>-->
-<!--      </div>-->
     </div>
 
     <!--        Edge stuff - 3rd column-->
@@ -219,24 +198,7 @@
         <button id="addEdgeButton">Add edge</button>
       </div>
 
-      <!--     Update edge-->
-<!--      <div id="updateEdgeDiv">-->
-<!--        <h3>Update edge:</h3>-->
-
-<!--        <label id="updateEdgeDDLabel">Edge:</label>-->
-<!--        <select id="updateEdgeDD">-->
-<!--          <option>Choose edge to upate</option>-->
-<!--        </select>-->
-<!--        <br>-->
-
-<!--        <label id="editWeightLabel">Weight:</label>-->
-<!--        <input type="text" id="editWeight">-->
-<!--        <br>-->
-
-<!--        <button id="updateEdgeButton">Update edge</button>-->
-<!--      </div>-->
-
-      <br>
+      <br><br>
 
       <!--    Delete edge-->
       <div id="deleteEdgeDiv">
@@ -254,7 +216,7 @@
       <br><br><br>
 
       <!--            Submit Button-->
-      <button style="height:10vh" , id="submitButton" , onclick="doSubmit()">Submit</button>
+      <button style="height:10vh" , id="checkButton" , onclick="doCheck()">Check</button>
 
       <!--            Download Button-->
       <button style="height:10vh" , id="downloadButton" , onclick="doDownload()">Download</button>

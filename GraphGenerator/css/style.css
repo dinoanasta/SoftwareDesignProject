@@ -73,7 +73,7 @@ button{
     display: block;
 }
 
-#submitButton{
+#checkButton{
     font-size: 5vmin;
     border-radius: 5vmin;
 }
@@ -128,4 +128,11 @@ button:hover{
 
     height: 100vh;
     overflow: scroll;
+}
+
+
+#questionUseRG{
+    padding: 1vh 1vw;
+    background-color: rgba(0, 0, 0, 0.2);
+    /*border: 0.2vmin solid black;*/
 }
