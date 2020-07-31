@@ -188,6 +188,7 @@ function doLoadGraph() { //When student enters code and presses the load button
                 }
 
                 let temp = questionGraph.convertGraphToString(questionCode, questionType,"");
+                console.log(temp);
                 answerGraph = new Graph();
                 answerGraph.fillGraphWithString(temp);
 
@@ -201,7 +202,6 @@ function doLoadGraph() { //When student enters code and presses the load button
 
                 populateDropDowns();
                 redraw();
-
             };
 
             reader.onerror = function () {
@@ -725,7 +725,6 @@ function setupInterface() {
             }
 
         } else if (!colored) { //Only need to add/delete edges and change root, no colors
-
             questionSetupDiv.appendChild( document.getElementById("drawGraphButton"));
             questionSetupDiv.appendChild( document.getElementById("clearButton"));
 
@@ -748,10 +747,12 @@ function setupInterface() {
                 edgeDiv.appendChild(downloadButton);
             }else if(questionUse=="prac"){
                 edgeDiv.appendChild(checkButton);
+            }else{ //Can delete this when using properly created graphs
+                edgeDiv.appendChild(downloadButton);
+                edgeDiv.appendChild(checkButton);
             }
         }
     }
-
 }
 
 function doCheck() { //When student submits graph
