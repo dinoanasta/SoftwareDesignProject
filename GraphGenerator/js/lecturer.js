@@ -744,6 +744,12 @@ function doCreate() {
       ref.push(data);
       //Jesse_new
       alert("Lecturer question successfully submitted");
+
+      var link = document.getElementById('link');
+      link.setAttribute('download', 'Graph_' + questionType + '.png');
+      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+      link.click();
+
     } catch (err) {
       alert("Error occured while trying to submit lecturer question graph");
     }
