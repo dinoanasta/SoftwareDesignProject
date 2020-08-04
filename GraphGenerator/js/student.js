@@ -202,6 +202,8 @@ function doLoadGraph() { //When student enters code and presses the load button
 
                 populateDropDowns();
                 redraw();
+
+                questionLoaded = true;
             };
 
             reader.onerror = function () {

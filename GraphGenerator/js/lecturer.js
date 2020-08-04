@@ -743,12 +743,19 @@ function doCreate() {
 
       ref.push(data);
       //Jesse_new
-      alert("Lecturer question successfully submitted");
 
+      //Save canvas as png
       var link = document.getElementById('link');
       link.setAttribute('download', 'Graph_' + questionType + '.png');
       link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
       link.click();
+
+      //Save graph as text file
+      var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
+      var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, "Graph_" + questionType + ".txt");
+
+      alert("Lecturer question successfully submitted");
 
     } catch (err) {
       alert("Error occured while trying to submit lecturer question graph");
