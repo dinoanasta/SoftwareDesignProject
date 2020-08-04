@@ -453,7 +453,7 @@ class Graph {
     }
   }
 
-  convertGraphToString(curr_question, curr_question_type) {
+  convertGraphToString(curr_question_code, curr_question_type, curr_question_use) {
     var numberVertices = this.getNumberVertices();
     //Initialise matrix and fill with all 0's
     var vertices_array = new Array(numberVertices)
@@ -477,8 +477,9 @@ class Graph {
       vertices: vertices_array,
       adjacency_matrix: adj_matrix,
       source_node: curr_source_node,
-      question: curr_question,
-      questionType: curr_question_type
+      questionCode: curr_question_code,
+      questionType: curr_question_type,
+      questionUse: curr_question_use
     };
 
     var string_converted = JSON.stringify(obj_to_string);

@@ -52,7 +52,7 @@ function installMouseHandler() {
         if(userType == "student"){
             clickedVertexIndex = getVertexIndex(answerGraph);
             selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
-        }else if (userType=="lecturer"){
+        }else if (userType == "lecturer"){
             clickedVertexIndex = getVertexIndex(graph);
             selectedVertex =  graph.getVertex(clickedVertexIndex);
         }
@@ -72,24 +72,38 @@ function installMouseHandler() {
             // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
 
             if(userType=="student"){
-                document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
-                document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                    document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
+                }
+                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                    document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                }
+                if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                }
             }else if (userType=="lecturer"){
                 document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
                 document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
             }
 
-            // document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex+1;
         }else{
             if(userType=="student"){
-                document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
-                document.getElementById("editvertexColor").value = "";
+
+                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                    document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
+                }
+                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                    document.getElementById("editvertexColor").value = "";
+                }
+                if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                    document.getElementById("setRootDD").selectedIndex = 0;
+                }
             }else if (userType=="lecturer"){
                 document.getElementById("editvertexValue").value = "";
                 document.getElementById("editvertexColor").value = "";
+                document.getElementById("setRootDD").selectedIndex = 0;
             }
-
-            // document.getElementById("deleteVertexDD").selectedIndex = 0;
 
             redraw();
 
