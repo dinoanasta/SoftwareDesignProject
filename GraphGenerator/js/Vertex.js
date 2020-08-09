@@ -91,25 +91,19 @@ class Vertex{
         graphics.fillStyle = "white";
         graphics.fillCircle(this.getXVal(), this.getYVal(), vertexRadius);
 
-        // graphics.fillStyle = "white";
-        // graphics.fillPoly(this.getXVal() + 22.5,this.getYVal() - 25,
-        //             this.getXVal() + 85,this.getYVal() - 25,
-        //             this.getXVal() + 85,this.getYVal() + 25,
-        //             this.getXVal() + 22.5,this.getYVal() + 25);
-
         //Draw vertex with value in center
         graphics.textAlign = "center";
-        graphics.fillStyle = "red";
+        graphics.fillStyle = "black";
         graphics.fillText(this.getVertexVal(), this.getXVal(), this.getYVal()+5, 20 );
 
         //Draw properties: ID, color, distance from root
         graphics.textAlign = "left";
         graphics.textBaseline = "top";
         graphics.fillStyle = "black";
-        graphics.fillText("ID: " + this.getVertexID().toString(), this.getXVal() + 20 , this.getYVal() - 20);
+        graphics.fillText("id: " + this.getVertexID().toString(), this.getXVal() + 20 , this.getYVal()-10);
 
         if(colored){
-            graphics.fillText("Col: " + this.getColor().toString(), this.getXVal() + 20, this.getYVal());
+            graphics.fillText("col: " + this.getColor().toString(), this.getXVal() + 20, this.getYVal()+10);
         }
         // if(questionType == "mwst"){
         //     graphics.fillText("Dist: " + this.getColor().toString(), this.getXVal() + 45, this.getYVal() + 30, 40 );

@@ -746,14 +746,14 @@ function doCreate() {
 
       //Save canvas as png
       var link = document.getElementById('link');
-      link.setAttribute('download', 'Graph_' + questionType + '.png');
+      link.setAttribute('download', 'Graph_' + questionType + "_" + questionUse + '.png');
       link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
       link.click();
 
       //Save graph as text file
       var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
       var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
-      saveAs(blob, "Graph_" + questionType + ".txt");
+      saveAs(blob, "Graph_"  + questionType + "_" + questionUse + ".txt");
 
       alert("Lecturer question successfully submitted");
 

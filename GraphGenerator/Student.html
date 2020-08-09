@@ -19,8 +19,7 @@
   <script src="js/Vertex.js"> </script>
   <script src="js/Edge.js"> </script>
   <script src="js/Graph.js"> </script>
-  <script src="js/student.js"> </script>
-<!--  <script src="js/main.js"> </script>-->
+  <script src="js/student.js" defer> </script>
   <script src="js/handlers.js"></script>
   <script src="js/PriorityQueue.js"> </script>
   <script src="js/ColMarker.js"> </script>
@@ -71,22 +70,16 @@
 
         applyLimits(graphics, X_LEFT, X_RIGHT, Y_TOP, Y_BOTTOM, false);
         graphics.lineWidth = pixelSize;  // Use 1 pixel as the default line width
-        graphics.font = "15px Comic Sans MS bold";
+        graphics.font = "15px Aldrich";
         graphics.textAlign = "center";
 
         addGraphicsContextExtras(graphics);
-        initialiseDB();
+        // initialiseDB();
         installMouseHandler();
+
         addBindings();
 
         setupInterface();
-
-        //Enable question setup stuff
-        // document.getElementById("questionSetupDiv").style.display = "initial";
-        // document.getElementById("edgeDiv").style.display = "none";
-        // document.getElementById("addVertexDiv").style.display = "none";
-        // document.getElementById("editVertexDiv").style.display = "none";
-        // document.getElementById("deleteVertexDiv").style.display = "none";
 
       } catch (e) {
         document.getElementById("canvas").innerHTML =
@@ -97,7 +90,7 @@
   </script>
 </head>
 
-<body onload="init()" style="background-color:#EEEEEE">
+<body onload="init()" style="background-color:#EEEEEE" id="body">
   <div id="studentDiv" class="row">
 
     <!--        Canvas - 1st column-->
@@ -117,22 +110,16 @@
       <div id="questionSetupDiv">
         <h3>Question setup:</h3>
 
-        <label id="questionCodeLabel">Question Code:</label>
-        <input type="text" id="questionCodeStudent" name="vertexValue">
-        <br>
+<!--        <label id="fileSelectionLabel">Upload file:</label>-->
+<!--        <br>-->
 
-        <label id="fileSelectionLabel">Upload file:</label>
-        <input type="file" accept=".txt" id="fileSelection">
+        <input type="file" accept=".txt" id="fileSelection" style="width: 20vw">
         <br>
 
         <label id="questionTypeLabel">Question Type:</label>
 
-        <button id="loadGraphButton" onclick="doLoadGraph()">Load Graph</button>
-
-        <button id="drawGraphButton" onclick="doDrawGraph()">Add edges</button>
-
-        <!--            Clear Button-->
-        <button style="height:5vh" , id="clearButton" onclick="doClear()">Reset</button>
+        <button id="loadGraphButton">Load Graph</button>
+        <button id="drawEdgesButton">Draw edges</button>
 
       </div>
 
@@ -216,10 +203,10 @@
       <br><br><br>
 
       <!--            Submit Button-->
-      <button style="height:10vh" , id="checkButton" , onclick="doCheck()">Check</button>
+      <button style="height:10vh" , id="checkButton" >Check</button>
 
       <!--            Download Button-->
-      <button style="height:10vh" , id="downloadButton" , onclick="doDownload()">Download</button>
+      <button style="height:10vh" , id="downloadButton">Download</button>
 
     </div>
   </div>

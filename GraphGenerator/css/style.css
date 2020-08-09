@@ -1,9 +1,15 @@
+@font-face {
+    font-family: 'Aldrich';
+    font-style: normal;
+    src: url(Aldrich-Regular.ttf);
+}
+
 body{
     /*margin-left: 2vmin;*/
     margin-top: 2vmin;
     background-color: #c71010;
     user-select: none;
-    font-family: "Eras Bold ITC";
+    font-family: Aldrich;
 }
 
 #lecturerDiv{
@@ -105,10 +111,10 @@ button:hover{
 }
 
 #vertexDiv{
-    margin-left: 2vw;
-    padding: 2vh 2vw;
+    /*margin-left: 2vw;*/
+    padding: 2vh 1vw;
 
-    background-color: rgba(0, 0, 0, 0.2);
+    /*background-color: rgba(0, 0, 0, 0.2);*/
 
     width: fit-content;
 
@@ -119,10 +125,10 @@ button:hover{
 #edgeDiv{
     float: right;
 
-    margin-left: 2vw;
-    padding: 2vh 2vw;
+    /*margin-left: 2vw;*/
+    padding: 2vh 1vw;
 
-    background-color: rgba(0,0,0,0.2);
+    /*background-color: rgba(0,0,0,0.2);*/
 
     width: fit-content;
 
