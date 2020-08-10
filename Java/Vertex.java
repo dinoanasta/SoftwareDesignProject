@@ -29,7 +29,7 @@ public class Vertex {
     }
   }
 
-  public void setColour(int colour;) {
+  public void setColour(int colour) {
     this.colour = colour;
     this.isColoured = true;
   }
