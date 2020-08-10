@@ -18,17 +18,16 @@ public class Converter {
     sc.close();
 
     // display graphs
-    //System.out.println("Graphs:");
-    //System.out.println(getGraphs());
+    System.out.println(getGraphs());
   }
 
   public ArrayList<Graph> getGraphList() {
     return this.graphs;
   }
 
-  public String getGraphs() {
+  public static String getGraphs() {
     String out = "";
-    for (int i = 0; i < this.graphs.size(); i++) {
+    for (int i = 0; i < graphs.size(); i++) {
       out = out + graphs.get(i).toString() + "\n";
     }
     return out;

@@ -6,12 +6,14 @@ public class Vertex {
   private int colour;
   boolean isColoured = false;
 
-  public Vertex(int id) {
+  public Vertex(int id, String value) {
     this.id = id;
+    this.value = value;
   }
 
-  public Vertex(int id, int colour) {
+  public Vertex(int id, String value, int colour) {
     this.id = id;
+    this.value = value;
     this.colour = colour;
     this.isColoured = true;
   }
@@ -22,6 +24,14 @@ public class Vertex {
 
   public void setID(int id) {
     this.id = id;
+  }
+
+  public String getValue() {
+    return this.value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
   }
 
   public int getColour() {
@@ -37,9 +47,12 @@ public class Vertex {
     this.isColoured = true;
   }
 
+  public void setColoured(boolean isColoured) {
+    this.isColoured = isColoured;
+  }
+
   public String getVertex() {
-    String out = "";
-    out = out + this.value;
+    String out = "" + this.value;
     if (this.isColoured == true) {
       out = out + "," + this.colour;
     }
