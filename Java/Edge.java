@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Edge {
   // assume for directed edge that v1 --> v2
   private Vertex v1, v2;
-  private ArrayList<Vertex> edge = new ArrayList<Vertex>;
+  private ArrayList<Vertex> edge = new ArrayList<Vertex>();
 
   public Edge(Vertex v1, Vertex v2) {
     this.v1 = v1;
@@ -18,7 +18,7 @@ public class Edge {
     this.v2 = edge.get(1);
   }
 
-  public void setEdge(ArrayList<vertex> edge) {
+  public void setEdge(ArrayList<Vertex> edge) {
     this.edge = edge;
     this.v1 = edge.get(0);
     this.v2 = edge.get(1);
