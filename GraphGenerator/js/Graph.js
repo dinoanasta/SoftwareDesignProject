@@ -467,7 +467,7 @@ class Graph {
       vertices_array[i][1] = curr_vertex.getVertexVal();
       vertices_array[i][2] = curr_vertex.getXVal();
       vertices_array[i][3] = curr_vertex.getYVal();
-      vertices_array[i][4] = curr_vertex.getColor();
+      vertices_array[i][4] = parseInt(curr_vertex.getColor());
     }
 
     var adj_matrix = this.getAdjacenyMatrix();
