@@ -45,22 +45,22 @@
         let pixelSize;  // The size of one pixel, in the transformed coordinates.
 
         //Initialize database
-        function initialiseDB() {
-            firebaseConfig = {
-                apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
-                authDomain: "graphmarker.firebaseapp.com",
-                databaseURL: "https://graphmarker.firebaseio.com",
-                projectId: "graphmarker",
-                storageBucket: "graphmarker.appspot.com",
-                messagingSenderId: "980362787898",
-                appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
-            };
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-
-            database = firebase.database();
-            ref = database.ref("scores");
-        }
+        // function initialiseDB() {
+        //     firebaseConfig = {
+        //         apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
+        //         authDomain: "graphmarker.firebaseapp.com",
+        //         databaseURL: "https://graphmarker.firebaseio.com",
+        //         projectId: "graphmarker",
+        //         storageBucket: "graphmarker.appspot.com",
+        //         messagingSenderId: "980362787898",
+        //         appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
+        //     };
+        //     // Initialize Firebase
+        //     firebase.initializeApp(firebaseConfig);
+        //
+        //     database = firebase.database();
+        //     ref = database.ref("scores");
+        // }
 
         function init() {
             try {
@@ -73,16 +73,9 @@
                 graphics.textAlign = "center";
 
                 addGraphicsContextExtras(graphics);
-                initialiseDB();
+                // initialiseDB();
                 installMouseHandler();
                 addBindings();
-
-                //Only show question setup stuff
-                // document.getElementById("questionSetupDiv").style.display = "initial";
-                // document.getElementById("edgeDiv").style.display = "none";
-                // document.getElementById("addVertexDiv").style.display = "none";
-                // document.getElementById("editVertexDiv").style.display = "none";
-                // document.getElementById("deleteVertexDiv").style.display = "none";
 
             } catch (e) {
                 document.getElementById("canvas").innerHTML =
@@ -113,6 +106,12 @@
         <!--        Question setup-->
         <div id="questionSetupDiv">
             <h3>Question setup:</h3>
+
+            <label id="questionTitleLabel">Question Title:</label>
+            <input type="text" id="questionTitle">
+
+            <br>
+
             <label id="questionTypeDDLabel">Question type:</label>
             <select id="questionTypeDD">
                 <option>Select type</option>
@@ -122,11 +121,6 @@
                 <option>Graph Colouring</option>
                 <option>Shortest Path</option>
             </select>
-
-            <br>
-
-            <label id="questionCodeLabel">Question Code:</label>
-            <input type="text" id="questionCodeLecturer">
 
             <br>
 
@@ -164,12 +158,12 @@
             <br>
 
             <label id="vertexColorLabel">Color:</label>
-            <input type="text" id="vertexColor">
+            <input type="number" id="vertexColor">
             <br>
 
-            <label id="distFromRootLabel">Distance:</label>
-            <input type="text" id="distFromRoot">
-            <br>
+<!--            <label id="distFromRootLabel">Distance:</label>-->
+<!--            <input type="text" id="distFromRoot">-->
+<!--            <br>-->
 
             <button id="addVertexButton">Add vertex</button>
 
