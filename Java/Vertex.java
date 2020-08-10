@@ -36,4 +36,22 @@ public class Vertex {
     this.colour = colour;
     this.isColoured = true;
   }
+
+  public String getVertex() {
+    String out = "";
+    out = out + this.value;
+    if (this.isColoured == true) {
+      out = out + "," + this.colour;
+    }
+    return out;
+  }
+
+  @Override
+  public String toString() {
+    String out = this.id + "," + this.value;
+    if (this.isColoured == true) {
+      out = out + "," + this.colour;
+    }
+    return out;
+  }
 }

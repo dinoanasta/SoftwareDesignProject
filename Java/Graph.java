@@ -27,10 +27,21 @@ public class Graph {
       String adj = ln.next();
       ln.close();
 
+      // clean relevant strings
+      verts = verts.substring(1, verts.length() - 20);
+      adj = adj.substring(1, adj.length() - 15);
+
       System.out.println(verts);
       System.out.println(adj);
 
       // split verts into individual Vertex objects
+      /* Scanner v = new Scanner(verts).useDelimiter("]");
+      while (v.hasNext()) {
+        temp = v.next();
+
+      }
+      v.close(); */
+
     } catch (FileNotFoundException e) {
       System.out.println("File not found: " + e);
     }
