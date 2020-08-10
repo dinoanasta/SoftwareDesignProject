@@ -5,41 +5,48 @@ import java.io.FileNotFoundException;
 
 public class JsonToObject {
   public static void main(String args[]) {
-    // read JSON from file
-    try {
-      Scanner sc = new Scanner(new File("Graph123.txt"));
-      String line = sc.nextLine();
-      System.out.println(line);
-      sc.close();
+    Scanner sc = new Scanner(System.in);
+    while (sc.hasLine()) {
+      // read JSON from file
+      String filename = sc.nextLine();
+      String file = readFile(filename);
 
-      // preprocess JSON (add slashes)
-      Scanner ln = new Scanner(line).useDelimiter("\"");
-      ln.close();
+      // creating Graph object
+      Graph graph = new Graph();
+
+      // converting JSON to Java Object
+      graph = getGraphObject();
+
+      // displaying object
+      System.out.println(graph);
+    }
+    sc.close();
+  }
+
+  private String readFile(String filename) {
+    String out = "";
+    try {
+      Scanner sc = new Scanner(new File(filename));
+      out = sc.nextLine();
+      sc.close();
     } catch (FileNotFoundException e) {
       System.out.println("File not found: " + e);
     }
-
-    // creating Graph object
-    Graph graph = new Graph();
-
-    // converting JSON to Java Object
-    graph = getGraphObject();
-
-    // displaying object
-    //System.out.println(graph);
+    return out;
   }
 
   private static Graph getGraphObject() {
     // storing preprocessed JSON (added slashes)
-    String GraphJson =
+    String GraphJson = "";
 
-    String OrganisationJson
+    // example for pre-processed JSON
+    /* String OrganisationJson
             = "{\"organisation_name\"
             : \"GeeksforGeeks\",
             \"description\"
             : \"A computer Science portal for Geeks\",
             \"Employee\"
-            : \"2000\"}";
+            : \"2000\"}"; */
 
     // creating a Gson object
     Gson gson = new Gson();

@@ -1,5 +1,8 @@
 public class Vertex {
   private int id;
+  private String value;
+  private int xVal;
+  private int yVal;
   private int colour;
   boolean isColoured = false;
 
