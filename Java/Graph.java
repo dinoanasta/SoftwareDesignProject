@@ -59,6 +59,14 @@ public class Graph {
     return questionType;
   }
 
+  public boolean isColoured() {
+    return isColoured;
+  }
+
+  public void setColoured(boolean coloured) {
+    isColoured = coloured;
+  }
+
   public void setVertices(ArrayList<Vertex> vertices) {
     this.vertices = vertices;
   }
