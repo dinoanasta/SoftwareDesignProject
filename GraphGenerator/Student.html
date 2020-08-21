@@ -8,7 +8,6 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
-
   <meta charset="UTF-8">
   <title>Graph Generator - Student</title>
 
@@ -46,22 +45,22 @@
     let pixelSize; // The size of one pixel, in the transformed coordinates.
 
     //Initialize database
-    function initialiseDB() {
-      firebaseConfig = {
-        apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
-        authDomain: "graphmarker.firebaseapp.com",
-        databaseURL: "https://graphmarker.firebaseio.com",
-        projectId: "graphmarker",
-        storageBucket: "graphmarker.appspot.com",
-        messagingSenderId: "980362787898",
-        appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-
-      database = firebase.database();
-      ref = database.ref("scores");
-    }
+    // function initialiseDB() {
+    //   firebaseConfig = {
+    //     apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
+    //     authDomain: "graphmarker.firebaseapp.com",
+    //     databaseURL: "https://graphmarker.firebaseio.com",
+    //     projectId: "graphmarker",
+    //     storageBucket: "graphmarker.appspot.com",
+    //     messagingSenderId: "980362787898",
+    //     appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
+    //   };
+    //   // Initialize Firebase
+    //   firebase.initializeApp(firebaseConfig);
+    //
+    //   database = firebase.database();
+    //   ref = database.ref("scores");
+    // }
 
     function init() {
       try {
@@ -114,16 +113,14 @@
 <!--        <br>-->
 
         <input type="file" accept=".txt" id="fileSelection" style="width: 20vw">
-        <br>
 
         <label id="questionTypeLabel">Question Type:</label>
+        <label id="questionDetailsLabel">Details:</label>
 
         <button id="loadGraphButton">Load Graph</button>
         <button id="drawEdgesButton">Draw edges</button>
 
       </div>
-
-      <br><br>
 
       <!--        Editing root vertex-->
       <div id="editRootDiv">
@@ -140,8 +137,6 @@
 
       </div>
 
-      <br><br>
-
       <!--        Editing vertices (colors)-->
       <div id="editVertexDiv">
         <h3>Edit color:</h3>
@@ -156,7 +151,7 @@
         <br>
 
         <label id="editvertexColorLabel">Color:</label>
-        <input type="text" id="editvertexColor">
+        <input type="number" id="editvertexColor">
         <br>
 
 <!--        <label id="editdistFromRootLabel">Distance:</label>-->

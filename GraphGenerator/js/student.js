@@ -40,7 +40,12 @@ const canvasDiv =  document.getElementById("canvasDiv");
 
 const vertexDiv =  document.getElementById("vertexDiv");
 const questionSetupDiv =  document.getElementById("questionSetupDiv");
+const loadGraphButton = document.getElementById("loadGraphButton");
+
 const drawEdgesButton = document.getElementById("drawEdgesButton");
+const questionTypeLabel = document.getElementById("questionTypeLabel");
+const questionDetailsLabel = document.getElementById("questionDetailsLabel");
+
 const editRootDiv =  document.getElementById("editRootDiv");
 const editVertexDiv =  document.getElementById("editVertexDiv");
 
@@ -78,134 +83,96 @@ function addBindings() {
 
 //Question setup
 function doLoadGraph() { //When student enters code and presses the load button
-    let questionTypeDisplay = document.getElementById("questionTypeLabel");
+    var file = document.getElementById("fileSelection").files[0];
 
-    // let qCode = document.getElementById("questionCodeStudent");
-    // if (qCode.value.length != 0) {
-    //     graphics.fillStyle = "white";
-    //     graphics.fillRect(0, 0, canvas.width, canvas.height);
-    //
-    //     questionCode = qCode.value;
-    //
-    //     fetchQuestionGraph();
-    //
-    //     // setTimeout(function () {
-    //     //     // unusedGraph = questionGraph;
-    //     //     weighted = questionGraph.isWeighted();
-    //     //     directed = questionGraph.isDirected();
-    //     //
-    //     //     console.log("Question type: " + questionType);
-    //     //     console.log("Weighted: " + weighted);
-    //     //     console.log("Directed: " + directed);
-    //     //     console.log("Question Use: " + questionUse);
-    //     //
-    //     //     setupInterface();
-    //     //
-    //     //     if (directed) {
-    //     //         if (weighted) {
-    //     //             questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed & Weighted)";
-    //     //         } else {
-    //     //             questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed)";
-    //     //         }
-    //     //     } else {
-    //     //         if (weighted) {
-    //     //             questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Weighted)";
-    //     //         } else {
-    //     //             questionTypeDisplay.innerHTML = "Question Type: " + questionType;
-    //     //         }
-    //     //     }
-    //     //
-    //     //     let temp = questionGraph.convertGraphToString(questionCode, questionType, questionUse);
-    //     //     console.log(temp);
-    //     //     answerGraph = new Graph();
-    //     //     answerGraph.fillGraphWithString(temp);
-    //     //     console.log(answerGraph);
-    //     //
-    //     //     if (!colored) {
-    //     //         answerGraph.edges = [];
-    //     //         answerGraph.directedEdges = [];
-    //     //     }
-    //     //
-    //     //     answerGraph.setSourceNode(0);
-    //     //     questionGraph.setSourceNode(0);
-    //     //
-    //     //     populateDropDowns();
-    //     //     redraw();
-    //     // }, 2000);
-    // } else {
-        var file = document.getElementById("fileSelection").files[0];
+    if (file != null) {
+        let reader = new FileReader();
 
-        if (file != null) {
-            let reader = new FileReader();
+        reader.readAsText(file);
 
-            reader.readAsText(file);
+        reader.onload = function () {
+            var graphText = reader.result;
+            console.log(graphText);
 
-            reader.onload = function () {
-                var graphText = reader.result;
-                console.log(graphText);
+            graphics.fillStyle = "white";
+            graphics.fillRect(0, 0, canvas.width, canvas.height);
 
-                graphics.fillStyle = "white";
-                graphics.fillRect(0, 0, canvas.width, canvas.height);
-
-                // unusedGraph = questionGraph;
-                questionGraph = new Graph();
-                questionGraph.fillGraphWithString(graphText);
+            // unusedGraph = questionGraph;
+            questionGraph = new Graph();
+            questionGraph.fillGraphWithString(graphText);
 
 
-                var fetched_obj = JSON.parse(graphText);
-                questionType = fetched_obj.questionType;
-                questionUse = fetched_obj.questionUse;
+            var fetched_obj = JSON.parse(graphText);
+            questionType = fetched_obj.questionType;
+            questionUse = fetched_obj.questionUse;
 
-                weighted = questionGraph.isWeighted();
-                directed = questionGraph.isDirected();
+            weighted = questionGraph.isWeighted();
+            directed = questionGraph.isDirected();
 
-                console.log("Question type: " + questionType);
-                console.log("Weighted: " + weighted);
-                console.log("Directed: " + directed);
+            console.log("Question type: " + questionType);
+            console.log("Weighted: " + weighted);
+            console.log("Directed: " + directed);
 
-                if (directed) {
-                    if (weighted) {
-                        questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed & Weighted)";
-                    } else {
-                        questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed)";
-                    }
-                } else {
-                    if (weighted) {
-                        questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Weighted)";
-                    } else {
-                        questionTypeDisplay.innerHTML = "Question Type: " + questionType;
-                    }
+            let temp = questionGraph.convertGraphToString(questionCode, questionType,"");
+            console.log(temp);
+            answerGraph = new Graph();
+            answerGraph.fillGraphWithString(temp);
+
+            if (!colored) {
+                answerGraph.edges = [];
+                answerGraph.directedEdges = [];
+            }
+
+            answerGraph.setSourceNode(0);
+            questionGraph.setSourceNode(0);
+
+            questionLoaded = true;
+            populateDropDowns();
+            redraw();
+            setupInterface();
+
+            switch (questionType){
+                case "bfs":
+                    questionTypeLabel.innerHTML = "Question Type: Breadth First Search";
+                    break;
+                case "dfs" :
+                    questionTypeLabel.innerHTML = "Question Type: Depth First Search";
+                    break;
+                case "mwst" :
+                    questionTypeLabel.innerHTML = "Question Type: MWST";
+                    break;
+                case "graphcolouring" :
+                    questionTypeLabel.innerHTML = "Question Type: Graph Colouring";
+                    break;
+                case "shortestpath" :
+                    questionTypeLabel.innerHTML = "Question Type: Shortest Path";
+                    break;
+            }
+
+            if(directed){
+                if(weighted){
+                    questionDetailsLabel.innerHTML = "Details: Directed graph and weighted edges";
+                }else{
+                    questionDetailsLabel.innerHTML = "Details: Directed graph";
                 }
-
-                let temp = questionGraph.convertGraphToString(questionCode, questionType,"");
-                console.log(temp);
-                answerGraph = new Graph();
-                answerGraph.fillGraphWithString(temp);
-
-                if (!colored) {
-                    answerGraph.edges = [];
-                    answerGraph.directedEdges = [];
+            }else{
+                if(weighted){
+                    questionDetailsLabel.innerHTML = "Details: Undirected graph and weighted edges";
+                }else{
+                    questionDetailsLabel.innerHTML = "Details: Undirected graph";
                 }
+            }
 
-                answerGraph.setSourceNode(0);
-                questionGraph.setSourceNode(0);
+            setupInterface();
+        };
 
-                questionLoaded = true;
-                populateDropDowns();
-                redraw();
-                setupInterface();
+        reader.onerror = function () {
+            console.log(reader.error);
+        };
 
-
-            };
-
-            reader.onerror = function () {
-                console.log(reader.error);
-            };
-
-        } else {
-            alert("Please upload the question graph");
-        }
-    // }
+    } else {
+        alert("Please upload the question graph");
+    }
 }
 
 // function setupInterfaceAfterGraphFetchedFromFB(){
@@ -659,16 +626,23 @@ function setupInterface() {
         studentDiv.appendChild(edgeDiv);
     }
 
-
     //Clear vertex div to add only what is needed
     if(vertexDiv != null){
         while (vertexDiv.firstChild) {
             vertexDiv.firstChild.remove();
         }
         vertexDiv.appendChild(questionSetupDiv);
-        questionSetupDiv.appendChild(drawEdgesButton);
-        questionSetupDiv.removeChild(drawEdgesButton);
     }
+
+
+    questionSetupDiv.appendChild(drawEdgesButton);
+    questionSetupDiv.appendChild(questionTypeLabel);
+    questionSetupDiv.appendChild(questionDetailsLabel);
+
+    questionSetupDiv.removeChild(drawEdgesButton);
+    questionSetupDiv.removeChild(questionTypeLabel);
+    questionSetupDiv.removeChild(questionDetailsLabel);
+
 
     //Clear vertex div to add only what is needed
     if(edgeDiv != null){
@@ -697,7 +671,16 @@ function setupInterface() {
     }
 
     if(questionLoaded){
-        console.log("question loaded")
+        console.log("question loaded");
+        questionSetupDiv.removeChild(loadGraphButton);
+        questionSetupDiv.appendChild(questionTypeLabel);
+        questionSetupDiv.appendChild(document.createElement("br"));
+
+        questionSetupDiv.appendChild(questionDetailsLabel);
+        questionSetupDiv.appendChild(document.createElement("br"));
+
+        questionSetupDiv.appendChild(loadGraphButton);
+
         if (colored) { //Only need to change colors - no root/edges
 
             vertexDiv.appendChild(document.createElement("br"));

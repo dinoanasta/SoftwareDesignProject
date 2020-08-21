@@ -15,6 +15,7 @@ let clickedVertexIndex = -1;
 let questionType;
 // let questionCode;
 let questionCode = null;
+let questionTitle = null;
 let isCreate = false;
 let questionLoaded = false;
 let questionUse = "prac";
@@ -34,11 +35,10 @@ let colored = false;
 function addBindings(){
   //Question setup
   document.getElementById("questionTypeDD").onchange = setQuestionType;
-  document.getElementById("setQuestionButton").onclick = doSetQuestion;
   document.getElementById("directedCB").onchange = doDirected;
   document.getElementById("weightedCB").onchange = doWeighted;
   document.getElementById("questionUseRG").onchange = doSetQuestionUse;
-
+  document.getElementById("setQuestionButton").onclick = doSetQuestion;
 
   //Vertices
   document.getElementById("addVertexButton").onclick = doAddVertex;
@@ -47,8 +47,6 @@ function addBindings(){
   document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
   document.getElementById("setRootDD").onchange = setRoot;
   document.getElementById("clearRootButton").onclick = removeRootVertex;
-
-
 
   //Edges
   document.getElementById("addEdgeButton").onclick = doAddEdge;
@@ -83,7 +81,7 @@ function setQuestionType(){
       break;
   }
 
-  setupInterface(questionType);
+  setupInterface();
 }
 
 function doDirected(){
@@ -95,7 +93,7 @@ function doDirected(){
     directed = false;
   }
 
-  setupInterface(questionType);
+  setupInterface();
 }
 
 function doWeighted(){
@@ -107,7 +105,7 @@ function doWeighted(){
     weighted = false;
   }
 
-  setupInterface(questionType);
+  setupInterface();
 }
 
 function doSetQuestionUse(){
@@ -118,7 +116,6 @@ function doSetQuestionUse(){
     }
   }
 }
-
 
 //Vertices
 function doAddVertex() {
@@ -147,8 +144,6 @@ function doAddVertex() {
 
       populateDropDowns();
       redraw();
-
-      console.log(graph.getAdjacenyMatrix());
     }
   }else{
     alert("Please enter a value for the vertex");
@@ -364,7 +359,6 @@ function redraw(){
   graphics.fillRect(0, 0, canvas.width, canvas.height);
   drawEdges();
   drawVertices();
-
 }
 
 function clearDropDown (DDB) {
@@ -440,8 +434,6 @@ function populateDropDowns(){
     addDirectedEdgeOption(editEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
 
   }
-
-
 }
 
 function doClear() {
@@ -458,7 +450,6 @@ function doClear() {
   setupInterface(questionType);
 
   //Reset variables
-
 
   graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
   questionGraph = new Graph();
@@ -521,8 +512,8 @@ function setupInterface(){
       document.getElementById("weightedCB").style.display = "initial";
       document.getElementById("weightedCBLabel").style.display = "initial";
 
-      document.getElementById("distFromRoot").style.display = "none";
-      document.getElementById("distFromRootLabel").style.display = "none";
+      // document.getElementById("distFromRoot").style.display = "none";
+      // document.getElementById("distFromRootLabel").style.display = "none";
       document.getElementById("editdistFromRoot").style.display = "none";
       document.getElementById("editdistFromRootLabel").style.display = "none";
 
@@ -539,8 +530,8 @@ function setupInterface(){
       document.getElementById("weightedCB").style.display = "initial";
       document.getElementById("weightedCBLabel").style.display = "initial";
 
-      document.getElementById("distFromRoot").style.display = "none";
-      document.getElementById("distFromRootLabel").style.display = "none";
+      // document.getElementById("distFromRoot").style.display = "none";
+      // document.getElementById("distFromRootLabel").style.display = "none";
       document.getElementById("editdistFromRoot").style.display = "none";
       document.getElementById("editdistFromRootLabel").style.display = "none";
 
@@ -559,8 +550,8 @@ function setupInterface(){
       document.getElementById("weightedCB").checked = true;
       weighted = true;
 
-      document.getElementById("distFromRoot").style.display = "initial";
-      document.getElementById("distFromRootLabel").style.display = "initial";
+      // document.getElementById("distFromRoot").style.display = "initial";
+      // document.getElementById("distFromRootLabel").style.display = "initial";
       document.getElementById("editdistFromRoot").style.display = "initial";
       document.getElementById("editdistFromRootLabel").style.display = "initial";
 
@@ -579,8 +570,8 @@ function setupInterface(){
       document.getElementById("weightedCBLabel").style.display = "none";
       weighted = false;
 
-      document.getElementById("distFromRoot").style.display = "none";
-      document.getElementById("distFromRootLabel").style.display = "none";
+      // document.getElementById("distFromRoot").style.display = "none";
+      // document.getElementById("distFromRootLabel").style.display = "none";
       document.getElementById("editdistFromRoot").style.display = "none";
       document.getElementById("editdistFromRootLabel").style.display = "none";
 
@@ -599,8 +590,8 @@ function setupInterface(){
       document.getElementById("weightedCB").checked = true;
       weighted = true;
 
-      document.getElementById("distFromRoot").style.display = "initial";
-      document.getElementById("distFromRootLabel").style.display = "initial";
+      // document.getElementById("distFromRoot").style.display = "initial";
+      // document.getElementById("distFromRootLabel").style.display = "initial";
       document.getElementById("editdistFromRoot").style.display = "initial";
       document.getElementById("editdistFromRootLabel").style.display = "initial";
 
@@ -688,8 +679,11 @@ function setupInterface(){
 function doSetQuestion() {
   let dropDown = document.getElementById("questionTypeDD");
   let qCode = document.getElementById("questionCodeLecturer");
+  let qTitle = document.getElementById("questionTitle");
+
   isCreate = false;
-  if (dropDown.selectedIndex != 0 && qCode.value.length != 0) {
+
+  if (dropDown.selectedIndex != 0 && qTitle.value.length != 0) {
     switch (dropDown.selectedIndex) {
       case 1:
         questionType = "bfs";
@@ -715,47 +709,50 @@ function doSetQuestion() {
     // document.getElementById("editVertexDiv").style.display = "initial";
     // document.getElementById("deleteVertexDiv").style.display = "initial";
 
-    setupInterface(questionType);
+    setupInterface();
 
-    questionCode = qCode.value;
+    // questionCode = qCode.value;
+    questionTitle = qTitle.value;
     //Jesse_new
-    validifyQuestionCode(questionCode);
+    // validifyQuestionCode(questionCode);
+
+    alert("Question setup completed");
 
   } else {
-    alert("Please select a question type and enter a code");
+    alert("Please select a question type and enter a title");
   }
 }
 
 //When lecturer submits graph
 function doCreate() {
   //Jesse_new
-  if (questionCode!=null) {
+  if (questionTitle != null) {
     try {
-      var data = {
-        id: questionCode,
-        graph: graph.convertGraphToString(questionCode, questionType, questionUse)
-      }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
+      // var data = {
+      //   id: questionCode,
+      //   graph: graph.convertGraphToString(questionCode, questionType, questionUse)
+      // }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
 
       //Jesse_new
-      isCreate = true;
+      // isCreate = true;
       // console.log("isWeighted:",graph.isWeighted(),
       //   "isDirected:",graph.isDirected(),graph.getAdjacenyMatrix());
 
-      ref.push(data);
+      // ref.push(data);
       //Jesse_new
 
+      alert("Saving graph...");
+
       //Save canvas as png
-      var link = document.getElementById('link');
-      link.setAttribute('download', 'Graph_' + questionType + "_" + questionUse + '.png');
-      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-      link.click();
+      // var link = document.getElementById('link');
+      // link.setAttribute('download', 'Graph_' + questionType + "_" + questionTitle + '.png');
+      // link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+      // link.click();
 
       //Save graph as text file
       var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
       var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
-      saveAs(blob, "Graph_"  + questionType + "_" + questionUse + ".txt");
-
-      alert("Lecturer question successfully submitted");
+      saveAs(blob, "Graph_"  + questionType + "_" + questionTitle + ".txt");
 
     } catch (err) {
       alert("Error occured while trying to submit lecturer question graph");
@@ -766,37 +763,37 @@ function doCreate() {
 }
 
 //Jesse_new
-function gotData(data) {
-  if (isCreate) {
-    questionCode = null;
-  } else {
-    var data = data.val();
-    var keys = Object.keys(data);
-    var foundQuestionGraph = false;
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i];
-      if (data[k].id === questionCode) {
-        foundQuestionGraph = true;
-        break;
-      }
-    }
-    if (foundQuestionGraph) {
-      alert("Question code already exists, please choose a new one.");
-      questionCode = null;
-    } else {
-      alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
-    }
-  }
-}
+// function gotData(data) {
+//   if (isCreate) {
+//     questionCode = null;
+//   } else {
+//     var data = data.val();
+//     var keys = Object.keys(data);
+//     var foundQuestionGraph = false;
+//     for (var i = 0; i < keys.length; i++) {
+//       var k = keys[i];
+//       if (data[k].id === questionCode) {
+//         foundQuestionGraph = true;
+//         break;
+//       }
+//     }
+//     if (foundQuestionGraph) {
+//       alert("Question code already exists, please choose a new one.");
+//       questionCode = null;
+//     } else {
+//       alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
+//     }
+//   }
+// }
 
 //Jesse_new
-function errorData(err) {
-  alert("An error has occured while trying to validify the question code. Please try again.");
-}
+// function errorData(err) {
+//   alert("An error has occured while trying to validify the question code. Please try again.");
+// }
 
 //Jesse_new
-function validifyQuestionCode(questionCode) {
-  //fetch data, scan if question code has been used
-  ref.on("value", gotData, errorData);
-}
+// function validifyQuestionCode(questionCode) {
+//   //fetch data, scan if question code has been used
+//   ref.on("value", gotData, errorData);
+// }
 
