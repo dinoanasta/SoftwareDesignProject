@@ -31,6 +31,15 @@ class Edge{
     }
 
     drawEdge(){
+        graphics.fillStyle = "red";
+
+        if(xdist < ydist){
+            graphics.fillPoly(this.vertexOne.getXVal()+vertexRadius, this.vertexOne.getYVal(), this.vertexOne.getXVal()-vertexRadius, this.vertexOne.getYVal(), this.vertexTwo.getXVal()-vertexRadius, this.vertexTwo.getYVal(), this.vertexTwo.getXVal()+vertexRadius, this.vertexTwo.getYVal());
+        }else if(ydist < xdist){
+            graphics.fillPoly(this.vertexOne.getXVal(), this.vertexOne.getYVal()+vertexRadius, this.vertexOne.getXVal(), this.vertexOne.getYVal()-vertexRadius, this.vertexTwo.getXVal(), this.vertexTwo.getYVal()-vertexRadius, this.vertexTwo.getXVal(),this.vertexTwo.getYVal()+vertexRadius);
+        }
+
+
         graphics.lineWidth = 3;  // Use 1 pixel as the default line width
         graphics.strokeStyle = "lightgrey";
         graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
