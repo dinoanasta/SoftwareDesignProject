@@ -49,6 +49,27 @@ function installMouseHandler() {
             return -1;
         }
 
+        // function selectEdge(x, y){
+        //     if(userType == "student"){
+        //         let edgesArray = answerGraph.getEdges();
+
+        //         for(let i=0; i<edgesArray.length();++i){
+        //             let vertex1 = edgesArray[i].getVertexOne();
+        //             let vertex2 = edgesArray[i].getVertexTwo();
+
+        //             if(vertex1.getXVal <= vertex2.getXVal){
+
+
+        //             }else if(vertex1.getXVal > vertex2.getXVal){
+
+        //             }
+        //         }
+        //     }else if (userType == "lecturer"){
+
+        //     }
+
+        // }
+
         if(userType == "student"){
             clickedVertexIndex = getVertexIndex(answerGraph);
             selectedVertex =  answerGraph.getVertex(clickedVertexIndex);

@@ -22,7 +22,7 @@ class Edge{
         return this.vertexOne;
     }
 
-    getVertexTwo(){
+    getVertexTwo(){  
         return this.vertexTwo;
     }
 
@@ -31,14 +31,17 @@ class Edge{
     }
 
     drawEdge(){
+
+        let xdist = Math.abs(this.vertexOne.getXVal() - this.vertexTwo.getXVal());
+        let ydist = Math.abs(this.vertexOne.getYVal() - this.vertexTwo.getYVal());
+
         graphics.fillStyle = "red";
 
         if(xdist < ydist){
-            graphics.fillPoly(this.vertexOne.getXVal()+vertexRadius, this.vertexOne.getYVal(), this.vertexOne.getXVal()-vertexRadius, this.vertexOne.getYVal(), this.vertexTwo.getXVal()-vertexRadius, this.vertexTwo.getYVal(), this.vertexTwo.getXVal()+vertexRadius, this.vertexTwo.getYVal());
+            graphics.fillPoly(this.vertexOne.getXVal()+vertexRadius-2, this.vertexOne.getYVal(), this.vertexOne.getXVal()-vertexRadius+2, this.vertexOne.getYVal(), this.vertexTwo.getXVal()-vertexRadius+2, this.vertexTwo.getYVal(), this.vertexTwo.getXVal()+vertexRadius-2, this.vertexTwo.getYVal());
         }else if(ydist < xdist){
-            graphics.fillPoly(this.vertexOne.getXVal(), this.vertexOne.getYVal()+vertexRadius, this.vertexOne.getXVal(), this.vertexOne.getYVal()-vertexRadius, this.vertexTwo.getXVal(), this.vertexTwo.getYVal()-vertexRadius, this.vertexTwo.getXVal(),this.vertexTwo.getYVal()+vertexRadius);
+            graphics.fillPoly(this.vertexOne.getXVal(), this.vertexOne.getYVal()+vertexRadius-2, this.vertexOne.getXVal(), this.vertexOne.getYVal()-vertexRadius+2, this.vertexTwo.getXVal(), this.vertexTwo.getYVal()-vertexRadius+2, this.vertexTwo.getXVal(),this.vertexTwo.getYVal()+vertexRadius-2);
         }
-
 
         graphics.lineWidth = 3;  // Use 1 pixel as the default line width
         graphics.strokeStyle = "lightgrey";
