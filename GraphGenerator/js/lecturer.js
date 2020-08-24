@@ -55,7 +55,7 @@ function addBindings(){
   document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
 
   //Interface
-  document.getElementById("clearButton").onclick = doClear;
+  // document.getElementById("clearButton").onclick = doClear;
   document.getElementById("createButton").onclick = doCreate;
   window.addEventListener('keydown', handleKeyDown, false);
 }
@@ -227,7 +227,7 @@ function setRoot(){
 }
 
 function removeRootVertex(){
-  graph.setSourceNode(0);
+  graph.setSourceNode(-1);
   redraw();
 }
 
@@ -436,44 +436,44 @@ function populateDropDowns(){
   }
 }
 
-function doClear() {
-  graphics.fillStyle = "white";
-  graphics.fillRect(0, 0, canvas.width, canvas.height);
-
-  //Enable question setup stuff
-  document.getElementById("questionSetupDiv").style.display = "initial";
-  document.getElementById("edgeDiv").style.display = "none";
-  document.getElementById("addVertexDiv").style.display = "none";
-  document.getElementById("editVertexDiv").style.display = "none";
-  document.getElementById("deleteVertexDiv").style.display = "none";
-
-  setupInterface(questionType);
-
-  //Reset variables
-
-  graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
-  questionGraph = new Graph();
-
-  clickedVertexIndex = -1;
-
-  selectedVertex = null;
-
-  questionType;
-  questionCode = null;
-  isCreate = false;
-  questionLoaded = false;
-
-  weight = 0;
-  weighted = true;
-
-  directed = true;
-
-  color = "0";
-  colored = true;
-
-  //Clear dropdowns
-  populateDropDowns();
-}
+// function doClear() {
+//   graphics.fillStyle = "white";
+//   graphics.fillRect(0, 0, canvas.width, canvas.height);
+//
+//   //Enable question setup stuff
+//   document.getElementById("questionSetupDiv").style.display = "initial";
+//   document.getElementById("edgeDiv").style.display = "none";
+//   document.getElementById("addVertexDiv").style.display = "none";
+//   document.getElementById("editVertexDiv").style.display = "none";
+//   document.getElementById("deleteVertexDiv").style.display = "none";
+//
+//   setupInterface(questionType);
+//
+//   //Reset variables
+//
+//   graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
+//   questionGraph = new Graph();
+//
+//   clickedVertexIndex = -1;
+//
+//   selectedVertex = null;
+//
+//   questionType;
+//   questionCode = null;
+//   isCreate = false;
+//   questionLoaded = false;
+//
+//   weight = 0;
+//   weighted = true;
+//
+//   directed = true;
+//
+//   color = "0";
+//   colored = true;
+//
+//   //Clear dropdowns
+//   populateDropDowns();
+// }
 
 function drawVertices(){
   for(let i  = 0; i< graph.vertices.length; ++i){
@@ -741,24 +741,24 @@ function doCreate() {
       // ref.push(data);
       //Jesse_new
 
-      alert("Saving graph...");
-
-      //Save canvas as png
-      // var link = document.getElementById('link');
-      // link.setAttribute('download', 'Graph_' + questionType + "_" + questionTitle + '.png');
-      // link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-      // link.click();
+      // alert("Saving graph...");
 
       //Save graph as text file
       var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
       var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
       saveAs(blob, "Graph_"  + questionType + "_" + questionTitle + ".txt");
 
+      //Save canvas as png
+      var link = document.getElementById('link');
+      link.setAttribute('download', 'Graph_' + questionType + "_" + questionTitle + '.png');
+      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+      link.click();
+
     } catch (err) {
       alert("Error occured while trying to submit lecturer question graph");
     }
   }else{
-    alert("Confirm/enter question code.");
+    alert("Confirm/enter question title and details.");
   }
 }
 

@@ -4,7 +4,7 @@ class Graph {
     this.vertices = new Array();
     this.edges = new Array();
     this.directedEdges = new Array();
-    this.sourceNode = 0;
+    this.sourceNode = -1;
     this.adjMatrix = adjMatrix;
     if(adjMatrix!==null){
       this.convertMatrix();

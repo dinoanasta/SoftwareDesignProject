@@ -123,8 +123,8 @@ function doLoadGraph() { //When student enters code and presses the load button
                 answerGraph.directedEdges = [];
             }
 
-            answerGraph.setSourceNode(0);
-            questionGraph.setSourceNode(0);
+            answerGraph.setSourceNode(questionGraph.getSourceNode());
+            // questionGraph.setSourceNode(-1);
 
             questionLoaded = true;
             populateDropDowns();

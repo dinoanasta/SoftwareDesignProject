@@ -89,6 +89,11 @@ button{
     border-radius: 5vmin;
 }
 
+#createButton{
+    font-size: 5vmin;
+    border-radius: 5vmin;
+}
+
 button:hover{
     background-color: #fffc00;
 }

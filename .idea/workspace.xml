@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="633de341-9a24-4c63-b4a7-69046602a0f5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/GraphGenerator/Lecturer.html" beforeDir="false" afterPath="$PROJECT_DIR$/GraphGenerator/Lecturer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphGenerator/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/GraphGenerator/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphGenerator/js/Edge.js" beforeDir="false" afterPath="$PROJECT_DIR$/GraphGenerator/js/Edge.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphGenerator/js/Graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/GraphGenerator/js/Graph.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphGenerator/js/lecturer.js" beforeDir="false" afterPath="$PROJECT_DIR$/GraphGenerator/js/lecturer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphGenerator/js/student.js" beforeDir="false" afterPath="$PROJECT_DIR$/GraphGenerator/js/student.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1gX8xk9o6NBYrSLfcwmTHsO9GvZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.Student.html">
+    <configuration name="Lecturer.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/SDProject/GraphGenerator/Lecturer.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="Student.html" type="JavascriptDebugType" temporary="true" uri="http://localhost:63342/SDProject/GraphGenerator/Student.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.Student.html" />
+        <item itemvalue="JavaScript Debug.Lecturer.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="633de341-9a24-4c63-b4a7-69046602a0f5" name="Default Changelist" comment="" />
+      <created>1598249826228</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598249826228</updated>
+      <workItem from="1598249827746" duration="3241000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="438" y="129" key="#Web_Browsers" timestamp="1598252097512">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="438" y="129" key="#Web_Browsers/0.0.1280.680@0.0.1280.680" timestamp="1598252097512" />
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598252146572">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1598252146572" />
+  </component>
+</project>
