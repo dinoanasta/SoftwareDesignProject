@@ -17,7 +17,7 @@ jdk:
  
  
  
- export CODECOV_TOKEN="e94614bf-3b8b-43c5-8273-09d85b8ed5b0"
+ #export CODECOV_TOKEN="e94614bf-3b8b-43c5-8273-09d85b8ed5b0"
 
 # Each job in Travis CI has several steps:
 # https://docs.travis-ci.com/user/job-lifecycle/
