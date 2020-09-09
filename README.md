@@ -1,9 +1,16 @@
 # SoftwareDesignProject
 # 2B||!2B
 
-## Resources:
-H5P plugin repo: https://github.com/h5p/h5p-moodle-plugin
-(Could work for just embedding the final html5 project into a Moodle plugin)
+## About this project :)
+This is a drag-and-drop graph creator interface for studying graph theory. It allows the student to visually create their answer to tutorial questions, and download them in a format that can be automatically marked/submitted for marking. There is a practice mode with a few pre-set markers, where you can check your answers without submitting them, and a testing/submission mode where you can only download your answer for submission.
+
+For instructors, this means that you can set tutorial-type practical questions on graph theory, and still be able to automatically mark them. Our project currently supports downloading the answer files in JSON format, and in a Java object format.
+
+## Installation:
+The [GraphGenerator](GraphGenerator) folder can be deployed on a server for organisational use, anyone who can access a copy of these files can run it in a browser window (preferably Chrome) and use the full functionality of the project. It does not require an internet connection to use.
+
+## Manuals
+The student manual can be found [here](Manuals/StudentManual.pdf), and the lecturer manual can be found [here](Manuals/LecturerManual.pdf).
 
 
 ## Continuous Integration for JavaScript Code
