@@ -15,4 +15,4 @@ H5P plugin repo: https://github.com/h5p/h5p-moodle-plugin
 
 
 ## Coverage for Java Code
-f479620e-0693-4f67-bd8e-6e4a5f10761e
+[![codecov](https://codecov.io/gh/dinoanasta/SoftwareDesignProject/branch/master/graph/badge.svg)](https://codecov.io/gh/dinoanasta/SoftwareDesignProject)
