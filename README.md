@@ -13,13 +13,10 @@ The [GraphGenerator](GraphGenerator) folder can be deployed on a server for orga
 The student manual can be found [here](Manuals/StudentManual.pdf), and the lecturer manual can be found [here](Manuals/LecturerManual.pdf).
 
 
-## Continuous Integration for JavaScript Code
+## Continuous Integration and Coverage for JavaScript Code
 [![dinoanasta](https://circleci.com/gh/dinoanasta/SoftwareDesignProject.svg?style=svg)](https://app.circleci.com/pipelines/github/dinoanasta/SoftwareDesignProject)
 [![Coverage Status](https://coveralls.io/repos/github/dinoanasta/SoftwareDesignProject/badge.svg?branch=master)](https://coveralls.io/github/dinoanasta/SoftwareDesignProject?branch=master)
 
-## Continuous Integration for Java Code
+## Continuous Integration and Coverage for Java Code
 [![Build Status](https://travis-ci.org/dinoanasta/SoftwareDesignProject.svg?branch=master)](https://travis-ci.org/dinoanasta/SoftwareDesignProject)
-
-
-## Coverage for Java Code
 [![codecov](https://codecov.io/gh/dinoanasta/SoftwareDesignProject/branch/master/graph/badge.svg)](https://codecov.io/gh/dinoanasta/SoftwareDesignProject)
