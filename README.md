@@ -12,3 +12,7 @@ H5P plugin repo: https://github.com/h5p/h5p-moodle-plugin
 
 ## Continuous Integration for Java Code
 [![Build Status](https://travis-ci.org/dinoanasta/SoftwareDesignProject.svg?branch=master)](https://travis-ci.org/dinoanasta/SoftwareDesignProject)
+
+
+## Coverage for Java Code
+[![codecov](https://codecov.io/gh/dinoanasta/SoftwareDesignProject/branch/master/graph/badge.svg)](https://codecov.io/gh/dinoanasta/SoftwareDesignProject)
