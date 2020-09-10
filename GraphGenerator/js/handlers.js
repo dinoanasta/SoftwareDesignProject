@@ -9,6 +9,7 @@
 function installMouseHandler() {
 
     var dragging = false;  // set to true when a drag action is in progress.
+    var creatingEdge = false;
 
     function doMouseDown(evt) {
         // This function is called when the user presses a button on the mouse.
@@ -16,20 +17,7 @@ function installMouseHandler() {
         if (dragging) {
             return;  // if a drag is in progress, don't start another.
         }
-
-        if (evt.button != 0) {
-            return;  // don't respond unless the button is the main (left) mouse button.
-        }
-
-        var r = canvas.getBoundingClientRect();
-        var x = Math.round(evt.clientX - r.left);  // translate mouse position from screen coords to canvas coords.
-        var y = Math.round(evt.clientY - r.top);   // round to integer values; some browsers would give non-integers.
-        dragging = true;  // (this won't be the case for all mousedowns in all programs)
-
-        if (dragging) {
-            document.addEventListener("mousemove", doMouseMove, false);
-            document.addEventListener("mouseup", doMouseUp, false);
-        }
+        creatingEdge = false;
 
         //TO DO WHEN MOUSE IS PRESSED
         function euclideanDistance(point1, point2) {
@@ -49,87 +37,187 @@ function installMouseHandler() {
             return -1;
         }
 
-        // function selectEdge(x, y){
-        //     if(userType == "student"){
-        //         let edgesArray = answerGraph.getEdges();
+        var r = canvas.getBoundingClientRect();
+        var x = Math.round(evt.clientX - r.left);  // translate mouse position from screen coords to canvas coords.
+        var y = Math.round(evt.clientY - r.top);   // round to integer values; some browsers would give non-integers.
 
-        //         for(let i=0; i<edgesArray.length();++i){
-        //             let vertex1 = edgesArray[i].getVertexOne();
-        //             let vertex2 = edgesArray[i].getVertexTwo();
+        if (evt.button == 0) { //LEFT BUTTON
+            dragging = true;  // (this won't be the case for all mousedowns in all programs)
 
-        //             if(vertex1.getXVal <= vertex2.getXVal){
-
-
-        //             }else if(vertex1.getXVal > vertex2.getXVal){
-
-        //             }
-        //         }
-        //     }else if (userType == "lecturer"){
-
-        //     }
-
-        // }
-
-        if(userType == "student"){
-            clickedVertexIndex = getVertexIndex(answerGraph);
-            selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
-        }else if (userType == "lecturer"){
-            clickedVertexIndex = getVertexIndex(graph);
-            selectedVertex =  graph.getVertex(clickedVertexIndex);
-        }
-
-        graphics.strokeStyle = "red";
-        graphics.lineWidth = 2;
-
-        redraw();
-
-        if(clickedVertexIndex != -1){
-            graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
-                selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
-                selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-                selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
-            );
-
-            // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
-
-            if(userType=="student"){
-                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
-                    document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
-                }
-                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
-                    document.getElementById("editvertexColor").value = selectedVertex.getColor();
-                }
-                if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
-                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
-                }
-            }else if (userType=="lecturer"){
-                document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
-                document.getElementById("editvertexColor").value = selectedVertex.getColor();
-                document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+            if (dragging) {
+                document.addEventListener("mousemove", doMouseMove, false);
+                document.addEventListener("mouseup", doMouseUp, false);
             }
 
-        }else{
-            if(userType=="student"){
 
-                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
-                    document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
-                }
-                if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
-                    document.getElementById("editvertexColor").value = "";
-                }
-                if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
-                    document.getElementById("setRootDD").selectedIndex = 0;
-                }
-            }else if (userType=="lecturer"){
-                document.getElementById("editvertexValue").value = "";
-                document.getElementById("editvertexColor").value = "";
-                document.getElementById("setRootDD").selectedIndex = 0;
+            if(userType == "student"){
+                clickedVertexIndex = getVertexIndex(answerGraph);
+                selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
+            }else if (userType == "lecturer"){
+                clickedVertexIndex = getVertexIndex(graph);
+                selectedVertex =  graph.getVertex(clickedVertexIndex);
             }
+
+            graphics.strokeStyle = "red";
+            graphics.lineWidth = 2;
+
+            selectedEdge = null;
 
             redraw();
 
-        }
+            if(clickedVertexIndex != -1){
+                graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
+                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
+                    selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
+                );
 
+                // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
+
+                if(userType=="student"){
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                        document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                        document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                    }
+                }else if (userType=="lecturer"){
+                    document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
+                    document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                }
+
+            }else{
+                if(userType=="student"){
+
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                        document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                        document.getElementById("editvertexColor").value = "";
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                        document.getElementById("setRootDD").selectedIndex = 0;
+                    }
+
+                    for(let i =0; i<answerGraph.getEdges().length;++i){
+                        let thisEdge = answerGraph.getEdges()[i];
+
+                        let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
+                        let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
+
+                        if(xdist < ydist){
+                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal()]], {x: x, y: y})){
+                                console.log("Function working smfdslkngjlsgjdsnglfs");
+                                selectedEdge = thisEdge;
+                                graphics.strokePoly(thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal(), thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal());
+                                break;
+                            };
+                        }else if(ydist < xdist){
+                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2]], {x: x, y: y})){
+                                selectedEdge = thisEdge;
+                                graphics.strokePoly(thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2, thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2);
+                                break;
+                            };
+                        }
+                    }
+
+                    for(let i =0; i<answerGraph.getDirectedEdges().length;++i){
+                        let thisEdge = answerGraph.getDirectedEdges()[i];
+
+                        let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
+                        let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
+
+                        if(xdist < ydist){
+                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal()]], {x: x, y: y})){
+                                console.log("Function working smfdslkngjlsgjdsnglfs");
+                                selectedEdge = thisEdge;
+                                graphics.strokePoly(thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal(), thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal());
+                                break;
+                            };
+                        }else if(ydist < xdist){
+                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2]], {x: x, y: y})){
+                                console.log("Function working smfdslkngjlsgjdsnglfs")
+                                selectedEdge = thisEdge;
+                                graphics.strokePoly(thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2, thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2);
+                                break;
+                            };
+                        }
+                    }
+                }else if (userType=="lecturer"){
+                    document.getElementById("editvertexValue").value = "";
+                    document.getElementById("editvertexColor").value = "";
+                    document.getElementById("setRootDD").selectedIndex = 0;
+                }
+
+                redraw();
+            }
+        }else if (evt.button == 1) {
+            return;
+        }else if (evt.button == 2) { //RIGHT BUTTON
+            dragging = true;  // (this won't be the case for all mousedowns in all programs)
+            creatingEdge = true; 
+
+            if (dragging) {
+                document.addEventListener("mousemove", doMouseMove, false);
+                document.addEventListener("mouseup", doMouseUp, false);
+            }
+
+            if(userType == "student"){
+                clickedVertexIndex = getVertexIndex(answerGraph);
+                selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
+            }else if (userType == "lecturer"){
+                clickedVertexIndex = getVertexIndex(graph);
+                selectedVertex =  graph.getVertex(clickedVertexIndex);
+            }
+
+            graphics.strokeStyle = "red";
+            graphics.lineWidth = 2;
+
+            redraw();
+
+            if(clickedVertexIndex != -1){
+                if(userType=="student"){
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                        document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                        document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                    }
+                }else if (userType=="lecturer"){
+                    document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
+                    document.getElementById("editvertexColor").value = selectedVertex.getColor();
+                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                }
+            }else{
+                if(userType=="student"){
+
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                        document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                        document.getElementById("editvertexColor").value = "";
+                    }
+                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                        document.getElementById("setRootDD").selectedIndex = 0;
+                    }
+                }else if (userType=="lecturer"){
+                    document.getElementById("editvertexValue").value = "";
+                    document.getElementById("editvertexColor").value = "";
+                    document.getElementById("setRootDD").selectedIndex = 0;
+                }
+
+                redraw();
+
+
+            }
+        }
     }
 
     function doMouseMove(evt) {
@@ -142,22 +230,52 @@ function installMouseHandler() {
         var x = Math.round(evt.clientX - r.left);
         var y = Math.round(evt.clientY - r.top);
 
-        if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
-            if(clickedVertexIndex != -1){
-                if(userType=="student"){
-                    answerGraph.updateXandYVal(selectedVertex, x, y);
-                }else if (userType=="lecturer"){
-                    graph.updateXandYVal(selectedVertex, x, y);
+        // if (evt.button == 0) { //LEFT BUTTON
+        //     if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
+        //         if(clickedVertexIndex != -1){
+        //             if(userType=="student"){
+        //                 answerGraph.updateXandYVal(selectedVertex, x, y);
+        //             }else if (userType=="lecturer"){
+        //                 graph.updateXandYVal(selectedVertex, x, y);
+        //             }
+        //             redraw();
+        //             graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+        //                 selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
+        //                 selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
+        //                 selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
+        //             );
+        //         }
+        //     }
+        // }else if (evt.button == 1) {
+        //     return;
+        // }else if (evt.button == 2) { //RIGHT BUTTON
+        //     console.log("RIGHT DRAGGINGGGGGG")
+        //     graphics.strokeLine(selectedVertex.getXVal(),selectedVertex.getYVal(), x, y);
+        // }
+
+
+        if(creatingEdge){
+            redraw();
+            console.log("RIGHT DRAGGINGGGGGG")
+            graphics.strokeLine(selectedVertex.getXVal(),selectedVertex.getYVal(), x, y);
+            drawVertices();
+        }else{
+            if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
+                if(clickedVertexIndex != -1){
+                    if(userType=="student"){
+                        answerGraph.updateXandYVal(selectedVertex, x, y);
+                    }else if (userType=="lecturer"){
+                        graph.updateXandYVal(selectedVertex, x, y);
+                    }
+                    redraw();
+                    graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+                        selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
+                        selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
+                        selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
+                    );
                 }
-                redraw();
-                graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
-                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
-                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-                    selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
-                );
             }
         }
-
     }
 
     function doMouseUp(evt) {
@@ -182,6 +300,12 @@ function handleKeyDown(event) {
                 redraw();
         }
     }
+}
+
+function isPointInPoly(poly, pt) { 
+    for(var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i) 
+      ((poly[i][1] <= pt.y && pt.y < poly[j][1]) || (poly[j][1] <= pt.y && pt.y < poly[i][1])) && (pt.x < (poly[j][0] - poly[i][0]) * (pt.y - poly[i][1]) / (poly[j][1] - poly[i][1]) + poly[i][0]) && (c = !c); 
+      return c;
 }
 
 function addGraphicsContextExtras(graphics) {

@@ -3,6 +3,8 @@ const userType = "student";
 
 var selectedVertex = null;
 const space = 4;
+let selectedEdge = null;
+
 
 const vertexRadius = 15;
 

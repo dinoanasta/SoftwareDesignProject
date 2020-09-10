@@ -86,217 +86,217 @@
     </script>
 </head>
 
-<body onload="init()" style="background-color:#EEEEEE">
+<body onload="init()" style="background-color:#EEEEEE" oncontextmenu="return false">
 
-<div id="lecturerDiv" class="row">
+    <div id="lecturerDiv" class="row">
 
-    <!--        Canvas - 1st column-->
-    <div id="canvasDiv">
-        <h1>Graph Generator - Lecturer</h1>
+        <!--        Canvas - 1st column-->
+        <div id="canvasDiv">
+            <h1>Graph Generator - Lecturer</h1>
 
-        <canvas id="canvas" width="550" height="450">
-            <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
-            Canvas not supported.
-        </canvas>
-    </div>
+            <canvas id="canvas" width="550" height="450">
+                <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
+                Canvas not supported.
+            </canvas>
+        </div>
 
-    <!--        Vertex stuff - 2nd column-->
-    <div id="vertexDiv">
+        <!--        Vertex stuff - 2nd column-->
+        <div id="vertexDiv">
 
-        <!--        Question setup-->
-        <div id="questionSetupDiv">
-            <h3>Question setup:</h3>
+            <!--        Question setup-->
+            <div id="questionSetupDiv">
+                <h3>Question setup:</h3>
 
-            <label id="questionTitleLabel">Question Title:</label>
-            <input type="text" id="questionTitle">
+                <label id="questionTitleLabel">Question Title:</label>
+                <input type="text" id="questionTitle">
 
-            <br>
-
-            <label id="questionTypeDDLabel">Question type:</label>
-            <select id="questionTypeDD">
-                <option>Select type</option>
-                <option>BFS</option>
-                <option>DFS</option>
-                <option>MWST</option>
-                <option>Graph Colouring</option>
-                <option>Shortest Path</option>
-            </select>
-
-            <br>
-
-            <input type="checkbox" id="directedCB">
-            <label id="directedCBLabel">Directed</label>
-            <br>
-
-            <input type="checkbox" id="weightedCB">
-            <label id="weightedCBLabel">Weighted</label>
-            <br>
-
-            <div id="questionUseRG">
-                <h5>Question Use:</h5>
-
-                <input type="radio" name="questionUse" id="submissionUse" value="sub">
-                <label for="submissionUse">Submission/Testing</label>
                 <br>
-                <input type="radio" name="questionUse" id="practiceUse" value="prac">
-                <label for="submissionUse">Practice</label>
+
+                <label id="questionTypeDDLabel">Question type:</label>
+                <select id="questionTypeDD">
+                    <option>Select type</option>
+                    <option>BFS</option>
+                    <option>DFS</option>
+                    <option>MWST</option>
+                    <option>Graph Colouring</option>
+                    <option>Shortest Path</option>
+                </select>
+
+                <br>
+
+                <input type="checkbox" id="directedCB">
+                <label id="directedCBLabel">Directed</label>
+                <br>
+
+                <input type="checkbox" id="weightedCB">
+                <label id="weightedCBLabel">Weighted</label>
+                <br>
+
+                <div id="questionUseRG">
+                    <h5>Question Use:</h5>
+
+                    <input type="radio" name="questionUse" id="submissionUse" value="sub">
+                    <label for="submissionUse">Submission/Testing</label>
+                    <br>
+                    <input type="radio" name="questionUse" id="practiceUse" value="prac">
+                    <label for="submissionUse">Practice</label>
+                    <br>
+                </div>
+
+                <button id="setQuestionButton">Confirm</button>
+
+            </div>
+
+            <br>
+
+            <!--        Adding vertices-->
+            <div id="addVertexDiv">
+                <h3>Add vertex:</h3>
+
+                <label id="vertexValueLabel">Value:</label>
+                <input type="text" id="vertexValue">
+                <br>
+
+                <label id="vertexColorLabel">Color:</label>
+                <input type="number" id="vertexColor">
+                <br>
+
+    <!--            <label id="distFromRootLabel">Distance:</label>-->
+    <!--            <input type="text" id="distFromRoot">-->
+    <!--            <br>-->
+
+                <button id="addVertexButton">Add vertex</button>
+
+                <!--        Set root vertex-->
+                <br>
+                <label id="setRootDDLabel">Set Root:</label>
+                <select id="setRootDD">
+                    <option>Choose root vertex</option>
+                </select>
+                <button id="clearRootButton">Clear Root</button>
+
                 <br>
             </div>
 
-            <button id="setQuestionButton">Confirm</button>
 
+
+            <!--        Editing vertices-->
+            <div id="editVertexDiv">
+                <h3>Edit vertex:</h3>
+
+                <label id="editVertexDDLabel">Vertex:</label>
+                <select id="editVertexDD">
+                    <option>Choose vertex</option>
+                </select>
+                <br>
+
+                <label id="editvertexValueLabel">Value:</label>
+                <input type="text" id="editvertexValue">
+                <br>
+
+                <label id="editvertexColorLabel">Color:</label>
+                <input type="number" id="editvertexColor">
+                <br>
+
+                <label id="editdistFromRootLabel">Distance:</label>
+                <input type="text" id="editdistFromRoot">
+                <br>
+
+                <button id="updateVertexButton">Update vertex</button>
+            </div>
+
+            <br>
+
+            <!--        Delete vertex-->
+            <div id="deleteVertexDiv">
+                <h3>Delete vertex:</h3>
+
+                <label id="deleteVertexDDLabel">Vertex:</label>
+                <select id="deleteVertexDD">
+                    <option>Choose vertex</option>
+                </select>
+                <br>
+
+                <button id="deleteVertexButton">Delete vertex</button>
+            </div>
         </div>
 
-        <br>
+        <!--        Edge stuff - 3rd column-->
+        <div id="edgeDiv">
 
-        <!--        Adding vertices-->
-        <div id="addVertexDiv">
-            <h3>Add vertex:</h3>
+            <!--     Add edge-->
+            <div id="addEdgeDiv">
+                <h3>Add edge:</h3>
 
-            <label id="vertexValueLabel">Value:</label>
-            <input type="text" id="vertexValue">
-            <br>
+                <label id="vertex1DDLabel">Vertex 1:</label>
+                <select id="vertex1DD">
+                    <option>Choose first vertex</option>
+                </select>
+                <br>
 
-            <label id="vertexColorLabel">Color:</label>
-            <input type="number" id="vertexColor">
-            <br>
+                <label id="vertex2DDLabel">Vertex 2:</label>
+                <select id="vertex2DD">
+                    <option>Choose second vertex</option>
+                </select>
+                <br>
 
-<!--            <label id="distFromRootLabel">Distance:</label>-->
-<!--            <input type="text" id="distFromRoot">-->
-<!--            <br>-->
+                <label id="edgeWeightLabel">Edge weight:</label>
+                <input type="text" id="edgeWeight">
+                <br>
 
-            <button id="addVertexButton">Add vertex</button>
-
-            <!--        Set root vertex-->
-            <br>
-            <label id="setRootDDLabel">Set Root:</label>
-            <select id="setRootDD">
-                <option>Choose root vertex</option>
-            </select>
-            <button id="clearRootButton">Clear Root</button>
+                <button id="addEdgeButton">Add edge</button>
+            </div>
 
             <br>
-        </div>
 
+            <!--     Update edge-->
+            <div id="updateEdgeDiv">
+                <h3>Update edge:</h3>
 
+                <label id="updateEdgeDDLabel">Edge:</label>
+                <select id="updateEdgeDD">
+                    <option>Choose edge</option>
+                </select>
+                <br>
 
-        <!--        Editing vertices-->
-        <div id="editVertexDiv">
-            <h3>Edit vertex:</h3>
+                <label id="editWeightLabel">Weight:</label>
+                <input type="text" id="editWeight">
+                <br>
 
-            <label id="editVertexDDLabel">Vertex:</label>
-            <select id="editVertexDD">
-                <option>Choose vertex</option>
-            </select>
+                <button id="updateEdgeButton">Update edge</button>
+            </div>
+
             <br>
 
-            <label id="editvertexValueLabel">Value:</label>
-            <input type="text" id="editvertexValue">
-            <br>
+            <!--    Delete edge-->
+            <div id="deleteEdgeDiv">
+                <h3>Delete edge:</h3>
 
-            <label id="editvertexColorLabel">Color:</label>
-            <input type="number" id="editvertexColor">
-            <br>
+                <label id="deleteEdgeDDLabel">Edge:</label>
+                <select id="deleteEdgeDD">
+                    <option>Choose edge</option>
+                </select>
+                <br>
 
-            <label id="editdistFromRootLabel">Distance:</label>
-            <input type="text" id="editdistFromRoot">
-            <br>
+                <button id="deleteEdgeButton">Delete edge</button>
+            </div>
 
-            <button id="updateVertexButton">Update vertex</button>
-        </div>
+            <!--    Clear Button-->
+            <br><br>
+    <!--        <button id="clearButton">Clear</button>-->
 
-        <br>
+            <!--     Submit Button-->
+            <button id="createButton">Create</button>
+            <a id="link"></a>
 
-        <!--        Delete vertex-->
-        <div id="deleteVertexDiv">
-            <h3>Delete vertex:</h3>
-
-            <label id="deleteVertexDDLabel">Vertex:</label>
-            <select id="deleteVertexDD">
-                <option>Choose vertex</option>
-            </select>
-            <br>
-
-            <button id="deleteVertexButton">Delete vertex</button>
         </div>
     </div>
 
-    <!--        Edge stuff - 3rd column-->
-    <div id="edgeDiv">
 
-        <!--     Add edge-->
-        <div id="addEdgeDiv">
-            <h3>Add edge:</h3>
-
-            <label id="vertex1DDLabel">Vertex 1:</label>
-            <select id="vertex1DD">
-                <option>Choose first vertex</option>
-            </select>
-            <br>
-
-            <label id="vertex2DDLabel">Vertex 2:</label>
-            <select id="vertex2DD">
-                <option>Choose second vertex</option>
-            </select>
-            <br>
-
-            <label id="edgeWeightLabel">Edge weight:</label>
-            <input type="text" id="edgeWeight">
-            <br>
-
-            <button id="addEdgeButton">Add edge</button>
-        </div>
-
-        <br>
-
-        <!--     Update edge-->
-        <div id="updateEdgeDiv">
-            <h3>Update edge:</h3>
-
-            <label id="updateEdgeDDLabel">Edge:</label>
-            <select id="updateEdgeDD">
-                <option>Choose edge</option>
-            </select>
-            <br>
-
-            <label id="editWeightLabel">Weight:</label>
-            <input type="text" id="editWeight">
-            <br>
-
-            <button id="updateEdgeButton">Update edge</button>
-        </div>
-
-        <br>
-
-        <!--    Delete edge-->
-        <div id="deleteEdgeDiv">
-            <h3>Delete edge:</h3>
-
-            <label id="deleteEdgeDDLabel">Edge:</label>
-            <select id="deleteEdgeDD">
-                <option>Choose edge</option>
-            </select>
-            <br>
-
-            <button id="deleteEdgeButton">Delete edge</button>
-        </div>
-
-        <!--    Clear Button-->
-        <br><br>
-<!--        <button id="clearButton">Clear</button>-->
-
-        <!--     Submit Button-->
-        <button id="createButton">Create</button>
-        <a id="link"></a>
-
-    </div>
-</div>
-
-
-<noscript>
-    <!-- This message will be shown in the page if JavaScript is not available. -->
-    <p>JavaScript is required to use this page.</p>
-</noscript>
+    <noscript>
+        <!-- This message will be shown in the page if JavaScript is not available. -->
+        <p>JavaScript is required to use this page.</p>
+    </noscript>
 
 </body>
 </html>
