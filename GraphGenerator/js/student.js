@@ -8,9 +8,7 @@ let selectedEdge = null;
 
 const vertexRadius = 15;
 
-let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 let questionGraph = new Graph();
-
 let answerGraph;
 
 let clickedVertexIndex = -1;
@@ -408,9 +406,9 @@ function editEdgeSelected() {
     let weight;
 
     if (directed) {
-        weight = graph.directedEdges[dropDown.selectedIndex - 1].getWeightEdge();
+        weight = answerGraph.getDirectedEdges()[dropDown.selectedIndex - 1].getWeightEdge();
     } else if (!directed) {
-        weight = graph.edges[dropDown.selectedIndex - 1].getWeightEdge();
+        weight = answerGraph.getEdges()[dropDown.selectedIndex - 1].getWeightEdge();
     }
 
     document.getElementById("editWeight").value = weight;

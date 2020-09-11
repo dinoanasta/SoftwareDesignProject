@@ -10,31 +10,33 @@ function installMouseHandler() {
 
     var dragging = false;  // set to true when a drag action is in progress.
     var creatingEdge = false;
+    var startingVertex = null;
+    var endingVertex = null;
+
+    //TO DO WHEN MOUSE IS PRESSED
+    function euclideanDistance(point1, point2) {
+        let xdiff = Math.pow((point1[0] - point2[0]), 2);
+        let ydiff = Math.pow((point1[1] - point2[1]), 2);
+
+        return Math.sqrt(xdiff + ydiff);
+    }
+
+    function getVertexIndex(graph, x, y) {
+        for (let i = 0; i < graph.getNumberVertices(); ++i) {
+            let dist = euclideanDistance([x, y], [graph.getVertex(i).getXVal(), graph.getVertex(i).getYVal()]);
+            if (dist <= vertexRadius) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     function doMouseDown(evt) {
         // This function is called when the user presses a button on the mouse.
         // Only the main mouse button will start a drag.
         if (dragging) {
             return;  // if a drag is in progress, don't start another.
-        }
-        creatingEdge = false;
-
-        //TO DO WHEN MOUSE IS PRESSED
-        function euclideanDistance(point1, point2) {
-            let xdiff = Math.pow((point1[0] - point2[0]), 2);
-            let ydiff = Math.pow((point1[1] - point2[1]), 2);
-
-            return Math.sqrt(xdiff + ydiff);
-        }
-
-        function getVertexIndex(graph) {
-            for (let i = 0; i < graph.getNumberVertices(); ++i) {
-                let dist = euclideanDistance([x, y], [graph.getVertex(i).getXVal(), graph.getVertex(i).getYVal()]);
-                if (dist <= vertexRadius) {
-                    return i;
-                }
-            }
-            return -1;
         }
 
         var r = canvas.getBoundingClientRect();
@@ -43,20 +45,21 @@ function installMouseHandler() {
 
         if (evt.button == 0) { //LEFT BUTTON
             dragging = true;  // (this won't be the case for all mousedowns in all programs)
+            creatingEdge = false;
 
             if (dragging) {
                 document.addEventListener("mousemove", doMouseMove, false);
                 document.addEventListener("mouseup", doMouseUp, false);
             }
 
-
-            if(userType == "student"){
-                clickedVertexIndex = getVertexIndex(answerGraph);
-                selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
-            }else if (userType == "lecturer"){
-                clickedVertexIndex = getVertexIndex(graph);
-                selectedVertex =  graph.getVertex(clickedVertexIndex);
+            if (userType == "student") {
+                clickedVertexIndex = getVertexIndex(answerGraph,x,y)
+                selectedVertex = answerGraph.getVertex(clickedVertexIndex);
+            } else if (userType == "lecturer") {
+                clickedVertexIndex = getVertexIndex(graph,x,y);
+                selectedVertex = graph.getVertex(clickedVertexIndex);
             }
+
 
             graphics.strokeStyle = "red";
             graphics.lineWidth = 2;
@@ -65,220 +68,253 @@ function installMouseHandler() {
 
             redraw();
 
-            if(clickedVertexIndex != -1){
-                graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
-                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
-                    selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-                    selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
+            if (clickedVertexIndex != -1) {
+                graphics.strokePoly(selectedVertex.getXVal() - vertexRadius - space, selectedVertex.getYVal() - vertexRadius - space,
+                    selectedVertex.getXVal() + vertexRadius + space, selectedVertex.getYVal() - vertexRadius - space,
+                    selectedVertex.getXVal() + vertexRadius + space, selectedVertex.getYVal() + vertexRadius + space,
+                    selectedVertex.getXVal() - vertexRadius - space, selectedVertex.getYVal() + vertexRadius + space
                 );
 
                 // document.getElementById("editVertexDD").textContent = selectedVertex.getVertexVal();
 
-                if(userType=="student"){
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                if (userType == "student") {
+                    if (document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))) {
                         document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
                     }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                    if (document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
                         document.getElementById("editvertexColor").value = selectedVertex.getColor();
                     }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
-                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                    if (document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex + 1;
                     }
-                }else if (userType=="lecturer"){
+                } else if (userType == "lecturer") {
                     document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
                     document.getElementById("editvertexColor").value = selectedVertex.getColor();
-                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex + 1;
                 }
 
-            }else{
-                if(userType=="student"){
+            } else {
+                if (userType == "student") {
 
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
+                    if (document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))) {
                         document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
                     }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
+                    if (document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
                         document.getElementById("editvertexColor").value = "";
                     }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
+                    if (document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
                         document.getElementById("setRootDD").selectedIndex = 0;
                     }
 
-                    for(let i =0; i<answerGraph.getEdges().length;++i){
+                    for (let i = 0; i < answerGraph.getEdges().length; ++i) {
                         let thisEdge = answerGraph.getEdges()[i];
 
                         let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
                         let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
 
-                        if(xdist < ydist){
-                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal()]], {x: x, y: y})){
-                                console.log("Function working smfdslkngjlsgjdsnglfs");
+                        if (xdist < ydist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
                                 selectedEdge = thisEdge;
-                                graphics.strokePoly(thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal(), thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal());
-                                break;
+                                let index = findEdgeIndex(answerGraph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;                                
+                                }
                             };
-                        }else if(ydist < xdist){
-                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2]], {x: x, y: y})){
+                        } else if (ydist < xdist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
                                 selectedEdge = thisEdge;
-                                graphics.strokePoly(thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2, thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2);
-                                break;
+                                let index = findEdgeIndex(answerGraph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;                                
+                                }
                             };
                         }
+
+
                     }
 
-                    for(let i =0; i<answerGraph.getDirectedEdges().length;++i){
+                    for (let i = 0; i < answerGraph.getDirectedEdges().length; ++i) {
                         let thisEdge = answerGraph.getDirectedEdges()[i];
 
                         let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
                         let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
 
-                        if(xdist < ydist){
-                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal()]], {x: x, y: y})){
-                                console.log("Function working smfdslkngjlsgjdsnglfs");
-                                selectedEdge = thisEdge;
-                                graphics.strokePoly(thisEdge.getVertexOne().getXVal()+vertexRadius-2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexOne().getXVal()-vertexRadius+2, thisEdge.getVertexOne().getYVal(), thisEdge.getVertexTwo().getXVal()-vertexRadius+2, thisEdge.getVertexTwo().getYVal(), thisEdge.getVertexTwo().getXVal()+vertexRadius-2, thisEdge.getVertexTwo().getYVal());
-                                break;
+                        if (xdist < ydist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;   
+                                let index = findEdgeIndex(answerGraph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                }                 
                             };
-                        }else if(ydist < xdist){
-                            if(isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2], [thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2]], {x: x, y: y})){
-                                console.log("Function working smfdslkngjlsgjdsnglfs")
-                                selectedEdge = thisEdge;
-                                graphics.strokePoly(thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()+vertexRadius-2, thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal()-vertexRadius+2, thisEdge.getVertexTwo().getXVal(),thisEdge.getVertexTwo().getYVal()+vertexRadius-2);
-                                break;
+                        } else if (ydist < xdist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;   
+                                let index = findEdgeIndex(answerGraph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                }                             
                             };
                         }
                     }
-                }else if (userType=="lecturer"){
+
+
+                } else if (userType == "lecturer") {
                     document.getElementById("editvertexValue").value = "";
                     document.getElementById("editvertexColor").value = "";
                     document.getElementById("setRootDD").selectedIndex = 0;
+
+                    for (let i = 0; i < graph.getEdges().length; ++i) {
+                        let thisEdge = graph.getEdges()[i];
+
+                        let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
+                        let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
+
+                        if (xdist < ydist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;    
+                                let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                }     
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                }        
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+
+                            };
+                        } else if (ydist < xdist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;
+                                let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+                            };
+                        }
+                    }
+
+                    for (let i = 0; i < graph.getDirectedEdges().length; ++i) {
+                        let thisEdge = graph.getDirectedEdges()[i];
+
+                        let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
+                        let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
+
+                        if (xdist < ydist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;
+                                let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+                            };
+                        } else if (ydist < xdist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;
+                                let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+                            };
+                        }
+                    }
                 }
 
                 redraw();
             }
-        }else if (evt.button == 1) {
+        } else if (evt.button == 1) {
             return;
-        }else if (evt.button == 2) { //RIGHT BUTTON
-            dragging = true;  // (this won't be the case for all mousedowns in all programs)
-            creatingEdge = true; 
+        } else if (evt.button == 2) { //RIGHT BUTTON
+            if (userType == "lecturer") {
+                dragging = true;  // (this won't be the case for all mousedowns in all programs)
+    
+                creatingEdge = true;
 
-            if (dragging) {
-                document.addEventListener("mousemove", doMouseMove, false);
-                document.addEventListener("mouseup", doMouseUp, false);
-            }
+                clickedVertexIndex = getVertexIndex(graph,x,y);
+                startingVertex = graph.getVertex(clickedVertexIndex);
 
-            if(userType == "student"){
-                clickedVertexIndex = getVertexIndex(answerGraph);
-                selectedVertex =  answerGraph.getVertex(clickedVertexIndex);
-            }else if (userType == "lecturer"){
-                clickedVertexIndex = getVertexIndex(graph);
-                selectedVertex =  graph.getVertex(clickedVertexIndex);
-            }
-
-            graphics.strokeStyle = "red";
-            graphics.lineWidth = 2;
-
-            redraw();
-
-            if(clickedVertexIndex != -1){
-                if(userType=="student"){
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
-                        document.getElementById("editvertexValueLabel").innerHTML = "Value: " + answerGraph.getVertex(clickedVertexIndex).getVertexVal();
-                    }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
-                        document.getElementById("editvertexColor").value = selectedVertex.getColor();
-                    }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
-                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
-                    }
-                }else if (userType=="lecturer"){
-                    document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
-                    document.getElementById("editvertexColor").value = selectedVertex.getColor();
-                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex+1;
+                if (dragging|| !dragging) {
+                    document.addEventListener("mousemove", doMouseMove, false);
+                    document.addEventListener("mouseup", doMouseUp, false);
                 }
-            }else{
-                if(userType=="student"){
 
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))){
-                        document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
-                    }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editvertexColor"))) {
-                        document.getElementById("editvertexColor").value = "";
-                    }
-                    if(document.getElementById("studentDiv").contains(document.getElementById("editRootDiv"))) {
-                        document.getElementById("setRootDD").selectedIndex = 0;
-                    }
-                }else if (userType=="lecturer"){
-                    document.getElementById("editvertexValue").value = "";
-                    document.getElementById("editvertexColor").value = "";
-                    document.getElementById("setRootDD").selectedIndex = 0;
+                if (clickedVertexIndex != -1) {
+                    document.getElementById("vertex1DD").selectedIndex = clickedVertexIndex + 1;
+                } else {
+                    document.getElementById("vertex1DD").selectedIndex = 0;
                 }
 
                 redraw();
-
-
             }
         }
     }
 
     function doMouseMove(evt) {
         // This function is called when the user moves the mouse during a drag.
-        if (!dragging) {
-            return;  // (shouldn't be possible)
-        }
-
         var r = canvas.getBoundingClientRect();
         var x = Math.round(evt.clientX - r.left);
         var y = Math.round(evt.clientY - r.top);
 
-        // if (evt.button == 0) { //LEFT BUTTON
-        //     if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
-        //         if(clickedVertexIndex != -1){
-        //             if(userType=="student"){
-        //                 answerGraph.updateXandYVal(selectedVertex, x, y);
-        //             }else if (userType=="lecturer"){
-        //                 graph.updateXandYVal(selectedVertex, x, y);
-        //             }
-        //             redraw();
-        //             graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
-        //                 selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
-        //                 selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-        //                 selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
-        //             );
-        //         }
-        //     }
-        // }else if (evt.button == 1) {
-        //     return;
-        // }else if (evt.button == 2) { //RIGHT BUTTON
-        //     console.log("RIGHT DRAGGINGGGGGG")
-        //     graphics.strokeLine(selectedVertex.getXVal(),selectedVertex.getYVal(), x, y);
-        // }
+        if(!dragging){
+            return;
+        }
 
 
         if(creatingEdge){
+            graphics.strokeStyle = "red";
+            graphics.lineWidth = 3;
             redraw();
-            console.log("RIGHT DRAGGINGGGGGG")
-            graphics.strokeLine(selectedVertex.getXVal(),selectedVertex.getYVal(), x, y);
+            graphics.strokeLine(startingVertex.getXVal(),startingVertex.getYVal(), x, y);
             drawVertices();
         }else{
-            if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10){
+            if(x>10 && x<X_RIGHT-10 && y>10 && y<Y_BOTTOM-10 && evt.button == 0){
                 if(clickedVertexIndex != -1){
                     if(userType=="student"){
                         answerGraph.updateXandYVal(selectedVertex, x, y);
-                    }else if (userType=="lecturer"){
-                        graph.updateXandYVal(selectedVertex, x, y);
-                    }
-                    redraw();
-                    graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+                        redraw();
+                        graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
                         selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
                         selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
-                        selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space
-                    );
+                        selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space);
+                    }else if (userType=="lecturer"){
+                        graph.updateXandYVal(selectedVertex, x, y);
+                        redraw();
+                        graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
+                        selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
+                        selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
+                        selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space);
+                    }
+                    
                 }
-            }
+            } 
         }
     }
 
     function doMouseUp(evt) {
+        var r = canvas.getBoundingClientRect();
+        var x = Math.round(evt.clientX - r.left);
+        var y = Math.round(evt.clientY - r.top);
+
         // This function is called when the user releases a mouse button during a drag.
         if (!dragging) {
             return;  // (shouldn't be possible)
@@ -286,26 +322,73 @@ function installMouseHandler() {
         dragging = false;
         document.removeEventListener("mousemove", doMouseMove, false);
         document.removeEventListener("mouseup", doMouseMove, false);
+
+        if(creatingEdge){
+
+            clickedVertexIndex = getVertexIndex(graph,x,y);
+            endingVertex = graph.getVertex(clickedVertexIndex);
+
+            if (dragging || !dragging) {
+                document.addEventListener("mousemove", doMouseMove, false);
+                document.addEventListener("mouseup", doMouseUp, false);
+            }
+
+            if (clickedVertexIndex != -1) {
+                if (directed) {
+                    graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 0);
+                } else {
+                    graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 0);
+                }
+            }
+            redraw();
+            populateDropDowns();
+        }
+        creatingEdge = false;
     }
+
     canvas.addEventListener("mousedown", doMouseDown, false);
 }
 
 function handleKeyDown(event) {
-    if(userType=="lecturer"){
+    if (userType == "lecturer") {
         let keyCode = event.keyCode;
         switch (keyCode) {
             case 46: //Delete
-                graph.removeVertex(selectedVertex.getVertexID());
+                if(clickedVertexIndex != -1){
+                    graph.removeVertex(selectedVertex.getVertexID());
+                }else if(selectedEdge != null){
+                    if(directed){
+                        graph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                    }else{
+                        graph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+
+                    }
+                }
+                populateDropDowns();
+                redraw();
+        }
+    }else if (userType == "student") {
+        let keyCode = event.keyCode;
+        switch (keyCode) {
+            case 46: //Delete
+                if(selectedEdge != null && questionType != "graphcolouring"){
+                    if(directed){
+                        answerGraph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                    }else{
+                        answerGraph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+
+                    }
+                }
                 populateDropDowns();
                 redraw();
         }
     }
 }
 
-function isPointInPoly(poly, pt) { 
-    for(var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i) 
-      ((poly[i][1] <= pt.y && pt.y < poly[j][1]) || (poly[j][1] <= pt.y && pt.y < poly[i][1])) && (pt.x < (poly[j][0] - poly[i][0]) * (pt.y - poly[i][1]) / (poly[j][1] - poly[i][1]) + poly[i][0]) && (c = !c); 
-      return c;
+function isPointInPoly(poly, pt) {
+    for (var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i)
+        ((poly[i][1] <= pt.y && pt.y < poly[j][1]) || (poly[j][1] <= pt.y && pt.y < poly[i][1])) && (pt.x < (poly[j][0] - poly[i][0]) * (pt.y - poly[i][1]) / (poly[j][1] - poly[i][1]) + poly[i][0]) && (c = !c);
+    return c;
 }
 
 function addGraphicsContextExtras(graphics) {
@@ -325,24 +408,24 @@ function addGraphicsContextExtras(graphics) {
         this.arc(x, y, radius, 0, 2 * Math.PI, false);
         this.stroke();
     }
-    graphics.fillPoly = function() {
+    graphics.fillPoly = function () {
         if (arguments.length < 6)
             return;
         this.beginPath();
-        this.moveTo(arguments[0],arguments[1]);
-        for (var i = 2; i+1 < arguments.length; i = i + 2) {
-            this.lineTo(arguments[i],arguments[i+1]);
+        this.moveTo(arguments[0], arguments[1]);
+        for (var i = 2; i + 1 < arguments.length; i = i + 2) {
+            this.lineTo(arguments[i], arguments[i + 1]);
         }
         this.closePath();
         this.fill();
     }
-    graphics.strokePoly = function() {
+    graphics.strokePoly = function () {
         if (arguments.length < 4)
             return;
         this.beginPath();
-        this.moveTo(arguments[0],arguments[1]);
-        for (var i = 2; i+1 < arguments.length; i = i + 2) {
-            this.lineTo(arguments[i],arguments[i+1]);
+        this.moveTo(arguments[0], arguments[1]);
+        for (var i = 2; i + 1 < arguments.length; i = i + 2) {
+            this.lineTo(arguments[i], arguments[i + 1]);
         }
         this.closePath();
         this.stroke();
@@ -373,7 +456,3 @@ function applyLimits(g, xleft, xright, ytop, ybottom, preserveAspect) {
     g.scale(width / (xright - xleft), height / (ybottom - ytop));
     g.translate(-xleft, -ytop);
 }
-
-
-
-

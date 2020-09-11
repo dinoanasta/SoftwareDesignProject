@@ -31,22 +31,23 @@ class Edge{
     }
 
     drawEdge(){
+        graphics.lineWidth = 3;  // Use 1 pixel as the default line width
+        graphics.strokeStyle = "lightgrey";
+
         if(this == selectedEdge){
 
             graphics.strokeStyle = "red";
 
-            let xdist = Math.abs(this.getVertexOne().getXVal() - this.getVertexTwo().getXVal());
-            let ydist = Math.abs(this.getVertexOne().getYVal() - this.getVertexTwo().getYVal());
+            // let xdist = Math.abs(this.getVertexOne().getXVal() - this.getVertexTwo().getXVal());
+            // let ydist = Math.abs(this.getVertexOne().getYVal() - this.getVertexTwo().getYVal());
     
-            if(xdist < ydist){
-                graphics.strokePoly(this.vertexOne.getXVal()+vertexRadius-2, this.vertexOne.getYVal(), this.vertexOne.getXVal()-vertexRadius+2, this.vertexOne.getYVal(), this.vertexTwo.getXVal()-vertexRadius+2, this.vertexTwo.getYVal(), this.vertexTwo.getXVal()+vertexRadius-2, this.vertexTwo.getYVal());
-            }else if(ydist < xdist){
-                graphics.strokePoly(this.vertexOne.getXVal(), this.vertexOne.getYVal()+vertexRadius-2, this.vertexOne.getXVal(), this.vertexOne.getYVal()-vertexRadius+2, this.vertexTwo.getXVal(), this.vertexTwo.getYVal()-vertexRadius+2, this.vertexTwo.getXVal(),this.vertexTwo.getYVal()+vertexRadius-2);
-            }
+            // if(xdist < ydist){
+            //     graphics.strokePoly(this.vertexOne.getXVal()+vertexRadius-2, this.vertexOne.getYVal(), this.vertexOne.getXVal()-vertexRadius+2, this.vertexOne.getYVal(), this.vertexTwo.getXVal()-vertexRadius+2, this.vertexTwo.getYVal(), this.vertexTwo.getXVal()+vertexRadius-2, this.vertexTwo.getYVal());
+            // }else if(ydist < xdist){
+            //     graphics.strokePoly(this.vertexOne.getXVal(), this.vertexOne.getYVal()+vertexRadius-2, this.vertexOne.getXVal(), this.vertexOne.getYVal()-vertexRadius+2, this.vertexTwo.getXVal(), this.vertexTwo.getYVal()-vertexRadius+2, this.vertexTwo.getXVal(),this.vertexTwo.getYVal()+vertexRadius-2);
+            // }
         }
 
-        graphics.lineWidth = 3;  // Use 1 pixel as the default line width
-        graphics.strokeStyle = "lightgrey";
         graphics.strokeLine(this.getVertexOne().getXVal(), this.getVertexOne().getYVal(), this.getVertexTwo().getXVal(), this.getVertexTwo().getYVal());
 
         if(directed){
@@ -55,7 +56,6 @@ class Edge{
             // let yy = ( (1/3)*this.getVertexOne().getYVal() + (2/3)*this.getVertexTwo().getYVal() );
             // graphics.fillStyle = "lightgray";
             // graphics.fillCircle(xx, yy, 6);
-
 
             function drawDirected(vertexOneX,vertexOneY,vertexTwoX,vertexTwoY){
 
