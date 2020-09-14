@@ -60,7 +60,7 @@
 					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
-							<mainClass>Java.Vertex</mainClass>
+							<mainClass>Java.main.Vertex</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
