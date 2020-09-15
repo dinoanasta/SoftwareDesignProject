@@ -739,7 +739,7 @@ function doCreate() {
     //Jesse_new1
     // if question type is == to bfs/dfs/shortestpath then dont allow them to
     // create the graph if you can't visit every node from the source node
-    var is_a_valid_graph;
+    var is_a_valid_graph = true;
     if((questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath") && graph.getSourceNode() == -1){
       is_a_valid_graph = false;
     }
