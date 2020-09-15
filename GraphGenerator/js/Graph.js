@@ -608,5 +608,49 @@ class Graph {
     return [edges_avail, dir_edges_avail];
   }
 
+  //Jesse_new1
+  canVisitEachNodeFromSource(){
+    var can_visit_all = true;
 
+    // do bfs from node and store bool Array of visited
+    var visited_arr = this.fillVisitedArr(false, this.getNumberVertices());
+
+    visited_arr[this.getSourceNode()] = true;
+    var dfs_stack = [];
+    dfs_stack.push(this.getSourceNode());
+
+    while(dfs_stack.length > 0){
+      var curr_node = dfs_stack[dfs_stack.length-1];
+      dfs_stack.pop();
+
+      // get nieghbours
+      var curr_vertex = this.getVertex(curr_node);
+      var curr_neighbours = curr_vertex.getAdjacenyList();
+      for(var i = 0;i<curr_neighbours.length;i++){
+        var curr_neighbour_ind = curr_neighbours[i].getVertexID();
+        if(!visited_arr[curr_neighbour_ind]){
+          visited_arr[curr_neighbour_ind] = true;
+          dfs_stack.push(curr_neighbour_ind);
+        }
+      }
+    }
+
+    // loop through visited and see if 1 not visited
+    for(var i = 0;i<visited_arr.length;i++){
+      if(!visited_arr[i]){
+        can_visit_all = false;
+        break;
+      }
+    }
+
+    return can_visit_all;
+  }
+  //Jesse_new1
+  fillVisitedArr(val, size){
+    var arr = [];
+    for(var i=0;i<size;i++){
+      arr.push(val);
+    }
+    return arr;
+  }
 }
