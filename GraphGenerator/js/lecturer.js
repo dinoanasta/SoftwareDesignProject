@@ -736,35 +736,50 @@ function doSetQuestion() {
 function doCreate() {
   //Jesse_new
   if (questionTitle != null) {
-    try {
-      // var data = {
-      //   id: questionCode,
-      //   graph: graph.convertGraphToString(questionCode, questionType, questionUse)
-      // }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
+    //Jesse_new1
+    // if question type is == to bfs/dfs/shortestpath then dont allow them to
+    // create the graph if you can't visit every node from the source node
+    var is_a_valid_graph = false;
+    if(questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath"){
+        // check if can visit every node in graph
+        is_a_valid_graph = graph.canVisitEachNodeFromSource();
+    }
 
-      //Jesse_new
-      // isCreate = true;
-      // console.log("isWeighted:",graph.isWeighted(),
-      //   "isDirected:",graph.isDirected(),graph.getAdjacenyMatrix());
+    if(is_a_valid_graph){
+      try {
+        // var data = {
+        //   id: questionCode,
+        //   graph: graph.convertGraphToString(questionCode, questionType, questionUse)
+        // }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
 
-      // ref.push(data);
-      //Jesse_new
+        //Jesse_new
+        // isCreate = true;
+        // console.log("isWeighted:",graph.isWeighted(),
+        //   "isDirected:",graph.isDirected(),graph.getAdjacenyMatrix());
 
-      // alert("Saving graph...");
+        // ref.push(data);
+        //Jesse_new
 
-      //Save graph as text file
-      var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
-      var blob = new Blob([stringed], { type: "text/plain;charset=utf-8" });
-      saveAs(blob, "Graph_" + questionType + "_" + questionTitle + ".txt");
+        // alert("Saving graph...");
 
-      //Save canvas as png
-      var link = document.getElementById('link');
-      link.setAttribute('download', 'Graph_' + questionType + "_" + questionTitle + '.png');
-      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-      link.click();
+        //Save graph as text file
+        var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
+        var blob = new Blob([stringed], { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "Graph_" + questionType + "_" + questionTitle + ".txt");
 
-    } catch (err) {
-      alert("Error occured while trying to submit lecturer question graph");
+        //Save canvas as png
+        var link = document.getElementById('link');
+        link.setAttribute('download', 'Graph_' + questionType + "_" + questionTitle + '.png');
+        link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+        link.click();
+
+      } catch (err) {
+        alert("Error occured while trying to submit lecturer question graph");
+      }
+    }
+    //Jesse_new1
+    else{
+      alert("You must be able to visit every node from the source node when creating a graph with question type bfs, dfs, or shortestpath");
     }
   } else {
     alert("Confirm/enter question title and details.");
@@ -805,4 +820,3 @@ function doCreate() {
 //   //fetch data, scan if question code has been used
 //   ref.on("value", gotData, errorData);
 // }
-
