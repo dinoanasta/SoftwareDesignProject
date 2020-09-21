@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -9,13 +10,15 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
   <meta charset="UTF-8">
+
     <!-- font awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-  <title>Graph Generator - Student</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <title>Graph Generator - Student</title>
+  
 
   <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
@@ -33,9 +36,11 @@
   <script src="js/ShortestPathMarker.js"> </script>
   <script src="js/Marker.js"> </script>
   <script src="js/FileSaver.js"></script>
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+   <!-- Compiled and minified JavaScript -->
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+ 
 
   <script>
     let canvas; // The canvas that is used as the drawing surface
@@ -103,7 +108,7 @@
 
     <!--        Canvas - 1st column-->
     <div id="canvasDiv">
-      <h1>Graph Generator - Student</h1>
+      <h1>Graph Generator</h1>
 
       <canvas id="canvas" width="550" height="450">
         <!-- This message is shown on the page if the browser doesn't support the canvas element. -->
@@ -125,11 +130,10 @@
 
         <label id="questionTypeLabel">Question Type:</label>
         <label id="questionDetailsLabel">Details:</label>
-	<a id="iconButton" hidden><i class="black-text waves-effect material-icons">info</i></a>
+        <a id="iconButton" hidden target="_blank" ><i class="black-text waves-effect material-icons">info</i></a>
+
 
         <button id="loadGraphButton">Load Graph</button>
-        <button id="drawEdgesButton">Draw edges</button>
-
       </div>
 
       <!--        Editing root vertex-->
@@ -147,8 +151,8 @@
 
       </div>
 
-      <!--        Editing vertices (colors)-->
-      <div id="editVertexDiv">
+      <!--       Editing vertices (colors)-->
+      <div id="editVertexDv">
         <h3>Edit color:</h3>
 
         <label id="editVertexDDLabel">Vertex:</label>
@@ -188,6 +192,7 @@
         <br>
 
         <button id="addEdgeButton">Add edge</button>
+        <button id="drawEdgesButton">Draw all edges</button>
       </div>
 
       <br><br>
