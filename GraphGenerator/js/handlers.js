@@ -6,6 +6,10 @@
  * doMouseDrag, and possibly doMouseUp to change the reponse to
  * mouse events.  As an example, this program does some simple drawing.
  */
+
+//////ADDED THIS LINE OF CODE TO DINOBRANCH
+
+
 function installMouseHandler() {
 
     var dragging = false;  // set to true when a drag action is in progress.
