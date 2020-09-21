@@ -1,3 +1,10 @@
+// ADDED THIS LINE
+
+
+
+
+
+
 //Global variables
 const userType = "student";
 
@@ -736,7 +743,7 @@ function doCheck() { //When student submits graph
                 break;
             case "dfs":
                 isCorrect = m.markDFS(questionGraph, answerGraph, true);
-                break;
+                breakgit ;
             case "mwst":
                 isCorrect = m.markMWST(questionGraph, answerGraph);
                 break;
