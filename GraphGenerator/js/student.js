@@ -86,7 +86,9 @@ function addBindings() {
     //Icon
     iconButton.addEventListener('click',()=>{
         //alert(link);
-        window.location.href=link;
+        window.location.href=link;            
+        iconButton.target="_blank";
+
     });
 
     window.addEventListener('keydown', handleKeyDown, false);
