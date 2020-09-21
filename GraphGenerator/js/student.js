@@ -164,6 +164,7 @@ function doLoadGraph() { //When student enters code and presses the load button
             }
 
             setupInterface();
+            doDrawEdges();
         };
 
         reader.onerror = function () {
@@ -227,9 +228,6 @@ function doDrawEdges() {
         let temp = questionGraph.convertGraphToString(questionCode, questionType);
         answerGraph = new Graph();
         answerGraph.fillGraphWithString(temp);
-
-        console.log(questionGraph);
-        console.log(answerGraph);
 
         populateDropDowns();
         redraw();
@@ -635,11 +633,11 @@ function setupInterface() {
     }
 
 
-    questionSetupDiv.appendChild(drawEdgesButton);
+    addEdgeDiv.appendChild(drawEdgesButton);
     questionSetupDiv.appendChild(questionTypeLabel);
     questionSetupDiv.appendChild(questionDetailsLabel);
 
-    questionSetupDiv.removeChild(drawEdgesButton);
+    addEdgeDiv.removeChild(drawEdgesButton);
     questionSetupDiv.removeChild(questionTypeLabel);
     questionSetupDiv.removeChild(questionDetailsLabel);
 
@@ -699,7 +697,6 @@ function setupInterface() {
             doDrawEdges();
 
         } else if (!colored) { //Only need to add/delete edges and change root, no colors
-            questionSetupDiv.appendChild(drawEdgesButton);
 
             vertexDiv.appendChild(document.createElement("br"));
             vertexDiv.appendChild(document.createElement("br"));
@@ -708,6 +705,7 @@ function setupInterface() {
             //Add edge div so users can add/delete edges
             studentDiv.appendChild(edgeDiv);
             edgeDiv.appendChild(addEdgeDiv);
+            addEdgeDiv.appendChild(drawEdgesButton);
             edgeDiv.appendChild(document.createElement("br"));
             edgeDiv.appendChild(document.createElement("br"));
             edgeDiv.appendChild(deleteEdgeDiv);
