@@ -1,3 +1,10 @@
+// ADDED THIS LINE
+
+
+
+
+
+
 //Global variables
 const userType = "student";
 
@@ -8,9 +15,7 @@ let selectedEdge = null;
 
 const vertexRadius = 15;
 
-let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
 let questionGraph = new Graph();
-
 let answerGraph;
 
 let clickedVertexIndex = -1;
@@ -181,6 +186,7 @@ function doLoadGraph() { //When student enters code and presses the load button
             }
 
             setupInterface();
+            doDrawEdges();
         };
 
         reader.onerror = function () {
@@ -244,9 +250,6 @@ function doDrawEdges() {
         let temp = questionGraph.convertGraphToString(questionCode, questionType);
         answerGraph = new Graph();
         answerGraph.fillGraphWithString(temp);
-
-        console.log(questionGraph);
-        console.log(answerGraph);
 
         populateDropDowns();
         redraw();
@@ -423,9 +426,9 @@ function editEdgeSelected() {
     let weight;
 
     if (directed) {
-        weight = graph.directedEdges[dropDown.selectedIndex - 1].getWeightEdge();
+        weight = answerGraph.getDirectedEdges()[dropDown.selectedIndex - 1].getWeightEdge();
     } else if (!directed) {
-        weight = graph.edges[dropDown.selectedIndex - 1].getWeightEdge();
+        weight = answerGraph.getEdges()[dropDown.selectedIndex - 1].getWeightEdge();
     }
 
     document.getElementById("editWeight").value = weight;
@@ -652,11 +655,11 @@ function setupInterface() {
     }
 
 
-    questionSetupDiv.appendChild(drawEdgesButton);
+    addEdgeDiv.appendChild(drawEdgesButton);
     questionSetupDiv.appendChild(questionTypeLabel);
     questionSetupDiv.appendChild(questionDetailsLabel);
 
-    questionSetupDiv.removeChild(drawEdgesButton);
+    addEdgeDiv.removeChild(drawEdgesButton);
     questionSetupDiv.removeChild(questionTypeLabel);
     questionSetupDiv.removeChild(questionDetailsLabel);
 
@@ -717,7 +720,6 @@ function setupInterface() {
             doDrawEdges();
 
         } else if (!colored) { //Only need to add/delete edges and change root, no colors
-            questionSetupDiv.appendChild(drawEdgesButton);
 
             vertexDiv.appendChild(document.createElement("br"));
             vertexDiv.appendChild(document.createElement("br"));
@@ -726,6 +728,7 @@ function setupInterface() {
             //Add edge div so users can add/delete edges
             studentDiv.appendChild(edgeDiv);
             edgeDiv.appendChild(addEdgeDiv);
+            addEdgeDiv.appendChild(drawEdgesButton);
             edgeDiv.appendChild(document.createElement("br"));
             edgeDiv.appendChild(document.createElement("br"));
             edgeDiv.appendChild(deleteEdgeDiv);
@@ -756,7 +759,7 @@ function doCheck() { //When student submits graph
                 break;
             case "dfs":
                 isCorrect = m.markDFS(questionGraph, answerGraph, true);
-                break;
+                breakgit ;
             case "mwst":
                 isCorrect = m.markMWST(questionGraph, answerGraph);
                 break;
@@ -781,6 +784,5 @@ function doDownload() {
     var stringed = answerGraph.convertGraphToString(questionCode, questionType, questionUse);
 
     var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "Graph_" + questionType + ".txt");
+    saveAs(blob, "Graph_" + questionType + ".txt");}
 }
-

@@ -1,0 +1,80 @@
+[1mdiff --git a/GraphGenerator/Student.html b/GraphGenerator/Student.html[m
+[1mindex 9850d16..e9010c1 100644[m
+[1m--- a/GraphGenerator/Student.html[m
+[1m+++ b/GraphGenerator/Student.html[m
+[36m@@ -117,8 +117,6 @@[m
+         <label id="questionDetailsLabel">Details:</label>[m
+ [m
+         <button id="loadGraphButton">Load Graph</button>[m
+[31m-        <button id="drawEdgesButton">Draw edges</button>[m
+[31m-[m
+       </div>[m
+ [m
+       <!--        Editing root vertex-->[m
+[36m@@ -177,6 +175,7 @@[m
+         <br>[m
+ [m
+         <button id="addEdgeButton">Add edge</button>[m
+[32m+[m[32m        <button id="drawEdgesButton">Draw all edges</button>[m[41m[m
+       </div>[m
+ [m
+       <br><br>[m
+[1mdiff --git a/GraphGenerator/js/student.js b/GraphGenerator/js/student.js[m
+[1mindex a6b3ce0..c474b1e 100644[m
+[1m--- a/GraphGenerator/js/student.js[m
+[1m+++ b/GraphGenerator/js/student.js[m
+[36m@@ -164,6 +164,7 @@[m [mfunction doLoadGraph() { //When student enters code and presses the load button[m
+             }[m
+ [m
+             setupInterface();[m
+[32m+[m[32m            doDrawEdges();[m
+         };[m
+ [m
+         reader.onerror = function () {[m
+[36m@@ -228,9 +229,6 @@[m [mfunction doDrawEdges() {[m
+         answerGraph = new Graph();[m
+         answerGraph.fillGraphWithString(temp);[m
+ [m
+[31m-        console.log(questionGraph);[m
+[31m-        console.log(answerGraph);[m
+[31m-[m
+         populateDropDowns();[m
+         redraw();[m
+     } else {[m
+[36m@@ -635,11 +633,11 @@[m [mfunction setupInterface() {[m
+     }[m
+ [m
+ [m
+[31m-    questionSetupDiv.appendChild(drawEdgesButton);[m
+[32m+[m[32m    addEdgeDiv.appendChild(drawEdgesButton);[m
+     questionSetupDiv.appendChild(questionTypeLabel);[m
+     questionSetupDiv.appendChild(questionDetailsLabel);[m
+ [m
+[31m-    questionSetupDiv.removeChild(drawEdgesButton);[m
+[32m+[m[32m    addEdgeDiv.removeChild(drawEdgesButton);[m
+     questionSetupDiv.removeChild(questionTypeLabel);[m
+     questionSetupDiv.removeChild(questionDetailsLabel);[m
+ [m
+[36m@@ -699,7 +697,6 @@[m [mfunction setupInterface() {[m
+             doDrawEdges();[m
+ [m
+         } else if (!colored) { //Only need to add/delete edges and change root, no colors[m
+[31m-            questionSetupDiv.appendChild(drawEdgesButton);[m
+ [m
+             vertexDiv.appendChild(document.createElement("br"));[m
+             vertexDiv.appendChild(document.createElement("br"));[m
+[36m@@ -708,6 +705,7 @@[m [mfunction setupInterface() {[m
+             //Add edge div so users can add/delete edges[m
+             studentDiv.appendChild(edgeDiv);[m
+             edgeDiv.appendChild(addEdgeDiv);[m
+[32m+[m[32m            addEdgeDiv.appendChild(drawEdgesButton);[m
+             edgeDiv.appendChild(document.createElement("br"));[m
+             edgeDiv.appendChild(document.createElement("br"));[m
+             edgeDiv.appendChild(deleteEdgeDiv);[m
+[36m@@ -764,4 +762,4 @@[m [mfunction doDownload() {[m
+ [m
+     var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});[m
+     saveAs(blob, "Graph_" + questionType + ".txt");[m
+[31m-}[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
