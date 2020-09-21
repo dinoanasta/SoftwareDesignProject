@@ -1,10 +1,3 @@
-// ADDED THIS LINE
-
-
-
-
-
-
 //Global variables
 const userType = "student";
 
@@ -64,7 +57,6 @@ const checkButton =  document.getElementById("checkButton");
 const downloadButton =  document.getElementById("downloadButton");
 const iconButton = document.getElementById("iconButton");
 
-
 //Bindings and event handlers
 function addBindings() {
 
@@ -89,11 +81,7 @@ function addBindings() {
     document.getElementById("downloadButton").onclick = doDownload;
 
     //Icon
-    iconButton.addEventListener('click',()=>{
-        //alert(link);
-        // window.location.href=link;   
-        window.open(link, '_blank');         
-    });
+    document.getElementById("iconButton").onclick = doOpenHelpLink;
 
     window.addEventListener('keydown', handleKeyDown, false);
 }
@@ -784,5 +772,9 @@ function doDownload() {
     var stringed = answerGraph.convertGraphToString(questionCode, questionType, questionUse);
 
     var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "Graph_" + questionType + ".txt");}
+    saveAs(blob, "Graph_" + questionType + ".txt");
+}
+
+function doOpenHelpLink(){
+    window.open(link, '_blank');        
 }
