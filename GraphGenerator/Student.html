@@ -9,6 +9,12 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
   <meta charset="UTF-8">
+    <!-- font awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
   <title>Graph Generator - Student</title>
 
   <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
@@ -27,6 +33,9 @@
   <script src="js/ShortestPathMarker.js"> </script>
   <script src="js/Marker.js"> </script>
   <script src="js/FileSaver.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 
   <script>
     let canvas; // The canvas that is used as the drawing surface
@@ -116,6 +125,7 @@
 
         <label id="questionTypeLabel">Question Type:</label>
         <label id="questionDetailsLabel">Details:</label>
+	<a id="iconButton" hidden><i class="black-text waves-effect material-icons">info</i></a>
 
         <button id="loadGraphButton">Load Graph</button>
         <button id="drawEdgesButton">Draw edges</button>
