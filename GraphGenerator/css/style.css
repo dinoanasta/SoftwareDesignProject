@@ -147,10 +147,3 @@ button:hover{
     background-color: rgba(0, 0, 0, 0.2);
     /*border: 0.2vmin solid black;*/
 }
-
-#iconButton{
-    cursor:pointer;
-    position:relative;
-    bottom:2px;
-    
-}
