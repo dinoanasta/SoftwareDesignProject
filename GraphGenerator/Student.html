@@ -3,7 +3,7 @@
 
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
@@ -26,6 +26,11 @@
   <script src="js/ShortestPathMarker.js"> </script>
   <script src="js/Marker.js"> </script>
   <script src="js/FileSaver.js"></script>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+    
 
   <script>
     let canvas; // The canvas that is used as the drawing surface
@@ -114,8 +119,9 @@
         <input type="file" accept=".txt" id="fileSelection" style="width: 20vw">
 
         <label id="questionTypeLabel">Question Type:</label>
-        <label id="questionDetailsLabel">Details:</label>
+        <a id="iconButton" hidden ><i class="black-text waves-effect material-icons">info</i></a>
 
+        <label id="questionDetailsLabel">Details:</label>
         <button id="loadGraphButton">Load Graph</button>
       </div>
 

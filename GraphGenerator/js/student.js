@@ -18,6 +18,7 @@ let questionType;
 let questionCode;
 let questionUse;
 let questionLoaded = false;
+let link;
 
 //Weighted
 let weight = 1;
@@ -54,6 +55,8 @@ const addEdgeDiv =  document.getElementById("addEdgeDiv");
 const deleteEdgeDiv =  document.getElementById("deleteEdgeDiv");
 const checkButton =  document.getElementById("checkButton");
 const downloadButton =  document.getElementById("downloadButton");
+const iconButton = document.getElementById("iconButton");
+
 
 //Bindings and event handlers
 function addBindings() {
@@ -77,6 +80,9 @@ function addBindings() {
     //Interface
     document.getElementById("checkButton").onclick = doCheck;
     document.getElementById("downloadButton").onclick = doDownload;
+
+    //Icon
+    document.getElementById("iconButton").onclick = doOpenLink;
 
     window.addEventListener('keydown', handleKeyDown, false);
 }
@@ -134,18 +140,23 @@ function doLoadGraph() { //When student enters code and presses the load button
             switch (questionType){
                 case "bfs":
                     questionTypeLabel.innerHTML = "Question Type: Breadth First Search";
+                    link = "https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/";
                     break;
                 case "dfs" :
                     questionTypeLabel.innerHTML = "Question Type: Depth First Search";
+                    link = "https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/";
                     break;
                 case "mwst" :
                     questionTypeLabel.innerHTML = "Question Type: MWST";
+                    link = "https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/";
                     break;
                 case "graphcolouring" :
                     questionTypeLabel.innerHTML = "Question Type: Graph Colouring";
+                    link = "https://www.geeksforgeeks.org/graph-coloring-set-2-greedy-algorithm/";
                     break;
                 case "shortestpath" :
                     questionTypeLabel.innerHTML = "Question Type: Shortest Path";
+                    link = "https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/";
                     break;
             }
 
@@ -632,15 +643,11 @@ function setupInterface() {
         vertexDiv.appendChild(questionSetupDiv);
     }
 
-
-    addEdgeDiv.appendChild(drawEdgesButton);
     questionSetupDiv.appendChild(questionTypeLabel);
     questionSetupDiv.appendChild(questionDetailsLabel);
 
-    addEdgeDiv.removeChild(drawEdgesButton);
     questionSetupDiv.removeChild(questionTypeLabel);
     questionSetupDiv.removeChild(questionDetailsLabel);
-
 
     //Clear vertex div to add only what is needed
     if(edgeDiv != null){
@@ -672,7 +679,9 @@ function setupInterface() {
         console.log("question loaded");
         questionSetupDiv.removeChild(loadGraphButton);
         questionSetupDiv.appendChild(questionTypeLabel);
+        questionSetupDiv.appendChild(iconButton);
         questionSetupDiv.appendChild(document.createElement("br"));
+        iconButton.hidden = false;
 
         questionSetupDiv.appendChild(questionDetailsLabel);
         questionSetupDiv.appendChild(document.createElement("br"));
@@ -762,4 +771,8 @@ function doDownload() {
 
     var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "Graph_" + questionType + ".txt");
+}
+
+function doOpenLink(){
+        window.open(link, '_blank');         
 }
