@@ -85,8 +85,8 @@ function addBindings() {
 
     //Icon
     iconButton.addEventListener('click',()=>{
-        alert(link);
-        window.location.href="Lecturer.html";
+        //alert(link);
+        window.location.href=link;
     });
 
     window.addEventListener('keydown', handleKeyDown, false);
