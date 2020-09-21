@@ -54,10 +54,6 @@ const addEdgeDiv =  document.getElementById("addEdgeDiv");
 const deleteEdgeDiv =  document.getElementById("deleteEdgeDiv");
 const checkButton =  document.getElementById("checkButton");
 const downloadButton =  document.getElementById("downloadButton");
-<<<<<<< HEAD
-const iconButton = document.getElementById("iconButton");
-=======
->>>>>>> 85c1a3e720e40cffedfc643908516bbae77d084b
 
 //Bindings and event handlers
 function addBindings() {
@@ -82,12 +78,6 @@ function addBindings() {
     document.getElementById("checkButton").onclick = doCheck;
     document.getElementById("downloadButton").onclick = doDownload;
 
-<<<<<<< HEAD
-    //Icon
-    document.getElementById("iconButton").onclick = doOpenHelpLink;
-
-=======
->>>>>>> 85c1a3e720e40cffedfc643908516bbae77d084b
     window.addEventListener('keydown', handleKeyDown, false);
 }
 
@@ -772,11 +762,4 @@ function doDownload() {
 
     var blob = new Blob([stringed], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "Graph_" + questionType + ".txt");
-<<<<<<< HEAD
-}
-
-function doOpenHelpLink(){
-    window.open(link, '_blank');        
-=======
->>>>>>> 85c1a3e720e40cffedfc643908516bbae77d084b
 }
