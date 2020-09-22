@@ -20,5 +20,3 @@ The student manual can be found [here](Manuals/StudentManual.pdf), and the lectu
 ## Continuous Integration and Coverage for Java Code
 [![Build Status](https://travis-ci.org/dinoanasta/SoftwareDesignProject.svg?branch=master)](https://travis-ci.org/dinoanasta/SoftwareDesignProject)
 [![codecov](https://codecov.io/gh/dinoanasta/SoftwareDesignProject/branch/master/graph/badge.svg)](https://codecov.io/gh/dinoanasta/SoftwareDesignProject)
-[![codecov](https://codecov.io/gh/PMpofu12/Practice/branch/master/graph/badge.svg)](https://codecov.io/gh/PMpofu12/Practice)
-
