@@ -92,9 +92,9 @@ public class Edge {
     }
   }
 
-//  @Override
-//  public String toString() {
-//    String out = this.v1.getID()+"-"+this.v2.getID()+": "+this.weight+", ";
-//    return out;
-//  }
+  @Override
+  public String toString() {
+    String out = this.v1.getID()+"-"+this.v2.getID()+": "+this.weight;
+    return out;
+  }
 }
