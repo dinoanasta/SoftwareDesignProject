@@ -47,9 +47,9 @@ public class Vertex {
     this.isColoured = true;
   }
 
-//  public void setColoured(boolean isColoured) {
-//    this.isColoured = isColoured;
-//  }
+  public void setColoured(boolean isColoured) {
+    this.isColoured = isColoured;
+  }
 
   public String getVertex() {
     String out = "" + this.id + ";" + this.value;

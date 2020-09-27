@@ -37,19 +37,19 @@ public class Edge {
     this.isWeighted = true;
   }
 
-//  public void setEdge(ArrayList<Vertex> edge) {
-//    this.edge = edge;
-//    this.v1 = edge.get(0);
-//    this.v2 = edge.get(1);
-//  }
+  public void setEdge(ArrayList<Vertex> edge) {
+    this.edge = edge;
+    this.v1 = edge.get(0);
+    this.v2 = edge.get(1);
+  }
 
-//  public void setEdge(ArrayList<Vertex> edge, int weight) {
-//    this.edge = edge;
-//    this.v1 = edge.get(0);
-//    this.v2 = edge.get(1);
-//    this.weight = weight;
-//    this.isWeighted = true;
-//  }
+  public void setEdge(ArrayList<Vertex> edge, int weight) {
+    this.edge = edge;
+    this.v1 = edge.get(0);
+    this.v2 = edge.get(1);
+    this.weight = weight;
+    this.isWeighted = true;
+  }
 
   public void setEdge(Vertex v1, Vertex v2) {
     this.v1 = v1;
@@ -58,14 +58,14 @@ public class Edge {
     edge.set(1, v2);
   }
 
-//  public void setEdge(Vertex v1, Vertex v2, int weight) {
-//    this.v1 = v1;
-//    this.v2 = v2;
-//    edge.set(0, v1);
-//    edge.set(1, v2);
-//    this.weight = weight;
-//    this.isWeighted = true;
-//  }
+  public void setEdge(Vertex v1, Vertex v2, int weight) {
+    this.v1 = v1;
+    this.v2 = v2;
+    edge.set(0, v1);
+    edge.set(1, v2);
+    this.weight = weight;
+    this.isWeighted = true;
+  }
 
   public void setWeight(int weight) {
     this.weight = weight;

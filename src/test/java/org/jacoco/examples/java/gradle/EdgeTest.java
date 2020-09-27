@@ -118,6 +118,20 @@ public class EdgeTest {
 		
 	}
 	
+	@Test 
+	public void testSetEdge3() { // Test the third setEdge() function.
+		Vertex v1 = new Vertex(2,"zero",3);
+		Vertex v2 = new Vertex(4,"one",5);
+		Vertex v3 = new Vertex(4,"two",6);
+		Vertex v4 = new Vertex(5,"three",3);
+		Edge edge = new Edge(v1, v2);
+		edge.setEdge(v3,v4, 10);
+		Assert.assertEquals(edge.getV1(), v3);
+		Assert.assertEquals(edge.getV2(), v4);
+		Assert.assertEquals(edge.getWeight(), 10);
+		Assert.assertEquals(edge.isWeighted, true);
+	}
+	
 	@Test
 	public void testGetWeight() { // Test the getWeight function.
 		Vertex v1 = new Vertex(2,"zero",3);
