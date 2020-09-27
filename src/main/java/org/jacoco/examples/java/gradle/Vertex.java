@@ -51,13 +51,13 @@ public class Vertex {
 //    this.isColoured = isColoured;
 //  }
 
-//  public String getVertex() {
-//    String out = "" + this.value;
-//    if (this.isColoured == true) {
-//      out = out + "," + this.colour;
-//    }
-//    return out;
-//  }
+  public String getVertex() {
+    String out = "" + this.id + ";" + this.value;
+    if (this.isColoured == true) {
+      out = out + ";" + this.colour;
+    }
+    return out;
+  }
 //
 //  @Override
 //  public String toString() {
