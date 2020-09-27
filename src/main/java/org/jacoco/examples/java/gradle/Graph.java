@@ -100,18 +100,22 @@ public class Graph {
     // remove all "" from input string;
     line = line.replace("\"","");
 
-    // scan line, 2nd token is vertices, 4th is adjacency matrix
+    // scan line, 2nd token is vertices, 3rd is adjacency matrix
     String[] data = line.split(":");
     String verts = data[1];
     String adj = data[2];
     String source_node_str = data[3];
     String question_str = data[4];
     String question_type_str = data[5];
+    String question_use_str = data[6];
 
     // store source node, question, question type
     sourceNode = Integer.parseInt(source_node_str.split(",")[0]);
     question = question_str.split(",")[0];
-    questionType = question_type_str.replace("}","");
+    // questionType is no longer the last item in the JSON
+    //questionType = question_type_str.replace("}","");
+    questionType = question_type_str.split(",")[0];
+
 
     // clean relevant strings
     verts = verts.substring(1, verts.length() - 19);
@@ -148,11 +152,14 @@ public class Graph {
     // store edges, and adjacency matrix
     String[] rows_adj_matrix = adjacency_matrix_str.split("]");
     adjacency_matrix = new int[rows_adj_matrix.length][rows_adj_matrix.length];
-    for(int vertex_id=0; vertex_id<rows_adj_matrix.length; vertex_id++){
+
+    for (int vertex_id = 0; vertex_id < rows_adj_matrix.length; vertex_id++) {
       String[] curr_vertex_edges = rows_adj_matrix[vertex_id].substring(1).replace("[","").split(",");
-      for(int curr_vertex_edge_id = 0; curr_vertex_edge_id<curr_vertex_edges.length; curr_vertex_edge_id++){
+
+      for (int curr_vertex_edge_id = 0; curr_vertex_edge_id < curr_vertex_edges.length; curr_vertex_edge_id++) {
         int edge_weight = Integer.parseInt(curr_vertex_edges[curr_vertex_edge_id]);
-        if(edge_weight>0){
+
+        if (edge_weight > 0) {
           Edge curr_edge = new Edge(vertices.get(vertex_id),vertices.get(curr_vertex_edge_id),edge_weight);
           edges.add(curr_edge);
           adjacency_matrix[vertex_id][curr_vertex_edge_id] = edge_weight;
@@ -162,8 +169,8 @@ public class Graph {
   }
 
   private void print2dArr(int[][] arr_2d){
-    for(int i=0;i<arr_2d.length;i++){
-      for(int j=0;j<arr_2d[i].length;j++){
+    for (int i = 0; i < arr_2d.length; i++) {
+      for (int j = 0; j < arr_2d[i].length; j++) {
         System.out.print(String.valueOf(arr_2d[i][j]));
       }
       System.out.println("");
@@ -172,8 +179,8 @@ public class Graph {
 
   private String convert2dArrToString(int[][] arr_2d){
     String out = "";
-    for(int i=0;i<arr_2d.length;i++){
-      for(int j=0;j<arr_2d[i].length;j++){
+    for (int i = 0; i < arr_2d.length; i++) {
+      for (int j = 0; j < arr_2d[i].length; j++) {
         out += String.valueOf(arr_2d[i][j]);
       }
       out+="\n";
@@ -190,10 +197,20 @@ public class Graph {
 
   @Override
   public String toString() {
-    return "Graph [vertices="
-            + vertices
-            + ", \nadjacency_matrix=[\n"
+    String out = "Graph [vertices=[";
+    for (int i = 0; i < vertices.size(); i++) {
+      out = out + vertices.get(i).getVertex();
+      if (i < vertices.size() - 1) {
+        out = out + " ";
+      }
+    }
+    out = out + "], \nadjacency_matrix=[\n"
             + convert2dArrToString(adjacency_matrix)
             + "],\nedges="+edges+"]\n";
+    // probably don't need edges AND adjacency matrix
+    //for (int i = 0; i < edges.size(); i++) {
+    //    out = out + edges.get(i).toString();
+    //}
+    return out;
   }
 }
