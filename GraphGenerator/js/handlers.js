@@ -98,7 +98,7 @@ function installMouseHandler() {
                 }
 
             } else {
-                if (userType == "student") {
+                if (userType == "student" && questionType != "graphcolouring") {
 
                     if (document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))) {
                         document.getElementById("editvertexValueLabel").innerHTML = "Value: ";

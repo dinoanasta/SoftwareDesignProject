@@ -1,29 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
-
 
     <meta charset="UTF-8">
 
+    <!--    Scripts -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
     <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
-    <!--    Scripts -->
     <script src="js/Vertex.js"></script>
     <script src="js/Edge.js"></script>
     <script src="js/Graph.js"></script>
     <script src="js/lecturer.js"></script>
-<!--    <script src="js/main.js"></script>-->
     <script src="js/handlers.js"></script>
     <script src="js/FileSaver.js"></script>
 
+    <title>Graph Generator</title>
 
     <script>
 
@@ -42,24 +37,6 @@
 
         let pixelSize;  // The size of one pixel, in the transformed coordinates.
 
-        //Initialize database
-        // function initialiseDB() {
-        //     firebaseConfig = {
-        //         apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
-        //         authDomain: "graphmarker.firebaseapp.com",
-        //         databaseURL: "https://graphmarker.firebaseio.com",
-        //         projectId: "graphmarker",
-        //         storageBucket: "graphmarker.appspot.com",
-        //         messagingSenderId: "980362787898",
-        //         appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
-        //     };
-        //     // Initialize Firebase
-        //     firebase.initializeApp(firebaseConfig);
-        //
-        //     database = firebase.database();
-        //     ref = database.ref("scores");
-        // }
-
         function init() {
             try {
                 canvas = document.getElementById("canvas");
@@ -71,7 +48,6 @@
                 graphics.textAlign = "center";
 
                 addGraphicsContextExtras(graphics);
-                // initialiseDB();
                 installMouseHandler();
                 addBindings();
 
@@ -145,8 +121,6 @@
 
             </div>
 
-            <br>
-
             <!--        Adding vertices-->
             <div id="addVertexDiv">
                 <h3>Add vertex:</h3>
@@ -159,24 +133,9 @@
                 <input type="number" id="vertexColor">
                 <br>
 
-    <!--            <label id="distFromRootLabel">Distance:</label>-->
-    <!--            <input type="text" id="distFromRoot">-->
-    <!--            <br>-->
-
                 <button id="addVertexButton">Add vertex</button>
 
-                <!--        Set root vertex-->
-                <br>
-                <label id="setRootDDLabel">Set Root:</label>
-                <select id="setRootDD">
-                    <option>Choose root vertex</option>
-                </select>
-                <button id="clearRootButton">Clear Root</button>
-
-                <br>
             </div>
-
-
 
             <!--        Editing vertices-->
             <div id="editVertexDiv">
@@ -196,14 +155,21 @@
                 <input type="number" id="editvertexColor">
                 <br>
 
-                <label id="editdistFromRootLabel">Distance:</label>
-                <input type="text" id="editdistFromRoot">
-                <br>
-
                 <button id="updateVertexButton">Update vertex</button>
             </div>
 
-            <br>
+            <!--        Root vertex-->
+            <div id="rootDiv">
+                <h3>Root:</h3>
+
+                <label id="setRootDDLabel">Root Vertex:</label>
+                <select id="setRootDD">
+                    <option>Choose root vertex</option>
+                </select>
+                <button id="clearRootButton">Set Root</button>
+                <button id="clearRootButton">Clear Root</button>
+
+            </div>
 
             <!--        Delete vertex-->
             <div id="deleteVertexDiv">
@@ -245,8 +211,6 @@
                 <button id="addEdgeButton">Add edge</button>
             </div>
 
-            <br>
-
             <!--     Update edge-->
             <div id="updateEdgeDiv">
                 <h3>Update edge:</h3>
@@ -264,8 +228,6 @@
                 <button id="updateEdgeButton">Update edge</button>
             </div>
 
-            <br>
-
             <!--    Delete edge-->
             <div id="deleteEdgeDiv">
                 <h3>Delete edge:</h3>
@@ -278,10 +240,6 @@
 
                 <button id="deleteEdgeButton">Delete edge</button>
             </div>
-
-            <!--    Clear Button-->
-            <br><br>
-    <!--        <button id="clearButton">Clear</button>-->
 
             <!--     Submit Button-->
             <button id="createButton">Create</button>
