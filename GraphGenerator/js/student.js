@@ -591,7 +591,7 @@ function populateDropDowns() {
 }
 
 function setupInterface() {
-    //Clear vertex div to add only what is needed
+    //Clear page to add only what is needed
     if(body != null){
         while (body.firstChild ) {
             body.firstChild.remove();
@@ -607,7 +607,7 @@ function setupInterface() {
         studentDiv.appendChild(editingDiv);
     }
 
-    //Clear vertex div to add only what is needed
+    //Clear editing div to add only what is needed
     if(editingDiv != null){
         while (editingDiv.firstChild) {
             editingDiv.firstChild.remove();

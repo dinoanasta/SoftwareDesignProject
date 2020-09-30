@@ -40,30 +40,30 @@ const lecturerDiv = document.getElementById("lecturerDiv");
 const canvasDiv = document.getElementById("canvasDiv");
 
 const vertexDiv = document.getElementById("vertexDiv");
-  const questionSetupDiv = document.getElementById("questionSetupDiv");
+const questionSetupDiv = document.getElementById("questionSetupDiv");
 
-  const addVertexDiv = document.getElementById("addVertexDiv");
-    const vertexColor = document.getElementById("vertexColor");
-    const vertexColorLabel = document.getElementById("vertexColorLabel");
+const addVertexDiv = document.getElementById("addVertexDiv");
+const vertexColor = document.getElementById("vertexColor");
+const vertexColorLabel = document.getElementById("vertexColorLabel");
 
-  const editVertexDiv = document.getElementById("editVertexDiv");
-    const editVertexColor = document.getElementById("editVertexColor");
-    const editVertexColorLabel = document.getElementById("editVertexColorLabel");
+const editVertexDiv = document.getElementById("editVertexDiv");
+const editVertexColor = document.getElementById("editVertexColor");
+const editVertexColorLabel = document.getElementById("editVertexColorLabel");
 
-  const rootDiv = document.getElementById("rootDiv");
+const rootDiv = document.getElementById("rootDiv");
 
-  const deleteVertexDiv = document.getElementById("deleteVertexDiv");
+const deleteVertexDiv = document.getElementById("deleteVertexDiv");
 
 const edgeDiv = document.getElementById("edgeDiv");
-  const addEdgeDiv = document.getElementById("addEdgeDiv");
-    const edgeWeight = document.getElementById("edgeWeight");
-    const edgeWeightLabel = document.getElementById("edgeWeightLabel");
+const addEdgeDiv = document.getElementById("addEdgeDiv");
+const edgeWeight = document.getElementById("edgeWeight");
+const edgeWeightLabel = document.getElementById("edgeWeightLabel");
 
-  const updateEdgeDiv = document.getElementById("updateEdgeDiv");
+const updateEdgeDiv = document.getElementById("updateEdgeDiv");
 
-  const deleteEdgeDiv = document.getElementById("deleteEdgeDiv");
+const deleteEdgeDiv = document.getElementById("deleteEdgeDiv");
 
-  const createButton = document.getElementById("createButton");
+const createButton = document.getElementById("createButton");
 
 //Bindings and event handlers
 function addBindings() {
@@ -541,7 +541,7 @@ function drawEdges() {
 }
 
 function setupInterface() {
-  //Clear vertex div to add only what is needed
+  //Clear page to add only what is needed
   if (body != null) {
     while (body.firstChild) {
       body.firstChild.remove();
@@ -549,7 +549,6 @@ function setupInterface() {
     body.appendChild(lecturerDiv);
   }
 
-  //Clear page to add only what is needed
   if (lecturerDiv != null) {
     while (lecturerDiv.firstChild) {
       lecturerDiv.firstChild.remove();
@@ -583,7 +582,7 @@ function setupInterface() {
     edgeDiv.appendChild(addEdgeDiv);
     edgeDiv.appendChild(updateEdgeDiv);
     edgeDiv.appendChild(deleteEdgeDiv);
-    edgeDiv.removeChild(createButton);  
+    edgeDiv.appendChild(createButton);
   }
 
 
