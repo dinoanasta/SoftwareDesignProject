@@ -5,7 +5,6 @@ var selectedVertex = null;
 const space = 4;
 let selectedEdge = null;
 
-
 const vertexRadius = 15;
 
 let questionGraph = new Graph();
@@ -640,7 +639,6 @@ function setupInterface() {
     }
 
     if(questionLoaded){
-
 
         questionSetupDiv.removeChild(loadGraphButton);
         questionSetupDiv.appendChild(questionTypeLabel);

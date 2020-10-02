@@ -52,6 +52,8 @@ input{
 
 select{
     font-size: 2vmin;
+    width: 100%;
+    text-align: center;
 }
 
 button{
@@ -60,6 +62,12 @@ button{
 
 h1{
     font-size: 5vmin;
+    font-weight: bold;
+    text-align: center;
+}
+
+h2{
+    font-size: 4.5vmin;
     font-weight: bold;
     text-align: center;
 }

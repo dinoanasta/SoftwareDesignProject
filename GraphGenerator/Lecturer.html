@@ -9,12 +9,18 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script> -->
+
     <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
     <script src="js/Vertex.js"></script>
     <script src="js/Edge.js"></script>
     <script src="js/Graph.js"></script>
-    <script src="js/lecturer.js"></script>
     <script src="js/handlers.js"></script>
     <script src="js/FileSaver.js"></script>
 
@@ -24,11 +30,6 @@
 
         let canvas;   // The canvas that is used as the drawing surface
         let graphics; // The 2D graphics context for drawing on the canvas.
-
-        //Variables used for database
-        let firebaseConfig;
-        let database;
-        let ref;
 
         const X_LEFT = 0;    // The xy limits for the coordinate system.
         const X_RIGHT = 550;
@@ -60,8 +61,7 @@
     </script>
 </head>
 
-<body onload="init()" style="background-color:#EEEEEE" oncontextmenu="return false">
-
+<body onload="init()" style="background-color:#EEEEEE" id="body" oncontextmenu="return false">
     <div id="lecturerDiv" class="row">
 
         <!--        Canvas - 1st column-->
@@ -87,7 +87,7 @@
                 <br>
 
                 <label id="questionTypeDDLabel">Question type:</label>
-                <select id="questionTypeDD">
+                <select id="questionTypeDD" style="width:auto">
                     <option>Select type</option>
                     <option>BFS</option>
                     <option>DFS</option>
@@ -121,15 +121,17 @@
 
             </div>
 
+            <br>
+
             <!--        Adding vertices-->
             <div id="addVertexDiv">
-                <h3>Add vertex:</h3>
+                <h3 id="addVertexDivHeading">Add vertex:</h3>
 
-                <label id="vertexValueLabel">Value:</label>
+                <label id="vertexValueLabel">Value: </label>
                 <input type="text" id="vertexValue">
                 <br>
 
-                <label id="vertexColorLabel">Color:</label>
+                <label id="vertexColorLabel">Color: </label>
                 <input type="number" id="vertexColor">
                 <br>
 
@@ -137,45 +139,47 @@
 
             </div>
 
+            <br>
+
             <!--        Editing vertices-->
             <div id="editVertexDiv">
-                <h3>Edit vertex:</h3>
+                <h3 id="editVertexDivHeading">Edit vertex:</h3>
 
-                <label id="editVertexDDLabel">Vertex:</label>
+                <!-- <label id="editVertexDDLabel">Vertex:</label> -->
                 <select id="editVertexDD">
                     <option>Choose vertex</option>
                 </select>
                 <br>
 
-                <label id="editvertexValueLabel">Value:</label>
-                <input type="text" id="editvertexValue">
+                <label id="editVertexValueLabel">Value: </label>
+                <input type="text" id="editVertexValue">
                 <br>
 
-                <label id="editvertexColorLabel">Color:</label>
-                <input type="number" id="editvertexColor">
+                <label id="editVertexColorLabel">Color: </label>
+                <input type="number" id="editVertexColor">
                 <br>
 
                 <button id="updateVertexButton">Update vertex</button>
             </div>
 
+            <br>
+
             <!--        Root vertex-->
             <div id="rootDiv">
                 <h3>Root:</h3>
 
-                <label id="setRootDDLabel">Root Vertex:</label>
-                <select id="setRootDD">
+                <select id="setRootDD" >
                     <option>Choose root vertex</option>
                 </select>
-                <button id="clearRootButton">Set Root</button>
-                <button id="clearRootButton">Clear Root</button>
-
+                <button id="setRootButton">Set Root</button>
             </div>
+
+            <br>
 
             <!--        Delete vertex-->
             <div id="deleteVertexDiv">
                 <h3>Delete vertex:</h3>
 
-                <label id="deleteVertexDDLabel">Vertex:</label>
                 <select id="deleteVertexDD">
                     <option>Choose vertex</option>
                 </select>
@@ -190,49 +194,51 @@
 
             <!--     Add edge-->
             <div id="addEdgeDiv">
-                <h3>Add edge:</h3>
+                <h3 id="addEdgeDivHeading">Add edge: </h3>
 
-                <label id="vertex1DDLabel">Vertex 1:</label>
-                <select id="vertex1DD">
+                <label id="vertex1DDLabel">Vertex 1: </label>
+                <select id="vertex1DD" style="width:auto">
                     <option>Choose first vertex</option>
                 </select>
                 <br>
 
-                <label id="vertex2DDLabel">Vertex 2:</label>
-                <select id="vertex2DD">
+                <label id="vertex2DDLabel">Vertex 2: </label>
+                <select id="vertex2DD" style="width:auto">
                     <option>Choose second vertex</option>
                 </select>
                 <br>
 
-                <label id="edgeWeightLabel">Edge weight:</label>
+                <label id="edgeWeightLabel">Edge weight: </label>
                 <input type="text" id="edgeWeight">
                 <br>
 
                 <button id="addEdgeButton">Add edge</button>
             </div>
 
+            <br>
+
             <!--     Update edge-->
             <div id="updateEdgeDiv">
                 <h3>Update edge:</h3>
 
-                <label id="updateEdgeDDLabel">Edge:</label>
                 <select id="updateEdgeDD">
                     <option>Choose edge</option>
                 </select>
                 <br>
 
-                <label id="editWeightLabel">Weight:</label>
+                <label id="editWeightLabel">Weight: </label>
                 <input type="text" id="editWeight">
                 <br>
 
                 <button id="updateEdgeButton">Update edge</button>
             </div>
 
+            <br>
+
             <!--    Delete edge-->
             <div id="deleteEdgeDiv">
                 <h3>Delete edge:</h3>
 
-                <label id="deleteEdgeDDLabel">Edge:</label>
                 <select id="deleteEdgeDD">
                     <option>Choose edge</option>
                 </select>
@@ -241,10 +247,11 @@
                 <button id="deleteEdgeButton">Delete edge</button>
             </div>
 
+            <br><br><br>
+
             <!--     Submit Button-->
             <button id="createButton">Create</button>
             <a id="link"></a>
-
         </div>
     </div>
 
@@ -253,6 +260,8 @@
         <!-- This message will be shown in the page if JavaScript is not available. -->
         <p>JavaScript is required to use this page.</p>
     </noscript>
+
+    <script src="js/lecturer.js"></script>
 
 </body>
 </html>
