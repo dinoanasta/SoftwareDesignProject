@@ -64,7 +64,6 @@ function installMouseHandler() {
                 selectedVertex = graph.getVertex(clickedVertexIndex);
             }
 
-
             graphics.strokeStyle = "red";
             graphics.lineWidth = 2;
 
@@ -92,13 +91,19 @@ function installMouseHandler() {
                         document.getElementById("setRootDD").selectedIndex = clickedVertexIndex + 1;
                     }
                 } else if (userType == "lecturer") {
-                    document.getElementById("editvertexValue").value = selectedVertex.getVertexVal();
-                    document.getElementById("editvertexColor").value = selectedVertex.getColor();
-                    document.getElementById("setRootDD").selectedIndex = clickedVertexIndex + 1;
+                    document.getElementById("editVertexValue").value = selectedVertex.getVertexVal();
+                    if(lecturerDiv.contains(document.getElementById("editVertexColor"))){
+                        document.getElementById("editVertexColor").value = selectedVertex.getColor();
+                    }
+                    if(lecturerDiv.contains(document.getElementById("setRootDD"))){
+                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex + 1;
+                    }
+                    document.getElementById("editVertexDD").selectedIndex = clickedVertexIndex + 1;
+                    document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex + 1;
                 }
 
             } else {
-                if (userType == "student") {
+                if (userType == "student" && questionType != "graphcolouring") {
 
                     if (document.getElementById("studentDiv").contains(document.getElementById("editvertexValueLabel"))) {
                         document.getElementById("editvertexValueLabel").innerHTML = "Value: ";
@@ -164,9 +169,15 @@ function installMouseHandler() {
 
 
                 } else if (userType == "lecturer") {
-                    document.getElementById("editvertexValue").value = "";
-                    document.getElementById("editvertexColor").value = "";
-                    document.getElementById("setRootDD").selectedIndex = 0;
+                    if (document.getElementById("lecturerDiv").contains(document.getElementById("editvertexValue"))) {
+                        document.getElementById("editvertexValue").value = "";
+                    }     
+                    if (document.getElementById("lecturerDiv").contains(document.getElementById("editvertexColor"))) {
+                        document.getElementById("editvertexColor").value = "";
+                    }     
+                    if (document.getElementById("lecturerDiv").contains(document.getElementById("setRootDD"))) {
+                        document.getElementById("setRootDD").selectedIndex = 0;
+                    }   
 
                     for (let i = 0; i < graph.getEdges().length; ++i) {
                         let thisEdge = graph.getEdges()[i];
@@ -326,28 +337,31 @@ function installMouseHandler() {
         dragging = false;
         document.removeEventListener("mousemove", doMouseMove, false);
         document.removeEventListener("mouseup", doMouseMove, false);
+        
+        if(userType == "lecturer"){
+            if(creatingEdge){
 
-        if(creatingEdge){
-
-            clickedVertexIndex = getVertexIndex(graph,x,y);
-            endingVertex = graph.getVertex(clickedVertexIndex);
-
-            if (dragging || !dragging) {
-                document.addEventListener("mousemove", doMouseMove, false);
-                document.addEventListener("mouseup", doMouseUp, false);
-            }
-
-            if (clickedVertexIndex != -1) {
-                if (directed) {
-                    graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 0);
-                } else {
-                    graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 0);
+                clickedVertexIndex = getVertexIndex(graph,x,y);
+                endingVertex = graph.getVertex(clickedVertexIndex);
+    
+                if (dragging || !dragging) {
+                    document.addEventListener("mousemove", doMouseMove, false);
+                    document.addEventListener("mouseup", doMouseUp, false);
                 }
+    
+                if (clickedVertexIndex != -1) {
+                    if (directed) {
+                        graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                    } else {
+                        graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                    }
+                }
+                redraw();
+                populateDropDowns();
             }
-            redraw();
-            populateDropDowns();
+            creatingEdge = false;
         }
-        creatingEdge = false;
+ 
     }
 
     canvas.addEventListener("mousedown", doMouseDown, false);

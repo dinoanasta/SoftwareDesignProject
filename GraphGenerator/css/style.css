@@ -4,6 +4,20 @@
     src: url(Aldrich-Regular.ttf);
 }
 
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
+}
+  
+.material-icons {
+font-family: 'Material Icons';
+font-weight: normal;
+font-style: normal;
+font-size: 3vmin;
+}
+  
 body{
     /*margin-left: 2vmin;*/
     margin-top: 2vmin;
@@ -38,6 +52,8 @@ input{
 
 select{
     font-size: 2vmin;
+    width: 100%;
+    text-align: center;
 }
 
 button{
@@ -46,6 +62,12 @@ button{
 
 h1{
     font-size: 5vmin;
+    font-weight: bold;
+    text-align: center;
+}
+
+h2{
+    font-size: 4.5vmin;
     font-weight: bold;
     text-align: center;
 }
@@ -115,6 +137,7 @@ button:hover{
     overflow: scroll;
 }
 
+
 #vertexDiv{
     /*margin-left: 2vw;*/
     padding: 2vh 1vw;
@@ -141,6 +164,17 @@ button:hover{
     overflow: scroll;
 }
 
+#editingDiv{
+    /*margin-left: 2vw;*/
+    padding: 2vh 1vw;
+
+    /*background-color: rgba(0, 0, 0, 0.2);*/
+
+    width: fit-content;
+    
+    height: 100vh;
+    overflow: scroll;
+}
 
 #questionUseRG{
     padding: 1vh 1vw;

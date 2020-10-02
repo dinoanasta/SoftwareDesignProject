@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
 
   <meta charset="UTF-8">
 
-  <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
   <!--    Scripts -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
 
   <script src="js/Vertex.js"> </script>
   <script src="js/Edge.js"> </script>
@@ -27,19 +25,12 @@
   <script src="js/Marker.js"> </script>
   <script src="js/FileSaver.js"></script>
 
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-    
+  <title>Graph Generator</title>
 
   <script>
     let canvas; // The canvas that is used as the drawing surface
     let graphics; // The 2D graphics context for drawing on the canvas.
 
-    //Variables used for database
-    let firebaseConfig;
-    let database;
-    let ref;
 
     const X_LEFT = 0;    // The xy limits for the coordinate system.
     const X_RIGHT = 550;
@@ -47,24 +38,6 @@
     const Y_TOP = 0;
 
     let pixelSize; // The size of one pixel, in the transformed coordinates.
-
-    //Initialize database
-    // function initialiseDB() {
-    //   firebaseConfig = {
-    //     apiKey: "AIzaSyDbsB3C3vb4clAB9iQJT4j8r-sr-UsaGcU",
-    //     authDomain: "graphmarker.firebaseapp.com",
-    //     databaseURL: "https://graphmarker.firebaseio.com",
-    //     projectId: "graphmarker",
-    //     storageBucket: "graphmarker.appspot.com",
-    //     messagingSenderId: "980362787898",
-    //     appId: "1:980362787898:web:f3e18e93bf4505e4c3c903",
-    //   };
-    //   // Initialize Firebase
-    //   firebase.initializeApp(firebaseConfig);
-    //
-    //   database = firebase.database();
-    //   ref = database.ref("scores");
-    // }
 
     function init() {
       try {
@@ -77,7 +50,6 @@
         graphics.textAlign = "center";
 
         addGraphicsContextExtras(graphics);
-        // initialiseDB();
         installMouseHandler();
 
         addBindings();
@@ -106,38 +78,20 @@
       </canvas>
     </div>
 
-    <!--        Vertex stuff - 2nd column-->
-    <div id="vertexDiv">
+    <!--       Editing tools - 2nd column-->
+    <div id="editingDiv">
 
       <!--        Question setup-->
       <div id="questionSetupDiv">
         <h3>Question setup:</h3>
 
-<!--        <label id="fileSelectionLabel">Upload file:</label>-->
-<!--        <br>-->
-
         <input type="file" accept=".txt" id="fileSelection" style="width: 20vw">
 
         <label id="questionTypeLabel">Question Type:</label>
-        <a id="iconButton" hidden ><i class="black-text waves-effect material-icons">info</i></a>
+        <a id="iconButton" hidden><i class="black-text waves-effect material-icons">info</i></a>
 
         <label id="questionDetailsLabel">Details:</label>
         <button id="loadGraphButton">Load Graph</button>
-      </div>
-
-      <!--        Editing root vertex-->
-      <div id="editRootDiv">
-
-        <h3>Edit root:</h3>
-
-        <label id="setRootDDLabel">Set Root:</label>
-        <select id="setRootDD">
-          <option>Choose root vertex</option>
-        </select>
-        <button id="setRootButton">Set Root</button>
-
-        <button id="clearRootButton">Clear Root</button>
-
       </div>
 
       <!--        Editing vertices (colors)-->
@@ -157,18 +111,9 @@
         <input type="number" id="editvertexColor">
         <br>
 
-<!--        <label id="editdistFromRootLabel">Distance:</label>-->
-<!--        <input type="text" id="editdistFromRoot">-->
-<!--        <br>-->
-
         <button id="updateVertexButton">Update vertex</button>
       </div>
 
-
-    </div>
-
-    <!--        Edge stuff - 3rd column-->
-    <div id="edgeDiv">
 
       <!--     Add edge-->
       <div id="addEdgeDiv">
@@ -181,10 +126,8 @@
         <br>
 
         <button id="addEdgeButton">Add edge</button>
-        <button id="drawEdgesButton">Draw all edges</button>
+        <button id="addAllEdgesButton">Add all edges</button>
       </div>
-
-      <br><br>
 
       <!--    Delete edge-->
       <div id="deleteEdgeDiv">
@@ -197,15 +140,17 @@
         <br>
 
         <button id="deleteEdgeButton">Delete edge</button>
+        <button id="deleteAllEdgesButton">Delete all edges</button>
+
       </div>
 
-      <br><br><br>
-
       <!--            Submit Button-->
-      <button style="height:10vh" , id="checkButton" >Check</button>
+      <button style="height:10vh" , id="checkButton">Check</button>
 
       <!--            Download Button-->
       <button style="height:10vh" , id="downloadButton">Download</button>
+
+
 
     </div>
   </div>

@@ -1,14 +1,13 @@
 //Global variables
-const userType = "lecturer";
+var userType = "lecturer";
 
 var selectedVertex = null;
-const space = 4;
+var space = 4;
 let selectedEdge = null;
 
-const vertexRadius = 15;
+var vertexRadius = 15;
 
 let graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
-let questionGraph = new Graph();
 
 let clickedVertexIndex = -1;
 
@@ -29,8 +28,72 @@ let weighted = false;
 let directed = false;
 
 //Colored
-let color = "0";
+let color = "-1";
 let colored = false;
+
+//HTML DOM elements
+// const body = document.getElementById("body");
+const body = document.getElementById("body");
+
+const lecturerDiv = document.getElementById("lecturerDiv");
+
+const canvasDiv = document.getElementById("canvasDiv");
+
+const vertexDiv = document.getElementById("vertexDiv");
+const questionSetupDiv = document.getElementById("questionSetupDiv");
+
+  const questionTitleInput = document.getElementById("questionTitle");
+  const questionTitleLabel = document.getElementById("questionTitleLabel");
+  const questionTypeDD = document.getElementById("questionTypeDD");
+  const questionTypeDDLabel = document.getElementById("questionTypeDDLabel");
+  const directedCB = document.getElementById("directedCB");
+  const directedCBLabel = document.getElementById("directedCBLabel");
+  const weightedCB = document.getElementById("weightedCB");
+  const weightedCBLabel = document.getElementById("weightedCBLabel");
+  const questionUseRG = document.getElementById("questionUseRG");
+  const setQuestionButton = document.getElementById("setQuestionButton");
+
+// addVertexDiv
+const addVertexDiv = document.getElementById("addVertexDiv");
+  const addVertexDivHeading = document.getElementById("addVertexDivHeading");
+  const vertexValue = document.getElementById("vertexValue");
+  const vertexValueLabel = document.getElementById("vertexValueLabel");
+  const vertexColor = document.getElementById("vertexColor");
+  const vertexColorLabel = document.getElementById("vertexColorLabel");
+  const addVertexButton = document.getElementById("addVertexButton");
+
+// editVertexDiv
+const editVertexDiv = document.getElementById("editVertexDiv");
+  const editVertexDivHeading = document.getElementById("editVertexDivHeading");
+  const editVertexDD = document.getElementById("editVertexDD");
+  const editVertexValueLabel = document.getElementById("editVertexValueLabel");
+  const editVertexValue = document.getElementById("editVertexValue");
+  const editVertexColorLabel = document.getElementById("editVertexColorLabel");
+  const editVertexColor = document.getElementById("editVertexColor");
+  const updateVertexButton = document.getElementById("updateVertexButton");
+
+const rootDiv = document.getElementById("rootDiv");
+const deleteVertexDiv = document.getElementById("deleteVertexDiv");
+
+const edgeDiv = document.getElementById("edgeDiv");
+
+// addEdgeDiv
+const addEdgeDiv = document.getElementById("addEdgeDiv");
+  const addEdgeDivHeading = document.getElementById("addEdgeDivHeading");
+  const vertex1DDLabel = document.getElementById("vertex1DDLabel");
+  const vertex1DD = document.getElementById("vertex1DD");
+  const vertex2DDLabel = document.getElementById("vertex2DDLabel");
+  const vertex2DD = document.getElementById("vertex2DD");
+  const edgeWeightLabel = document.getElementById("edgeWeightLabel");
+  const edgeWeight = document.getElementById("edgeWeight");
+  const addEdgeButton = document.getElementById("addEdgeButton");
+
+const updateEdgeDiv = document.getElementById("updateEdgeDiv");
+const deleteEdgeDiv = document.getElementById("deleteEdgeDiv");
+
+const createButton = document.getElementById("createButton");
+const link = document.getElementById("link");
+
 
 //Bindings and event handlers
 function addBindings() {
@@ -46,8 +109,7 @@ function addBindings() {
   document.getElementById("editVertexDD").onchange = editVertexSelected;
   document.getElementById("updateVertexButton").onclick = doUpdateVertex;
   document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
-  document.getElementById("setRootDD").onchange = setRoot;
-  document.getElementById("clearRootButton").onclick = removeRootVertex;
+  document.getElementById("setRootButton").onclick = setRoot;
 
   //Edges
   document.getElementById("addEdgeButton").onclick = doAddEdge;
@@ -56,9 +118,10 @@ function addBindings() {
   document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
 
   //Interface
-  // document.getElementById("clearButton").onclick = doClear;
   document.getElementById("createButton").onclick = doCreate;
   window.addEventListener('keydown', handleKeyDown, false);
+
+  setupInterface();
 }
 
 //Question setup
@@ -123,34 +186,33 @@ function doAddVertex() {
   let valueText = document.getElementById("vertexValue");
   let colorText = document.getElementById("vertexColor");
 
+  let value;
+
   if (valueText.value.length != 0) {
-    let value = valueText.value;
-    let x = Math.random() * 450 + 50;
-    let y = Math.random() * 350 + 50;
-    if (colored) {
-      if (colorText.value.length != 0) {
-        color = colorText.value;
-
-        graph.addVertex(value, x, y, color);
-
-        populateDropDowns();
-        redraw();
-
-        console.log(graph.getAdjacenyMatrix());
-      } else {
-        alert("Please enter a value for the color");
-      }
-    } else {
-      graph.addVertex(value, x, y, color);
-
-      populateDropDowns();
-      redraw();
-    }
-  } else {
-    alert("Please enter a value for the vertex");
+    value = valueText.value;
+  }else{
+    value = graph.getNumberVertices();
   }
 
+  let x = Math.random() * 450 + 50;
+  let y = Math.random() * 350 + 50;
+  if (colored) {
+    if (colorText.value.length != 0) {
+      color = colorText.value;
+    } else {
+      color = "-1";
+    }
 
+    graph.addVertex(value, x, y, color);
+
+    populateDropDowns();
+    redraw();
+  } else {
+    graph.addVertex(value, x, y, color);
+
+    populateDropDowns();
+    redraw();
+  }
 }
 
 function editVertexSelected() {
@@ -167,7 +229,6 @@ function doUpdateVertex() {
   let newValue = document.getElementById("editvertexValue").value;
   let newColor = document.getElementById("editvertexColor").value;
   console.log(newValue, newColor);
-  // let newDist = document.getElementById("editdistFromRoot").textContent;
 
   if (dropDown.selectedIndex != 0) {
     let vertexID = dropDown.options[dropDown.selectedIndex].value;
@@ -178,8 +239,6 @@ function doUpdateVertex() {
       graph.updateVertexColor(vertexID, newColor);
 
     }
-    // graph.getVertex(vertexID).setDistance(newDist);
-
     populateDropDowns();
     redraw();
   } else {
@@ -188,8 +247,6 @@ function doUpdateVertex() {
       if (colored) {
         graph.getVertex(clickedVertexIndex).setColor(newColor);
       }
-      // graph.getVertex(vertexID).setDistance(newDist);
-
       populateDropDowns();
       redraw();
 
@@ -227,17 +284,12 @@ function setRoot() {
   }
 }
 
-function removeRootVertex() {
-  graph.setSourceNode(-1);
-  redraw();
-}
-
 //Edges
 function findEdgeIndex(edgesArray, first, second) {
   for (let i = 0; i < edgesArray.length; ++i) {
-      if ((edgesArray[i].getVertexOne().getVertexID() == first && edgesArray[i].getVertexTwo().getVertexID() == second) || (edgesArray[i].getVertexOne().getVertexID() == second && edgesArray[i].getVertexTwo().getVertexID() == first)) {
-          return i;
-      }
+    if ((edgesArray[i].getVertexOne().getVertexID() == first && edgesArray[i].getVertexTwo().getVertexID() == second) || (edgesArray[i].getVertexOne().getVertexID() == second && edgesArray[i].getVertexTwo().getVertexID() == first)) {
+      return i;
+    }
   }
 }
 
@@ -377,21 +429,28 @@ function clearDropDown(DDB) {
 }
 
 function populateDropDowns() {
-  const deleteVertexDD = document.getElementById("deleteVertexDD");
-  const deleteEdgeDD = document.getElementById("deleteEdgeDD");
-  const vertex1DD = document.getElementById("vertex1DD");
-  const vertex2DD = document.getElementById("vertex2DD");
-  const updateVertexDD = document.getElementById("editVertexDD");
-  const editEdgeDD = document.getElementById("updateEdgeDD");
-  const setRootDD = document.getElementById("setRootDD");
+  var deleteVertexDD = document.getElementById("deleteVertexDD");
+  var deleteEdgeDD = document.getElementById("deleteEdgeDD");
+  var vertex1DD = document.getElementById("vertex1DD");
+  var vertex2DD = document.getElementById("vertex2DD");
+  var updateVertexDD = document.getElementById("editVertexDD");
+  var editEdgeDD = document.getElementById("updateEdgeDD");
+  var setRootDD = document.getElementById("setRootDD");
+
+  if (lecturerDiv.contains(updateVertexDD)) {
+    clearDropDown(updateVertexDD);
+  } 
+  if (lecturerDiv.contains(editEdgeDD)) {
+    clearDropDown(editEdgeDD);
+  } 
+  if (lecturerDiv.contains(setRootDD)) {
+    clearDropDown(setRootDD);
+  }
 
   clearDropDown(vertex1DD);
   clearDropDown(vertex2DD);
   clearDropDown(deleteVertexDD);
   clearDropDown(deleteEdgeDD);
-  clearDropDown(updateVertexDD);
-  clearDropDown(editEdgeDD);
-  clearDropDown(setRootDD);
 
   //Add vertices to delete vertex and add edge drop downs
   function addVertexOption(DDB, value, ID, color) {
@@ -409,7 +468,9 @@ function populateDropDowns() {
     addVertexOption(vertex2DD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
     addVertexOption(deleteVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
     addVertexOption(updateVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
-    addVertexOption(setRootDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
+    if (lecturerDiv.contains(setRootDD)) {
+      addVertexOption(setRootDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
+    } 
   }
 
   //Add edges to delete edge drop downs
@@ -435,54 +496,18 @@ function populateDropDowns() {
 
   for (let i = 0; i < graph.edges.length; ++i) {
     addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
-    addEdgeOption(editEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
+    if (lecturerDiv.contains(editEdgeDD)) {
+      addEdgeOption(editEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
+    } 
   }
 
   for (let i = 0; i < graph.directedEdges.length; ++i) {
     addDirectedEdgeOption(deleteEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
-    addDirectedEdgeOption(editEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
-
+    if (lecturerDiv.contains(editEdgeDD)) {
+      addDirectedEdgeOption(editEdgeDD, graph.directedEdges[i].getVertexOne(), graph.directedEdges[i].getVertexTwo(), graph.directedEdges[i].getWeightEdge());
+    }
   }
 }
-
-// function doClear() {
-//   graphics.fillStyle = "white";
-//   graphics.fillRect(0, 0, canvas.width, canvas.height);
-//
-//   //Enable question setup stuff
-//   document.getElementById("questionSetupDiv").style.display = "initial";
-//   document.getElementById("edgeDiv").style.display = "none";
-//   document.getElementById("addVertexDiv").style.display = "none";
-//   document.getElementById("editVertexDiv").style.display = "none";
-//   document.getElementById("deleteVertexDiv").style.display = "none";
-//
-//   setupInterface(questionType);
-//
-//   //Reset variables
-//
-//   graph = new Graph(); //array of vertex objects, each having an array of adjacent vertices
-//   questionGraph = new Graph();
-//
-//   clickedVertexIndex = -1;
-//
-//   selectedVertex = null;
-//
-//   questionType;
-//   questionCode = null;
-//   isCreate = false;
-//   questionLoaded = false;
-//
-//   weight = 0;
-//   weighted = true;
-//
-//   directed = true;
-//
-//   color = "0";
-//   colored = true;
-//
-//   //Clear dropdowns
-//   populateDropDowns();
-// }
 
 function drawVertices() {
   for (let i = 0; i < graph.vertices.length; ++i) {
@@ -508,182 +533,190 @@ function drawEdges() {
 }
 
 function setupInterface() {
+
+  console.log("Setting up interface")
+  //Clear page to add only what is needed
+
+  if (body != null) {
+    while (body.firstChild) {
+      body.firstChild.remove();
+    }
+    body.appendChild(lecturerDiv);
+  }
+
+  if (lecturerDiv != null) {
+    while (lecturerDiv.firstChild) {
+      lecturerDiv.firstChild.remove();
+    }
+    lecturerDiv.appendChild(canvasDiv);
+    lecturerDiv.appendChild(vertexDiv);
+    lecturerDiv.appendChild(edgeDiv);
+  }
+
+  //Clear vertex div to add only what is needed
+  if (vertexDiv != null) {
+    while (vertexDiv.firstChild) {
+      vertexDiv.firstChild.remove();
+    }
+  }
+
+  //Clear edge div to add only what is needed
+  if (edgeDiv != null) {
+    while (edgeDiv.firstChild) {
+      edgeDiv.firstChild.remove();
+    }
+  }
+  
+  //Clear addVertexDiv
+  if (addVertexDiv != null) {
+    while (addVertexDiv.firstChild) {
+      addVertexDiv.firstChild.remove();
+    }
+  }
+
+  //Clear editVertexDiv
+  if (editVertexDiv != null) {
+    while (editVertexDiv.firstChild) {
+      editVertexDiv.firstChild.remove();
+    }
+  }
+
+  //Clear addEdgeDiv
+  if (addEdgeDiv != null) {
+    while (addEdgeDiv.firstChild) {
+      addEdgeDiv.firstChild.remove();
+    }
+  }
+
   switch (questionType) {
     case "bfs":
-      //Directed
-      document.getElementById("directedCB").style.display = "initial";
-      document.getElementById("directedCBLabel").style.display = "initial";
-
-      //Colored
       colored = false;
-
-      //Weighted
-      document.getElementById("weightedCB").style.display = "initial";
-      document.getElementById("weightedCBLabel").style.display = "initial";
-
-      // document.getElementById("distFromRoot").style.display = "none";
-      // document.getElementById("distFromRootLabel").style.display = "none";
-      document.getElementById("editdistFromRoot").style.display = "none";
-      document.getElementById("editdistFromRootLabel").style.display = "none";
-
       break;
     case "dfs":
-      //Directed
-      document.getElementById("directedCB").style.display = "initial";
-      document.getElementById("directedCBLabel").style.display = "initial";
-
-      //Colored
       colored = false;
-
-      //Weighted
-      document.getElementById("weightedCB").style.display = "initial";
-      document.getElementById("weightedCBLabel").style.display = "initial";
-
-      // document.getElementById("distFromRoot").style.display = "none";
-      // document.getElementById("distFromRootLabel").style.display = "none";
-      document.getElementById("editdistFromRoot").style.display = "none";
-      document.getElementById("editdistFromRootLabel").style.display = "none";
-
       break;
     case "mwst":
-      //Directed
-      document.getElementById("directedCB").style.display = "initial";
-      document.getElementById("directedCBLabel").style.display = "initial";
-
-      //Colored
       colored = false;
-
-      //Weighted
-      document.getElementById("weightedCB").style.display = "initial";
-      document.getElementById("weightedCBLabel").style.display = "initial";
-      document.getElementById("weightedCB").checked = true;
       weighted = true;
-
-      // document.getElementById("distFromRoot").style.display = "initial";
-      // document.getElementById("distFromRootLabel").style.display = "initial";
-      document.getElementById("editdistFromRoot").style.display = "initial";
-      document.getElementById("editdistFromRootLabel").style.display = "initial";
-
+      weightedCB.checked = true;
       break;
     case "graphcolouring":
-      //Directed
-      document.getElementById("directedCB").style.display = "none";
-      document.getElementById("directedCBLabel").style.display = "none";
-      directed = false;
-
-      //Colored
       colored = true;
-
-      //Weighted
-      document.getElementById("weightedCB").style.display = "none";
-      document.getElementById("weightedCBLabel").style.display = "none";
       weighted = false;
-
-      // document.getElementById("distFromRoot").style.display = "none";
-      // document.getElementById("distFromRootLabel").style.display = "none";
-      document.getElementById("editdistFromRoot").style.display = "none";
-      document.getElementById("editdistFromRootLabel").style.display = "none";
-
+      weightedCB.checked = false;
       break;
     case "shortestpath":
-      //Directed
-      document.getElementById("directedCB").style.display = "initial";
-      document.getElementById("directedCBLabel").style.display = "initial";
-
-      //Colored
       colored = false;
-
-      //Weighted
-      document.getElementById("weightedCB").style.display = "initial";
-      document.getElementById("weightedCBLabel").style.display = "initial";
-      document.getElementById("weightedCB").checked = true;
       weighted = true;
-
-      // document.getElementById("distFromRoot").style.display = "initial";
-      // document.getElementById("distFromRootLabel").style.display = "initial";
-      document.getElementById("editdistFromRoot").style.display = "initial";
-      document.getElementById("editdistFromRootLabel").style.display = "initial";
-
+      weightedCB.checked = true;
       break;
   }
 
-  if (colored) {
-    document.getElementById("vertexColor").style.display = "initial";
-    document.getElementById("vertexColorLabel").style.display = "initial";
-    document.getElementById("editvertexColor").style.display = "initial";
-    document.getElementById("editvertexColorLabel").style.display = "initial";
-  } else if (!colored) {
-    document.getElementById("vertexColor").style.display = "none";
-    document.getElementById("vertexColorLabel").style.display = "none";
-    document.getElementById("editvertexColor").style.display = "none";
-    document.getElementById("editvertexColorLabel").style.display = "none";
+  if (colored) { //Only need to change colors - no root/edges
+
+    directedCB.style.display = "none";
+    directedCBLabel.style.display = "none";
+    weightedCB.style.display = "none";
+    weightedCBLabel.style.display = "none";
+    
+    addVertexDiv.appendChild(addVertexDivHeading);
+    addVertexDiv.appendChild(vertexValueLabel);
+    addVertexDiv.appendChild(vertexValue);
+    addVertexDiv.appendChild(document.createElement("br"));
+    addVertexDiv.appendChild(vertexColorLabel);
+    addVertexDiv.appendChild(vertexColor);
+    addVertexDiv.appendChild(addVertexButton);
+
+    editVertexDiv.appendChild(editVertexDivHeading);
+    editVertexDiv.appendChild(editVertexDD);
+    editVertexDiv.appendChild(document.createElement("br"));
+    editVertexDiv.appendChild(editVertexValueLabel);
+    editVertexDiv.appendChild(editVertexValue);
+    editVertexDiv.appendChild(document.createElement("br"));
+    editVertexDiv.appendChild(editVertexColorLabel);
+    editVertexDiv.appendChild(editVertexColor);
+    editVertexDiv.appendChild(updateVertexButton);
+
+    vertexDiv.appendChild(questionSetupDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    vertexDiv.appendChild(addVertexDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    vertexDiv.appendChild(editVertexDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    vertexDiv.appendChild(deleteVertexDiv);
+
+  } else if (!colored) { //Only need to add/delete edges and change root, no colors
+
+    directedCB.style.display = "initial";
+    directedCBLabel.style.display = "initial";
+    weightedCB.style.display = "initial";
+    weightedCBLabel.style.display = "initial";
+
+    addVertexDiv.appendChild(addVertexDivHeading);
+    addVertexDiv.appendChild(vertexValueLabel);
+    addVertexDiv.appendChild(vertexValue);
+    addVertexDiv.appendChild(document.createElement("br"));
+    addVertexDiv.appendChild(addVertexButton);
+
+    editVertexDiv.appendChild(editVertexDivHeading);
+    editVertexDiv.appendChild(editVertexDD);
+    editVertexDiv.appendChild(document.createElement("br"));
+    editVertexDiv.appendChild(editVertexValueLabel);
+    editVertexDiv.appendChild(editVertexValue);
+    editVertexDiv.appendChild(document.createElement("br"));
+    editVertexDiv.appendChild(updateVertexButton);
+
+    vertexDiv.appendChild(questionSetupDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    
+    vertexDiv.appendChild(addVertexDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    vertexDiv.appendChild(editVertexDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    vertexDiv.appendChild(rootDiv);
+    vertexDiv.appendChild(document.createElement("br"));
+    vertexDiv.appendChild(deleteVertexDiv);
   }
 
-  if (weighted) {
-    document.getElementById("edgeWeight").style.display = "initial";
-    document.getElementById("edgeWeightLabel").style.display = "initial";
-    document.getElementById("updateEdgeDiv").style.display = "initial";
-  } else if (!weighted) {
-    document.getElementById("edgeWeight").style.display = "none";
-    document.getElementById("edgeWeightLabel").style.display = "none";
-    document.getElementById("updateEdgeDiv").style.display = "none";
+  if(weighted){
+    addEdgeDiv.appendChild(addEdgeDivHeading);
+    addEdgeDiv.appendChild(vertex1DDLabel);
+    addEdgeDiv.appendChild(vertex1DD);
+    addEdgeDiv.appendChild(document.createElement("br"));
+    addEdgeDiv.appendChild(vertex2DDLabel);
+    addEdgeDiv.appendChild(vertex2DD);
+    addEdgeDiv.appendChild(document.createElement("br"));
+    addEdgeDiv.appendChild(edgeWeightLabel);
+    addEdgeDiv.appendChild(edgeWeight);
+    addEdgeDiv.appendChild(document.createElement("br"));
+    addEdgeDiv.appendChild(addEdgeButton);
+
+    edgeDiv.appendChild(addEdgeDiv);
+    edgeDiv.appendChild(document.createElement("br"));
+    edgeDiv.appendChild(updateEdgeDiv);
+    edgeDiv.appendChild(document.createElement("br"));
+    edgeDiv.appendChild(deleteEdgeDiv);
+  }else if (!weighted){
+    addEdgeDiv.appendChild(addEdgeDivHeading);
+    addEdgeDiv.appendChild(vertex1DDLabel);
+    addEdgeDiv.appendChild(vertex1DD);
+    addEdgeDiv.appendChild(document.createElement("br"));
+    addEdgeDiv.appendChild(vertex2DDLabel);
+    addEdgeDiv.appendChild(vertex2DD);
+    addEdgeDiv.appendChild(document.createElement("br"));
+    addEdgeDiv.appendChild(addEdgeButton);
+
+    edgeDiv.appendChild(addEdgeDiv);
+    edgeDiv.appendChild(document.createElement("br"));
+    edgeDiv.appendChild(deleteEdgeDiv);
   }
+
+  edgeDiv.appendChild(document.createElement("br"));
+  edgeDiv.appendChild(document.createElement("br"));
+  edgeDiv.appendChild(document.createElement("br"));
+  edgeDiv.appendChild(createButton);
+  edgeDiv.appendChild(link);
 }
-
-
-// function doSetQuestion() {
-//   let dropDown = document.getElementById("questionTypeDD");
-//   let qCode = document.getElementById("questionCodeLecturer");
-//   if (dropDown.selectedIndex != 0 && qCode.value.length != 0) {
-//     switch (dropDown.selectedIndex) {
-//       case 1:
-//         questionType = "bfs";
-//         break;
-//       case 2:
-//         questionType = "dfs";
-//         break;
-//       case 3:
-//         questionType = "mwst";
-//         break;
-//       case 4:
-//         questionType = "graphcolouring";
-//         break;
-//       case 5:
-//         questionType = "shortestpath";
-//         break;
-//     }
-//
-//     //Disable question setup stuff
-//     // document.getElementById("questionSetupDiv").style.display = "none";
-//     // document.getElementById("edgeDiv").style.display = "initial";
-//     // document.getElementById("addVertexDiv").style.display = "initial";
-//     // document.getElementById("editVertexDiv").style.display = "initial";
-//     // document.getElementById("deleteVertexDiv").style.display = "initial";
-//
-//     setupInterface(questionType);
-//
-//     questionCode = qCode.value;
-//
-//     alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
-//
-//   } else {
-//     alert("Please select a question type and enter a code");
-//   }
-// }
-//
-// //When lecturer submits graph
-// function doCreate() {
-//   try {
-//     var data = {
-//       id: questionCode,
-//       graph: graph.convertGraphToString(questionType, questionType)
-//     }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
-//     ref.push(data);
-//     alert("Lecturer question successfully submitted");
-//   } catch (err) {
-//     alert("Error occured while trying to submit lecturer question graph");
-//   }
-// }
 
 function doSetQuestion() {
   let dropDown = document.getElementById("questionTypeDD");
@@ -710,20 +743,9 @@ function doSetQuestion() {
         questionType = "shortestpath";
         break;
     }
-
-    //Disable question setup stuff
-    // document.getElementById("questionSetupDiv").style.display = "none";
-    // document.getElementById("edgeDiv").style.display = "initial";
-    // document.getElementById("addVertexDiv").style.display = "initial";
-    // document.getElementById("editVertexDiv").style.display = "initial";
-    // document.getElementById("deleteVertexDiv").style.display = "initial";
-
     setupInterface();
 
-    // questionCode = qCode.value;
     questionTitle = qTitle.value;
-    //Jesse_new
-    // validifyQuestionCode(questionCode);
 
     alert("Question setup completed");
 
@@ -740,15 +762,15 @@ function doCreate() {
     // if question type is == to bfs/dfs/shortestpath then dont allow them to
     // create the graph if you can't visit every node from the source node
     var is_a_valid_graph = true;
-    if((questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath") && graph.getSourceNode() == -1){
+    if ((questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath") && graph.getSourceNode() == -1) {
       is_a_valid_graph = false;
     }
-    else if(questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath"){
-        // check if can visit every node in graph
-        is_a_valid_graph = graph.canVisitEachNodeFromSource();
+    else if (questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath") {
+      // check if can visit every node in graph
+      is_a_valid_graph = graph.canVisitEachNodeFromSource();
     }
 
-    if(is_a_valid_graph){
+    if (is_a_valid_graph) {
       try {
         // var data = {
         //   id: questionCode,
@@ -781,7 +803,7 @@ function doCreate() {
       }
     }
     //Jesse_new1
-    else{
+    else {
       alert("You must select a source node and you must be able to visit every node from the source node when creating a graph with question type bfs, dfs, or shortestpath.");
     }
   } else {
