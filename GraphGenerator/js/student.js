@@ -170,6 +170,8 @@ function doLoadGraph() { //When student enters code and presses the load button
             }else{
                 if(weighted){
                     questionDetailsLabel.innerHTML = "Details: Undirected graph and weighted edges";
+                }else if(colored){
+                    questionDetailsLabel.innerHTML = "";
                 }else{
                     questionDetailsLabel.innerHTML = "Details: Undirected graph";
                 }
@@ -177,6 +179,8 @@ function doLoadGraph() { //When student enters code and presses the load button
 
             setupInterface();
             doAddAllEdges();
+            redraw();
+
         };
 
         reader.onerror = function () {

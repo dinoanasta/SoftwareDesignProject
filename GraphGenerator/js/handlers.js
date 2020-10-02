@@ -337,28 +337,31 @@ function installMouseHandler() {
         dragging = false;
         document.removeEventListener("mousemove", doMouseMove, false);
         document.removeEventListener("mouseup", doMouseMove, false);
+        
+        if(userType == "lecturer"){
+            if(creatingEdge){
 
-        if(creatingEdge){
-
-            clickedVertexIndex = getVertexIndex(graph,x,y);
-            endingVertex = graph.getVertex(clickedVertexIndex);
-
-            if (dragging || !dragging) {
-                document.addEventListener("mousemove", doMouseMove, false);
-                document.addEventListener("mouseup", doMouseUp, false);
-            }
-
-            if (clickedVertexIndex != -1) {
-                if (directed) {
-                    graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 0);
-                } else {
-                    graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 0);
+                clickedVertexIndex = getVertexIndex(graph,x,y);
+                endingVertex = graph.getVertex(clickedVertexIndex);
+    
+                if (dragging || !dragging) {
+                    document.addEventListener("mousemove", doMouseMove, false);
+                    document.addEventListener("mouseup", doMouseUp, false);
                 }
+    
+                if (clickedVertexIndex != -1) {
+                    if (directed) {
+                        graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                    } else {
+                        graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                    }
+                }
+                redraw();
+                populateDropDowns();
             }
-            redraw();
-            populateDropDowns();
+            creatingEdge = false;
         }
-        creatingEdge = false;
+ 
     }
 
     canvas.addEventListener("mousedown", doMouseDown, false);

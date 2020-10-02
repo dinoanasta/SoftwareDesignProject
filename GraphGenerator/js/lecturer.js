@@ -229,7 +229,6 @@ function doUpdateVertex() {
   let newValue = document.getElementById("editvertexValue").value;
   let newColor = document.getElementById("editvertexColor").value;
   console.log(newValue, newColor);
-  // let newDist = document.getElementById("editdistFromRoot").textContent;
 
   if (dropDown.selectedIndex != 0) {
     let vertexID = dropDown.options[dropDown.selectedIndex].value;
@@ -240,8 +239,6 @@ function doUpdateVertex() {
       graph.updateVertexColor(vertexID, newColor);
 
     }
-    // graph.getVertex(vertexID).setDistance(newDist);
-
     populateDropDowns();
     redraw();
   } else {
@@ -250,8 +247,6 @@ function doUpdateVertex() {
       if (colored) {
         graph.getVertex(clickedVertexIndex).setColor(newColor);
       }
-      // graph.getVertex(vertexID).setDistance(newDist);
-
       populateDropDowns();
       redraw();
 
@@ -287,11 +282,6 @@ function setRoot() {
   } else {
     alert("Please select a vertex to set as the root");
   }
-}
-
-function removeRootVertex() {
-  graph.setSourceNode(-1);
-  redraw();
 }
 
 //Edges
