@@ -14,9 +14,7 @@ let clickedVertexIndex = -1;
 //Question Setup
 let questionType;
 // let questionCode;
-let questionCode = null;
 let questionTitle = null;
-let isCreate = false;
 let questionLoaded = false;
 
 //Weighted
@@ -99,7 +97,7 @@ function addBindings() {
   document.getElementById("coloredCB").onchange = doColored;
   document.getElementById("directedCB").onchange = doDirected;
   document.getElementById("weightedCB").onchange = doWeighted;
-  document.getElementById("setQuestionButton").onclick = doSetQuestion;
+  document.getElementById("confirmButton").onclick = doConfirm;
 
   //Vertices
   document.getElementById("addVertexButton").onclick = doAddVertex;
@@ -166,14 +164,22 @@ function doWeighted() {
   setupInterface();
 }
 
-function doSetQuestionUse() {
-  let radioGroup = document.getElementsByName("questionUse")
-  for (let i = 0; i < radioGroup.length; ++i) {
-    if (radioGroup[i].checked) {
-      questionUse = radioGroup[i].value;
-    }
+function doConfirm() {
+  let qTitle = document.getElementById("questionTitle");
+
+  if (qTitle.value.length != 0) {
+
+    setupInterface();
+
+    questionTitle = qTitle.value;
+
+    alert("Question setup completed");
+
+  } else {
+    alert("Please enter a title");
   }
 }
+
 
 //Vertices
 function doAddVertex() {
@@ -689,130 +695,25 @@ function setupInterface() {
   edgeDiv.appendChild(link);
 }
 
-function doSetQuestion() {
-  let dropDown = document.getElementById("questionTypeDD");
-  let qCode = document.getElementById("questionCodefreeform");
-  let qTitle = document.getElementById("questionTitle");
-
-  isCreate = false;
-
-  if (dropDown.selectedIndex != 0 && qTitle.value.length != 0) {
-    switch (dropDown.selectedIndex) {
-      case 1:
-        questionType = "bfs";
-        break;
-      case 2:
-        questionType = "dfs";
-        break;
-      case 3:
-        questionType = "mwst";
-        break;
-      case 4:
-        questionType = "graphcolouring";
-        break;
-      case 5:
-        questionType = "shortestpath";
-        break;
-    }
-    setupInterface();
-
-    questionTitle = qTitle.value;
-
-    alert("Question setup completed");
-
-  } else {
-    alert("Please select a question type and enter a title");
-  }
-}
-
-//When freeform submits graph
+//When download is clicked
 function doDownload() {
-  //Jesse_new
   if (questionTitle != null) {
-    //Jesse_new1
-    // if question type is == to bfs/dfs/shortestpath then dont allow them to
-    // create the graph if you can't visit every node from the source node
-    var is_a_valid_graph = true;
-    if ((questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath") && graph.getSourceNode() == -1) {
-      is_a_valid_graph = false;
-    }
-    else if (questionType == "bfs" || questionType == "dfs" || questionType == "shortestpath") {
-      // check if can visit every node in graph
-      is_a_valid_graph = graph.canVisitEachNodeFromSource();
-    }
-
-    if (is_a_valid_graph) {
       try {
-        // var data = {
-        //   id: questionCode,
-        //   graph: graph.convertGraphToString(questionCode, questionType, questionUse)
-        // }; //create object to pass into database , youll just put like id instead of name and the graph string instead of GFB
-
-        //Jesse_new
-        // isCreate = true;
-        // console.log("isWeighted:",graph.isWeighted(),
-        //   "isDirected:",graph.isDirected(),graph.getAdjacenyMatrix());
-
-        // ref.push(data);
-        //Jesse_new
-
-        // alert("Saving graph...");
-
         //Save graph as text file
-        var stringed = graph.convertGraphToString(questionCode, questionType, questionUse);
+        var stringed = graph.convertGraphToString("freeform", questionType, "freeform");
         var blob = new Blob([stringed], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "Graph_" + questionType + "_" + questionTitle + ".txt");
+        saveAs(blob, "Graph_" + questionTitle + ".txt");
 
         //Save canvas as png
         var link = document.getElementById('link');
-        link.setAttribute('download', 'Graph_' + questionType + "_" + questionTitle + '.png');
+        link.setAttribute('download', 'Graph_' + questionTitle + '.png');
         link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
         link.click();
 
       } catch (err) {
         alert("Error occured while trying to download graph");
       }
-    }
-    //Jesse_new1
-    else {
-      alert("You must select a source node and you must be able to visit every node from the source node when creating a graph with question type bfs, dfs, or shortestpath.");
-    }
   } else {
-    alert("Confirm/enter question title and details.");
+    alert("Confirm/enter question title.");
   }
 }
-
-//Jesse_new
-// function gotData(data) {
-//   if (isCreate) {
-//     questionCode = null;
-//   } else {
-//     var data = data.val();
-//     var keys = Object.keys(data);
-//     var foundQuestionGraph = false;
-//     for (var i = 0; i < keys.length; i++) {
-//       var k = keys[i];
-//       if (data[k].id === questionCode) {
-//         foundQuestionGraph = true;
-//         break;
-//       }
-//     }
-//     if (foundQuestionGraph) {
-//       alert("Question code already exists, please choose a new one.");
-//       questionCode = null;
-//     } else {
-//       alert("Question Type: " + questionType + "\nQuestion Code: " + questionCode);
-//     }
-//   }
-// }
-
-//Jesse_new
-// function errorData(err) {
-//   alert("An error has occured while trying to validify the question code. Please try again.");
-// }
-
-//Jesse_new
-// function validifyQuestionCode(questionCode) {
-//   //fetch data, scan if question code has been used
-//   ref.on("value", gotData, errorData);
-// }
