@@ -447,9 +447,9 @@ function installMouseHandler() {
     
                 if (clickedVertexIndex != -1) {
                     if (directed) {
-                        graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                        graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), -1);
                     } else {
-                        graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                        graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), -1);
                     }
                 }
                 redraw();
@@ -517,7 +517,7 @@ function handleKeyDown(event) {
             case 37: //Left arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
-                        selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
+                        selectedVertex.setColor( selectedVertex.getColor() -parseInt(1));
                     }
                     populateDropDowns();
                     redraw();
@@ -526,7 +526,7 @@ function handleKeyDown(event) {
             case 39: //Right arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
-                        selectedVertex.setColor( selectedVertex.getColor() + parseInt(1));
+                        selectedVertex.setColor( selectedVertex.getColor() - - parseInt(1));
                     }
                     populateDropDowns();
                     redraw();

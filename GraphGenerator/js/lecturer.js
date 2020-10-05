@@ -28,7 +28,7 @@ let weighted = false;
 let directed = false;
 
 //Colored
-let color = "-1";
+let color = 0;
 let colored = false;
 
 //HTML DOM elements
@@ -200,7 +200,7 @@ function doAddVertex() {
     if (colorText.value.length != 0) {
       color = colorText.value;
     } else {
-      color = "-1";
+      color = 0;
     }
 
     graph.addVertex(value, x, y, color);
@@ -591,24 +591,32 @@ function setupInterface() {
   switch (questionType) {
     case "bfs":
       colored = false;
+      directedCB.checked = false;
+      weightedCB.checked = false;
       break;
     case "dfs":
       colored = false;
+      directedCB.checked = false;
+      weightedCB.checked = false;
       break;
     case "mwst":
       colored = false;
       weighted = true;
       weightedCB.checked = true;
+      directedCB.checked = false;
       break;
     case "graphcolouring":
       colored = true;
       weighted = false;
+      directed = false;
+      directedCB.checked = false;
       weightedCB.checked = false;
       break;
     case "shortestpath":
       colored = false;
       weighted = true;
       weightedCB.checked = true;
+      directedCB.checked = false;
       break;
   }
 

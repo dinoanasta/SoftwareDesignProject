@@ -27,7 +27,7 @@ let weighted;
 let directed;
 
 //Colored
-let color = "0";
+let color = 0;
 let colored;
 
 //HTML DOM elements

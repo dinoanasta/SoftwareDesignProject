@@ -25,7 +25,7 @@ let weighted = false;
 let directed = false;
 
 //Colored
-let color = "-1";
+let color = 0;
 let colored = false;
 
 //HTML DOM elements
@@ -180,7 +180,6 @@ function doConfirm() {
   }
 }
 
-
 //Vertices
 function doAddVertex() {
   let valueText = document.getElementById("vertexValue");
@@ -200,7 +199,7 @@ function doAddVertex() {
     if (colorText.value.length != 0) {
       color = colorText.value;
     } else {
-      color = "-1";
+      color = 0;
     }
 
     graph.addVertex(value, x, y, color);

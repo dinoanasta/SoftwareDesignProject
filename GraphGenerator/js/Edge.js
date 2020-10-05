@@ -145,9 +145,8 @@ class Edge{
         }else{
             if(weighted){
                 graphics.fillStyle = "black";
-                graphics.fillText(this.getWeightEdge(), Math.abs(this.getVertexOne().getXVal() + this.getVertexTwo().getXVal())/2 +15, Math.abs(this.getVertexOne().getYVal() + this.getVertexTwo().getYVal())/2 +15, 20 );
+                graphics.fillText(this.getWeightEdge(), (1/3)*this.getVertexOne().getXVal() + (2/3)*this.getVertexTwo().getXVal() +15 ,  (1/3)*this.getVertexOne().getYVal() + (2/3)*this.getVertexTwo().getYVal()+15, 20 );
             }
         }
-
     }
 }
