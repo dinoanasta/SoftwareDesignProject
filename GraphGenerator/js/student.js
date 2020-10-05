@@ -42,13 +42,17 @@ const canvasDiv =  document.getElementById("canvasDiv");
 
 const editingDiv =  document.getElementById("editingDiv");
 const questionSetupDiv =  document.getElementById("questionSetupDiv");
+const questionSetupDivHeading =  document.getElementById("questionSetupDivHeading");
+const fileSelection =  document.getElementById("fileSelection");
+const questionTypeLabel = document.getElementById("questionTypeLabel");
+const questionDetailsLabel = document.getElementById("questionDetailsLabel");
+const icon = document.getElementById("iconButton");
 const loadGraphButton = document.getElementById("loadGraphButton");
 
 const addAllEdgesButton = document.getElementById("addAllEdgesButton");
 const deleteAllEdgesButton = document.getElementById("deleteAllEdgesButton");
 
-const questionTypeLabel = document.getElementById("questionTypeLabel");
-const questionDetailsLabel = document.getElementById("questionDetailsLabel");
+
 
 const editVertexDiv =  document.getElementById("editVertexDiv");
 
@@ -191,54 +195,6 @@ function doLoadGraph() { //When student enters code and presses the load button
         alert("Please upload the question graph");
     }
 }
-
-// function setupInterfaceAfterGraphFetchedFromFB(){
-//   let questionTypeDisplay = document.getElementById("questionTypeLabel");
-//   setTimeout(function () {
-//       // unusedGraph = questionGraph;
-//       weighted = questionGraph.isWeighted();
-//       directed = questionGraph.isDirected();
-//
-//       console.log("Question type: " + questionType);
-//       console.log("Weighted: " + weighted);
-//       console.log("Directed: " + directed);
-//       console.log("Question Use: " + questionUse);
-//
-//       setupInterface();
-//
-//       if (directed) {
-//           if (weighted) {
-//               questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed & Weighted)";
-//           } else {
-//               questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed)";
-//           }
-//       } else {
-//           if (weighted) {
-//               questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Weighted)";
-//           } else {
-//               questionTypeDisplay.innerHTML = "Question Type: " + questionType;
-//           }
-//       }
-//
-//       let temp = questionGraph.convertGraphToString(questionCode, questionType, questionUse);
-//       console.log(temp);
-//       answerGraph = new Graph();
-//       answerGraph.fillGraphWithString(temp);
-//       console.log(answerGraph);
-//
-//       if (!colored) {
-//           answerGraph.edges = [];
-//           answerGraph.directedEdges = [];
-//       }
-//
-//       answerGraph.setSourceNode(0);
-//       questionGraph.setSourceNode(0);
-//
-//       populateDropDowns();
-//       redraw();
-//   }, 2000);
-// }
-
 
 function fetchQuestionGraph() { //Fetch question graph for student
     ref.on("value", gotData, errorData);
@@ -615,14 +571,21 @@ function setupInterface() {
         while (editingDiv.firstChild) {
             editingDiv.firstChild.remove();
         }
-        editingDiv.appendChild(questionSetupDiv);
     }
 
-    questionSetupDiv.appendChild(questionTypeLabel);
-    questionSetupDiv.appendChild(questionDetailsLabel);
+    if(questionSetupDiv != null){
+        while (questionSetupDiv.firstChild) {
+            questionSetupDiv.firstChild.remove();
+        }
+    }
 
-    questionSetupDiv.removeChild(questionTypeLabel);
-    questionSetupDiv.removeChild(questionDetailsLabel);
+    questionSetupDiv.appendChild(questionSetupDivHeading);
+    questionSetupDiv.appendChild(fileSelection);
+    questionSetupDiv.appendChild(document.createElement("br"));
+    questionSetupDiv.appendChild(loadGraphButton);
+
+    editingDiv.appendChild(questionSetupDiv);
+
 
     switch (questionType) {
         case "bfs":
@@ -644,17 +607,25 @@ function setupInterface() {
 
     if(questionLoaded){
 
-        questionSetupDiv.removeChild(loadGraphButton);
+        if(questionSetupDiv != null){
+            while (questionSetupDiv.firstChild) {
+                questionSetupDiv.firstChild.remove();
+            }
+        }
+    
+        questionSetupDiv.appendChild(questionSetupDivHeading);
+        questionSetupDiv.appendChild(fileSelection);
+        questionSetupDiv.appendChild(document.createElement("br"));
         questionSetupDiv.appendChild(questionTypeLabel);
         questionSetupDiv.appendChild(iconButton);
-        iconButton.hidden = false;
-
         questionSetupDiv.appendChild(document.createElement("br"));
-
         questionSetupDiv.appendChild(questionDetailsLabel);
         questionSetupDiv.appendChild(document.createElement("br"));
-
         questionSetupDiv.appendChild(loadGraphButton);
+    
+        iconButton.hidden = false;
+
+        editingDiv.appendChild(questionSetupDiv);
 
 
         if (colored) { //Only need to change colors - no root/edges

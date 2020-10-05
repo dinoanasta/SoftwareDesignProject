@@ -59,7 +59,7 @@ function installMouseHandler() {
             if (userType == "student") {
                 clickedVertexIndex = getVertexIndex(answerGraph,x,y)
                 selectedVertex = answerGraph.getVertex(clickedVertexIndex);
-            } else if (userType == "lecturer") {
+            } else if (userType == "lecturer" || userType == "freeform") {
                 clickedVertexIndex = getVertexIndex(graph,x,y);
                 selectedVertex = graph.getVertex(clickedVertexIndex);
             }
@@ -100,8 +100,17 @@ function installMouseHandler() {
                     }
                     document.getElementById("editVertexDD").selectedIndex = clickedVertexIndex + 1;
                     document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex + 1;
+                } else if (userType == "freeform") {
+                    document.getElementById("editVertexValue").value = selectedVertex.getVertexVal();
+                    if(freeformDiv.contains(document.getElementById("editVertexColor"))){
+                        document.getElementById("editVertexColor").value = selectedVertex.getColor();
+                    }
+                    if(freeformDiv.contains(document.getElementById("setRootDD"))){
+                        document.getElementById("setRootDD").selectedIndex = clickedVertexIndex + 1;
+                    }
+                    document.getElementById("editVertexDD").selectedIndex = clickedVertexIndex + 1;
+                    document.getElementById("deleteVertexDD").selectedIndex = clickedVertexIndex + 1;
                 }
-
             } else {
                 if (userType == "student" && questionType != "graphcolouring") {
 
@@ -253,6 +262,91 @@ function installMouseHandler() {
                             };
                         }
                     }
+                } else if (userType == "freeform") {
+                    if (document.getElementById("freeformDiv").contains(document.getElementById("editvertexValue"))) {
+                        document.getElementById("editvertexValue").value = "";
+                    }     
+                    if (document.getElementById("freeformDiv").contains(document.getElementById("editvertexColor"))) {
+                        document.getElementById("editvertexColor").value = "";
+                    }     
+                    if (document.getElementById("freeformDiv").contains(document.getElementById("setRootDD"))) {
+                        document.getElementById("setRootDD").selectedIndex = 0;
+                    }   
+
+                    for (let i = 0; i < graph.getEdges().length; ++i) {
+                        let thisEdge = graph.getEdges()[i];
+
+                        let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
+                        let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
+
+                        if (xdist < ydist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;    
+                                let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                }     
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                }        
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+
+                            };
+                        } else if (ydist < xdist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;
+                                let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+                            };
+                        }
+                    }
+
+                    for (let i = 0; i < graph.getDirectedEdges().length; ++i) {
+                        let thisEdge = graph.getDirectedEdges()[i];
+
+                        let xdist = Math.abs(thisEdge.getVertexOne().getXVal() - thisEdge.getVertexTwo().getXVal());
+                        let ydist = Math.abs(thisEdge.getVertexOne().getYVal() - thisEdge.getVertexTwo().getYVal());
+
+                        if (xdist < ydist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;
+                                let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+                            };
+                        } else if (ydist < xdist) {
+                            if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
+                                selectedEdge = thisEdge;
+                                let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
+                                    document.getElementById("updateEdgeDD").selectedIndex = index+1;
+                                } 
+                                if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
+                                    document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
+                                }   
+                            };
+                        }
+                    }
                 }
 
                 redraw();
@@ -260,7 +354,7 @@ function installMouseHandler() {
         } else if (evt.button == 1) {
             return;
         } else if (evt.button == 2) { //RIGHT BUTTON
-            if (userType == "lecturer") {
+            if (userType == "lecturer" || userType == "freeform") {
                 dragging = true;  // (this won't be the case for all mousedowns in all programs)
     
                 creatingEdge = true;
@@ -282,6 +376,8 @@ function installMouseHandler() {
                 redraw();
             }
         }
+
+
     }
 
     function doMouseMove(evt) {
@@ -311,7 +407,7 @@ function installMouseHandler() {
                         selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()-vertexRadius-space,
                         selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
                         selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space);
-                    }else if (userType=="lecturer"){
+                    }else if (userType=="lecturer" || userType == "freeform"){
                         graph.updateXandYVal(selectedVertex, x, y);
                         redraw();
                         graphics.strokePoly(selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()-vertexRadius-space,
@@ -338,7 +434,7 @@ function installMouseHandler() {
         document.removeEventListener("mousemove", doMouseMove, false);
         document.removeEventListener("mouseup", doMouseMove, false);
         
-        if(userType == "lecturer"){
+        if(userType == "lecturer" || userType == "freeform"){
             if(creatingEdge){
 
                 clickedVertexIndex = getVertexIndex(graph,x,y);
@@ -368,8 +464,9 @@ function installMouseHandler() {
 }
 
 function handleKeyDown(event) {
-    if (userType == "lecturer") {
-        let keyCode = event.keyCode;
+    let keyCode = event.keyCode;
+
+    if (userType == "lecturer" || userType == "freeform") {
         switch (keyCode) {
             case 46: //Delete
                 if(clickedVertexIndex != -1){
@@ -379,14 +476,31 @@ function handleKeyDown(event) {
                         graph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     }else{
                         graph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
-
                     }
                 }
                 populateDropDowns();
                 redraw();
+                break
+            case 37: //Left arrow
+                if(colored){
+                    if(clickedVertexIndex != -1){
+                        selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
+                    }
+                    populateDropDowns();
+                    redraw();
+                }
+                break;
+            case 39: //Right arrow
+                if(colored){
+                    if(clickedVertexIndex != -1){
+                        selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
+                    }
+                    populateDropDowns();
+                    redraw();
+                }
+            break;
         }
     }else if (userType == "student") {
-        let keyCode = event.keyCode;
         switch (keyCode) {
             case 46: //Delete
                 if(selectedEdge != null && questionType != "graphcolouring"){
@@ -399,7 +513,33 @@ function handleKeyDown(event) {
                 }
                 populateDropDowns();
                 redraw();
+                break
+            case 37: //Left arrow
+                if(colored){
+                    if(clickedVertexIndex != -1){
+                        selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
+                    }
+                    populateDropDowns();
+                    redraw();
+                }
+                break;
+            case 39: //Right arrow
+                if(colored){
+                    if(clickedVertexIndex != -1){
+                        selectedVertex.setColor( selectedVertex.getColor() + parseInt(1));
+                    }
+                    populateDropDowns();
+                    redraw();
+                }
+            break;
         }
+    }
+
+    if (clickedVertexIndex != -1) {
+        graphics.strokePoly(selectedVertex.getXVal() - vertexRadius - space, selectedVertex.getYVal() - vertexRadius - space,
+            selectedVertex.getXVal() + vertexRadius + space, selectedVertex.getYVal() - vertexRadius - space,
+            selectedVertex.getXVal() + vertexRadius + space, selectedVertex.getYVal() + vertexRadius + space,
+            selectedVertex.getXVal() - vertexRadius - space, selectedVertex.getYVal() + vertexRadius + space);
     }
 }
 
