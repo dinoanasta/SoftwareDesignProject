@@ -486,19 +486,27 @@ function handleKeyDown(event) {
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
                     }
-                    populateDropDowns();
-                    redraw();
+                }else if(weighted){
+                    if(selectedEdge != null){
+                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - parseInt(1));
+                    }
                 }
+                populateDropDowns();
+                redraw();
                 break;
             case 39: //Right arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
                     }
-                    populateDropDowns();
-                    redraw();
+                }else if(weighted){
+                    if(selectedEdge != null){
+                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - -parseInt(1));
+                    }
                 }
-            break;
+                populateDropDowns();
+                redraw();
+                break;
         }
     }else if (userType == "student") {
         switch (keyCode) {
@@ -517,21 +525,29 @@ function handleKeyDown(event) {
             case 37: //Left arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
-                        selectedVertex.setColor( selectedVertex.getColor() -parseInt(1));
+                        selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
                     }
-                    populateDropDowns();
-                    redraw();
+                }else if(weighted){
+                    if(selectedEdge != null){
+                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - parseInt(1));
+                    }
                 }
+                populateDropDowns();
+                redraw();
                 break;
             case 39: //Right arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
-                        selectedVertex.setColor( selectedVertex.getColor() - - parseInt(1));
+                        selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
                     }
-                    populateDropDowns();
-                    redraw();
+                }else if(weighted){
+                    if(selectedEdge != null){
+                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - -parseInt(1));
+                    }
                 }
-            break;
+                populateDropDowns();
+                redraw();
+                break;
         }
     }
 
