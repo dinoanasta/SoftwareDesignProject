@@ -71,7 +71,7 @@ class Vertex{
     }
 
     drawVertex (){
-        if(userType=="lecturer"){
+        if(userType=="lecturer" || userType=="freeform"){
             if(this.getVertexID() == graph.getSourceNode()){
                 graphics.strokeStyle = "red";
             }else{

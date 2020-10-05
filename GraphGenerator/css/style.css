@@ -42,6 +42,15 @@ body{
     overflow: scroll;
 }
 
+#freeformDiv{
+    position: fixed;
+    background-color: rgba(20, 240, 20, 0.5);
+    height: 100vh;
+    width: 100vw;
+    overflow: scroll;
+}
+
+
 canvas {
     background-color: white;
 }
@@ -136,7 +145,6 @@ button:hover{
     height: 100vh;
     overflow: scroll;
 }
-
 
 #vertexDiv{
     /*margin-left: 2vw;*/
