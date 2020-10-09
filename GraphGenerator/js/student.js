@@ -5,6 +5,7 @@ var selectedVertex = null;
 const space = 4;
 let selectedEdge = null;
 
+
 const vertexRadius = 15;
 
 let questionGraph = new Graph();
@@ -27,12 +28,10 @@ let weighted;
 let directed;
 
 //Colored
-let color = 0;
+let color = "0";
 let colored;
 
 //HTML DOM elements
-
-let numTimesLoaded = 0;
 
 const body = document.getElementById("body");
 
@@ -40,22 +39,18 @@ const studentDiv = document.getElementById("studentDiv");
 
 const canvasDiv =  document.getElementById("canvasDiv");
 
-const editingDiv =  document.getElementById("editingDiv");
+const vertexDiv =  document.getElementById("vertexDiv");
 const questionSetupDiv =  document.getElementById("questionSetupDiv");
-const questionSetupDivHeading =  document.getElementById("questionSetupDivHeading");
-const fileSelection =  document.getElementById("fileSelection");
-const questionTypeLabel = document.getElementById("questionTypeLabel");
-const questionDetailsLabel = document.getElementById("questionDetailsLabel");
-const icon = document.getElementById("iconButton");
 const loadGraphButton = document.getElementById("loadGraphButton");
 
-const addAllEdgesButton = document.getElementById("addAllEdgesButton");
-const deleteAllEdgesButton = document.getElementById("deleteAllEdgesButton");
+const drawEdgesButton = document.getElementById("drawEdgesButton");
+const questionTypeLabel = document.getElementById("questionTypeLabel");
+const questionDetailsLabel = document.getElementById("questionDetailsLabel");
 
-
-
+const editRootDiv =  document.getElementById("editRootDiv");
 const editVertexDiv =  document.getElementById("editVertexDiv");
 
+const edgeDiv =  document.getElementById("edgeDiv");
 const addEdgeDiv =  document.getElementById("addEdgeDiv");
 const deleteEdgeDiv =  document.getElementById("deleteEdgeDiv");
 const checkButton =  document.getElementById("checkButton");
@@ -69,18 +64,18 @@ function addBindings() {
     console.log("Adding bindings");
     //Question setup
     document.getElementById("loadGraphButton").onclick = doLoadGraph;
+    document.getElementById("drawEdgesButton").onclick = doDrawEdges;
 
     //Vertices
     document.getElementById("editVertexDD").onchange = editVertexSelected;
     document.getElementById("updateVertexButton").onclick = doUpdateVertex;
+    // document.getElementById("setRootDD").onchange = setRoot;
+    document.getElementById("setRootButton").onclick = setRoot;
+    document.getElementById("clearRootButton").onclick = removeRootVertex;
 
     //Edges
     document.getElementById("addEdgeButton").onclick = doAddEdge;
-    document.getElementById("addAllEdgesButton").onclick = doAddAllEdges;
-
     document.getElementById("deleteEdgeButton").onclick = doDeleteEdge;
-    document.getElementById("deleteAllEdgesButton").onclick = doDeleteAllEdges;
-
 
     //Interface
     document.getElementById("checkButton").onclick = doCheck;
@@ -174,17 +169,13 @@ function doLoadGraph() { //When student enters code and presses the load button
             }else{
                 if(weighted){
                     questionDetailsLabel.innerHTML = "Details: Undirected graph and weighted edges";
-                }else if(colored){
-                    questionDetailsLabel.innerHTML = "";
                 }else{
                     questionDetailsLabel.innerHTML = "Details: Undirected graph";
                 }
             }
 
             setupInterface();
-            doAddAllEdges();
-            redraw();
-
+            doDrawEdges();
         };
 
         reader.onerror = function () {
@@ -193,6 +184,66 @@ function doLoadGraph() { //When student enters code and presses the load button
 
     } else {
         alert("Please upload the question graph");
+    }
+}
+
+// function setupInterfaceAfterGraphFetchedFromFB(){
+//   let questionTypeDisplay = document.getElementById("questionTypeLabel");
+//   setTimeout(function () {
+//       // unusedGraph = questionGraph;
+//       weighted = questionGraph.isWeighted();
+//       directed = questionGraph.isDirected();
+//
+//       console.log("Question type: " + questionType);
+//       console.log("Weighted: " + weighted);
+//       console.log("Directed: " + directed);
+//       console.log("Question Use: " + questionUse);
+//
+//       setupInterface();
+//
+//       if (directed) {
+//           if (weighted) {
+//               questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed & Weighted)";
+//           } else {
+//               questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Directed)";
+//           }
+//       } else {
+//           if (weighted) {
+//               questionTypeDisplay.innerHTML = "Question Type: " + questionType + " (Weighted)";
+//           } else {
+//               questionTypeDisplay.innerHTML = "Question Type: " + questionType;
+//           }
+//       }
+//
+//       let temp = questionGraph.convertGraphToString(questionCode, questionType, questionUse);
+//       console.log(temp);
+//       answerGraph = new Graph();
+//       answerGraph.fillGraphWithString(temp);
+//       console.log(answerGraph);
+//
+//       if (!colored) {
+//           answerGraph.edges = [];
+//           answerGraph.directedEdges = [];
+//       }
+//
+//       answerGraph.setSourceNode(0);
+//       questionGraph.setSourceNode(0);
+//
+//       populateDropDowns();
+//       redraw();
+//   }, 2000);
+// }
+
+function doDrawEdges() {
+    if (questionLoaded) {
+        let temp = questionGraph.convertGraphToString(questionCode, questionType);
+        answerGraph = new Graph();
+        answerGraph.fillGraphWithString(temp);
+
+        populateDropDowns();
+        redraw();
+    } else {
+        alert("First load the question graph");
     }
 }
 
@@ -242,6 +293,7 @@ function doUpdateVertex() {
     let dropDown = document.getElementById("editVertexDD");
 
     let newColor = document.getElementById("editvertexColor").value;
+    // let newDist = document.getElementById("editdistFromRoot").textContent;
 
     if (dropDown.selectedIndex != 0) {
         let vertexID = dropDown.options[dropDown.selectedIndex].value;
@@ -269,6 +321,28 @@ function doUpdateVertex() {
     }
 }
 
+function setRoot() {
+    let dropDown = document.getElementById("setRootDD");
+
+    if (dropDown.selectedIndex != 0) {
+        let vertexID = dropDown.options[dropDown.selectedIndex].value;
+        answerGraph.setSourceNode(vertexID);
+        questionGraph.setSourceNode(vertexID);
+
+        populateDropDowns();
+        redraw();
+    } else {
+        alert("Please select a vertex to set as the root");
+    }
+}
+
+function removeRootVertex() {
+    answerGraph.setSourceNode(0);
+    questionGraph.setSourceNode(0);
+
+    redraw();
+}
+
 //Edges
 function findEdgeIndex(edgesArray, first, second) {
     for (let i = 0; i < edgesArray.length; ++i) {
@@ -289,6 +363,21 @@ function doAddEdge() {
 
         let vertex1ID = splitted[1];
         let vertex2ID = splitted[6];
+        //
+        // function checkVerticesAdded(verticesArray, v1ID, v2ID){
+        //     let totalTrue = 0;
+        //     for (let i = 0; i<verticesArray.length;++i){
+        //         if (verticesArray[i].getVertexID() == v1ID || verticesArray[i].getVertexID == v2ID){
+        //             totalTrue++;
+        //         }
+        //     }
+        //
+        //     if(totalTrue==2){
+        //         return true;
+        //     }else{
+        //         return false;
+        //     }
+        // }
 
         if (directed) {
             let questionEdge = questionGraph.getDirectedEdge(vertex1ID, vertex2ID);
@@ -374,30 +463,6 @@ function doDeleteEdge() {
     }
 }
 
-
-function doAddAllEdges() {
-    let temp = questionGraph.convertGraphToString(questionCode, questionType);
-    answerGraph = new Graph();
-    answerGraph.fillGraphWithString(temp);
-
-    populateDropDowns();
-    redraw();
-}
-
-function doDeleteAllEdges() {
-    if (!colored) {
-        answerGraph.edges = [];
-        answerGraph.directedEdges = [];
-    }
-
-    answerGraph.setSourceNode(questionGraph.getSourceNode());
-
-    populateDropDowns();
-    redraw();
-    drawVertices();
-
-}
-
 //Interface
 
 function drawVertices() {
@@ -440,6 +505,7 @@ function clearDropDown(DDB) {
 function populateDropDowns() {
     //Vertices dropdowns
     // const deleteVertexDD = document.getElementById("deleteVertexDD");
+    const setRootDD = document.getElementById("setRootDD");
     const updateVertexDD = document.getElementById("editVertexDD");
     // const addVertexDD = document.getElementById("addVertexDD");
 
@@ -449,10 +515,11 @@ function populateDropDowns() {
     // const editEdgeDD = document.getElementById("updateEdgeDD");
 
 
-    //Clear vertices
+        //Clear vertices
     // clearDropDown(deleteVertexDD);
     clearDropDown(updateVertexDD);
     // clearDropDown(addVertexDD);
+    clearDropDown(setRootDD);
 
     //Clear edges
     clearDropDown(addEdgeDD);
@@ -477,10 +544,11 @@ function populateDropDowns() {
     //     // addVertexOption(addVertexDD, unusedGraph.getVertex(i));
     // }
 
-    //Populate delete and update vertices dropdowns with answerGraph
+    //Populate delete, update, root vertices dropdowns with answerGraph
     for (let i = 0; i < answerGraph.getNumberVertices(); ++i) {
         // addVertexOption(deleteVertexDD, graph.getVertex(i));
         addVertexOption(updateVertexDD, answerGraph.getVertex(i));
+        addVertexOption(setRootDD, answerGraph.getVertex(i));
     }
 
     //Code to actually populate dropdowns
@@ -550,7 +618,7 @@ function populateDropDowns() {
 }
 
 function setupInterface() {
-    //Clear page to add only what is needed
+    //Clear vertex div to add only what is needed
     if(body != null){
         while (body.firstChild ) {
             body.firstChild.remove();
@@ -563,29 +631,31 @@ function setupInterface() {
             studentDiv.firstChild.remove();
         }
         studentDiv.appendChild(canvasDiv);
-        studentDiv.appendChild(editingDiv);
+        studentDiv.appendChild(vertexDiv);
+        studentDiv.appendChild(edgeDiv);
     }
 
-    //Clear editing div to add only what is needed
-    if(editingDiv != null){
-        while (editingDiv.firstChild) {
-            editingDiv.firstChild.remove();
+    //Clear vertex div to add only what is needed
+    if(vertexDiv != null){
+        while (vertexDiv.firstChild) {
+            vertexDiv.firstChild.remove();
+        }
+        vertexDiv.appendChild(questionSetupDiv);
+    }
+
+    questionSetupDiv.appendChild(questionTypeLabel);
+    questionSetupDiv.appendChild(questionDetailsLabel);
+
+    questionSetupDiv.removeChild(questionTypeLabel);
+    questionSetupDiv.removeChild(questionDetailsLabel);
+
+    //Clear vertex div to add only what is needed
+    if(edgeDiv != null){
+        while (edgeDiv.firstChild) {
+            edgeDiv.firstChild.remove();
         }
     }
-
-    if(questionSetupDiv != null){
-        while (questionSetupDiv.firstChild) {
-            questionSetupDiv.firstChild.remove();
-        }
-    }
-
-    questionSetupDiv.appendChild(questionSetupDivHeading);
-    questionSetupDiv.appendChild(fileSelection);
-    questionSetupDiv.appendChild(document.createElement("br"));
-    questionSetupDiv.appendChild(loadGraphButton);
-
-    editingDiv.appendChild(questionSetupDiv);
-
+    studentDiv.removeChild(edgeDiv);
 
     switch (questionType) {
         case "bfs":
@@ -606,65 +676,57 @@ function setupInterface() {
     }
 
     if(questionLoaded){
-
-        if(questionSetupDiv != null){
-            while (questionSetupDiv.firstChild) {
-                questionSetupDiv.firstChild.remove();
-            }
-        }
-    
-        questionSetupDiv.appendChild(questionSetupDivHeading);
-        questionSetupDiv.appendChild(fileSelection);
-        questionSetupDiv.appendChild(document.createElement("br"));
+        console.log("question loaded");
+        questionSetupDiv.removeChild(loadGraphButton);
         questionSetupDiv.appendChild(questionTypeLabel);
         questionSetupDiv.appendChild(iconButton);
         questionSetupDiv.appendChild(document.createElement("br"));
-        questionSetupDiv.appendChild(questionDetailsLabel);
-        questionSetupDiv.appendChild(document.createElement("br"));
-        questionSetupDiv.appendChild(loadGraphButton);
-    
         iconButton.hidden = false;
 
-        editingDiv.appendChild(questionSetupDiv);
+        questionSetupDiv.appendChild(questionDetailsLabel);
+        questionSetupDiv.appendChild(document.createElement("br"));
 
+        questionSetupDiv.appendChild(loadGraphButton);
 
         if (colored) { //Only need to change colors - no root/edges
 
-            editingDiv.appendChild(document.createElement("br"));
-            editingDiv.appendChild(editVertexDiv);
+            vertexDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(editVertexDiv);
 
             //Add either check button or download button
-            editingDiv.appendChild(document.createElement("br"));
-            editingDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(document.createElement("br"));
             if(questionUse=="sub"){
-                editingDiv.appendChild(downloadButton);
+                vertexDiv.appendChild(downloadButton);
             }else if(questionUse=="prac"){
-                editingDiv.appendChild(checkButton);
+                vertexDiv.appendChild(checkButton);
             }
-            doAddAllEdges();
+            doDrawEdges();
 
         } else if (!colored) { //Only need to add/delete edges and change root, no colors
 
+            vertexDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(document.createElement("br"));
+            vertexDiv.appendChild(editRootDiv);
+
             //Add edge div so users can add/delete edges
-            studentDiv.appendChild(editingDiv);
-
-            editingDiv.appendChild(document.createElement("br"));
-
-
-            editingDiv.appendChild(addEdgeDiv);
-            // addEdgeDiv.appendChild(addAllEdgesButton);
-            editingDiv.appendChild(document.createElement("br"));
-            editingDiv.appendChild(deleteEdgeDiv);
-            // addEdgeDiv.appendChild(addAllEdgesButton);
-
+            studentDiv.appendChild(edgeDiv);
+            edgeDiv.appendChild(addEdgeDiv);
+            addEdgeDiv.appendChild(drawEdgesButton);
+            edgeDiv.appendChild(document.createElement("br"));
+            edgeDiv.appendChild(document.createElement("br"));
+            edgeDiv.appendChild(deleteEdgeDiv);
 
             //Add either check button or download button
-            editingDiv.appendChild(document.createElement("br"));
-            editingDiv.appendChild(document.createElement("br"));
+            edgeDiv.appendChild(document.createElement("br"));
+            edgeDiv.appendChild(document.createElement("br"));
+            edgeDiv.appendChild(document.createElement("br"));
             if(questionUse=="sub"){
-                editingDiv.appendChild(downloadButton);
+                edgeDiv.appendChild(downloadButton);
             }else if(questionUse=="prac"){
-                editingDiv.appendChild(checkButton);
+                edgeDiv.appendChild(checkButton);
             }
         }
     }

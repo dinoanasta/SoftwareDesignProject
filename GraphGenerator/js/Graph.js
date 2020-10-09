@@ -533,7 +533,7 @@ class Graph {
     var is_directed = false;
     for (var i = 0; i < adj_matrix.length; i++) {
       for (var j = 0; j < adj_matrix[i].length; j++) {
-        if(adj_matrix[i][j]>0){
+        if(adj_matrix[i][j]>1){
           is_weighted = true;
         }
         if(adj_matrix[i][j]!=adj_matrix[j][i]){
