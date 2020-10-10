@@ -187,7 +187,63 @@ function doAddVertex() {
 
   let value;
 
-  if (valueText.value.length != 0) {
+  // TODO support comma-separated list of vertices
+  let values = [];
+  let colors = [];
+
+  if (valueText.value.includes(",")) {        // add single vertex
+    values = valueText.value.split(",");
+
+    if (colored && colorText.value.length != 0) {      // check if color field is empty
+      if (colorText.value.includes(",")) {        // check if list
+        colors = colorText.value.split(",");
+      }
+    }
+
+    for (var i = 0; i < values.length; i++) {
+      value = values[i];
+      if (i < colors.length || i == 0) {
+        color = colors[i];
+      } else {
+        color = 0;
+      }
+      let x = Math.random() * 450 + 50;
+      let y = Math.random() * 350 + 50;
+      graph.addVertex(value, x, y, color);
+
+      populateDropDowns();
+      redraw();
+    }
+  } else { // add single vertex
+    let x = Math.random() * 450 + 50;
+    let y = Math.random() * 350 + 50;
+    if (valueText.value.length != 0) {
+      value = valueText.value;
+    } else {
+      value = graph.getNumberVertices;
+    }
+
+    if (colored) {
+      if (colorText.value.length != 0) {
+        color = colorText.value;
+      } else {
+        color = 0;
+      }
+
+      graph.addVertex(value, x, y, color);
+
+      populateDropDowns();
+      redraw();
+    } else {
+      graph.addVertex(value, x, y, color);
+
+      populateDropDowns();
+      redraw();
+    }
+  }
+  // end
+
+  /*if (valueText.value.length != 0) {
     value = valueText.value;
   } else {
     value = graph.getNumberVertices();
@@ -211,7 +267,7 @@ function doAddVertex() {
 
     populateDropDowns();
     redraw();
-  }
+  } */
 }
 
 function editVertexSelected() {
