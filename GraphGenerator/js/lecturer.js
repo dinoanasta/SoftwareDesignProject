@@ -188,7 +188,63 @@ function doAddVertex() {
 
   let value;
 
-  if (valueText.value.length != 0) {
+  // TODO support comma-separated list of vertices
+  let values = [];
+  let colors = [];
+
+  if (valueText.value.includes(",")) {        // add single vertex
+    values = valueText.value.split(",");
+
+    if (colored && colorText.value.length != 0) {      // check if color field is empty
+      if (colorText.value.includes(",")) {        // check if list
+        colors = colorText.value.split(",");
+      }
+    }
+
+    for (var i = 0; i < values.length; i++) {
+      value = values[i];
+      if (colors.length != 0 && (i < colors.length || i == 0)) {
+        color = colors[i];
+      } else {
+        color = 0;
+      }
+      let x = Math.random() * 450 + 50;
+      let y = Math.random() * 350 + 50;
+      graph.addVertex(value, x, y, color);
+
+      populateDropDowns();
+      redraw();
+    }
+  } else { // add single vertex
+    let x = Math.random() * 450 + 50;
+    let y = Math.random() * 350 + 50;
+    if (valueText.value.length != 0) {
+      value = valueText.value;
+    } else {
+      value = graph.getNumberVertices;
+    }
+
+    if (colored) {
+      if (colorText.value.length != 0) {
+        color = colorText.value;
+      } else {
+        color = 0;
+      }
+
+      graph.addVertex(value, x, y, color);
+
+      populateDropDowns();
+      redraw();
+    } else {
+      graph.addVertex(value, x, y, color);
+
+      populateDropDowns();
+      redraw();
+    }
+  }
+  // end
+
+  /*if (valueText.value.length != 0) {
     value = valueText.value;
   }else{
     value = graph.getNumberVertices();
@@ -212,7 +268,7 @@ function doAddVertex() {
 
     populateDropDowns();
     redraw();
-  }
+  } */
 }
 
 function editVertexSelected() {
@@ -439,10 +495,10 @@ function populateDropDowns() {
 
   if (lecturerDiv.contains(updateVertexDD)) {
     clearDropDown(updateVertexDD);
-  } 
+  }
   if (lecturerDiv.contains(editEdgeDD)) {
     clearDropDown(editEdgeDD);
-  } 
+  }
   if (lecturerDiv.contains(setRootDD)) {
     clearDropDown(setRootDD);
   }
@@ -470,7 +526,7 @@ function populateDropDowns() {
     addVertexOption(updateVertexDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
     if (lecturerDiv.contains(setRootDD)) {
       addVertexOption(setRootDD, graph.getVertex(i).getVertexVal(), graph.getVertex(i).getVertexID(), graph.getVertex(i).getColor());
-    } 
+    }
   }
 
   //Add edges to delete edge drop downs
@@ -498,7 +554,7 @@ function populateDropDowns() {
     addEdgeOption(deleteEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
     if (lecturerDiv.contains(editEdgeDD)) {
       addEdgeOption(editEdgeDD, graph.edges[i].getVertexOne(), graph.edges[i].getVertexTwo(), graph.edges[i].getWeightEdge());
-    } 
+    }
   }
 
   for (let i = 0; i < graph.directedEdges.length; ++i) {
@@ -566,7 +622,7 @@ function setupInterface() {
       edgeDiv.firstChild.remove();
     }
   }
-  
+
   //Clear addVertexDiv
   if (addVertexDiv != null) {
     while (addVertexDiv.firstChild) {
@@ -626,7 +682,7 @@ function setupInterface() {
     directedCBLabel.style.display = "none";
     weightedCB.style.display = "none";
     weightedCBLabel.style.display = "none";
-    
+
     addVertexDiv.appendChild(addVertexDivHeading);
     addVertexDiv.appendChild(vertexValueLabel);
     addVertexDiv.appendChild(vertexValue);
@@ -676,7 +732,7 @@ function setupInterface() {
 
     vertexDiv.appendChild(questionSetupDiv);
     vertexDiv.appendChild(document.createElement("br"));
-    
+
     vertexDiv.appendChild(addVertexDiv);
     vertexDiv.appendChild(document.createElement("br"));
     vertexDiv.appendChild(editVertexDiv);

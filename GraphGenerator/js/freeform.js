@@ -202,7 +202,7 @@ function doAddVertex() {
 
     for (var i = 0; i < values.length; i++) {
       value = values[i];
-      if (i < colors.length || i == 0) {
+      if (colors.length != 0 && (i < colors.length || i == 0)) {
         color = colors[i];
       } else {
         color = 0;
