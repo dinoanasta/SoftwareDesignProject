@@ -42,35 +42,35 @@ const canvasDiv = document.getElementById("canvasDiv");
 const vertexDiv = document.getElementById("vertexDiv");
 const questionSetupDiv = document.getElementById("questionSetupDiv");
 
-  const questionTitleInput = document.getElementById("questionTitle");
-  const questionTitleLabel = document.getElementById("questionTitleLabel");
-  const questionTypeDD = document.getElementById("questionTypeDD");
-  const questionTypeDDLabel = document.getElementById("questionTypeDDLabel");
-  const directedCB = document.getElementById("directedCB");
-  const directedCBLabel = document.getElementById("directedCBLabel");
-  const weightedCB = document.getElementById("weightedCB");
-  const weightedCBLabel = document.getElementById("weightedCBLabel");
-  const questionUseRG = document.getElementById("questionUseRG");
-  const setQuestionButton = document.getElementById("setQuestionButton");
+const questionTitleInput = document.getElementById("questionTitle");
+const questionTitleLabel = document.getElementById("questionTitleLabel");
+const questionTypeDD = document.getElementById("questionTypeDD");
+const questionTypeDDLabel = document.getElementById("questionTypeDDLabel");
+const directedCB = document.getElementById("directedCB");
+const directedCBLabel = document.getElementById("directedCBLabel");
+const weightedCB = document.getElementById("weightedCB");
+const weightedCBLabel = document.getElementById("weightedCBLabel");
+const questionUseRG = document.getElementById("questionUseRG");
+const setQuestionButton = document.getElementById("setQuestionButton");
 
 // addVertexDiv
 const addVertexDiv = document.getElementById("addVertexDiv");
-  const addVertexDivHeading = document.getElementById("addVertexDivHeading");
-  const vertexValue = document.getElementById("vertexValue");
-  const vertexValueLabel = document.getElementById("vertexValueLabel");
-  const vertexColor = document.getElementById("vertexColor");
-  const vertexColorLabel = document.getElementById("vertexColorLabel");
-  const addVertexButton = document.getElementById("addVertexButton");
+const addVertexDivHeading = document.getElementById("addVertexDivHeading");
+const vertexValue = document.getElementById("vertexValue");
+const vertexValueLabel = document.getElementById("vertexValueLabel");
+const vertexColor = document.getElementById("vertexColor");
+const vertexColorLabel = document.getElementById("vertexColorLabel");
+const addVertexButton = document.getElementById("addVertexButton");
 
 // editVertexDiv
 const editVertexDiv = document.getElementById("editVertexDiv");
-  const editVertexDivHeading = document.getElementById("editVertexDivHeading");
-  const editVertexDD = document.getElementById("editVertexDD");
-  const editVertexValueLabel = document.getElementById("editVertexValueLabel");
-  const editVertexValue = document.getElementById("editVertexValue");
-  const editVertexColorLabel = document.getElementById("editVertexColorLabel");
-  const editVertexColor = document.getElementById("editVertexColor");
-  const updateVertexButton = document.getElementById("updateVertexButton");
+const editVertexDivHeading = document.getElementById("editVertexDivHeading");
+const editVertexDD = document.getElementById("editVertexDD");
+const editVertexValueLabel = document.getElementById("editVertexValueLabel");
+const editVertexValue = document.getElementById("editVertexValue");
+const editVertexColorLabel = document.getElementById("editVertexColorLabel");
+const editVertexColor = document.getElementById("editVertexColor");
+const updateVertexButton = document.getElementById("updateVertexButton");
 
 const rootDiv = document.getElementById("rootDiv");
 const deleteVertexDiv = document.getElementById("deleteVertexDiv");
@@ -79,14 +79,14 @@ const edgeDiv = document.getElementById("edgeDiv");
 
 // addEdgeDiv
 const addEdgeDiv = document.getElementById("addEdgeDiv");
-  const addEdgeDivHeading = document.getElementById("addEdgeDivHeading");
-  const vertex1DDLabel = document.getElementById("vertex1DDLabel");
-  const vertex1DD = document.getElementById("vertex1DD");
-  const vertex2DDLabel = document.getElementById("vertex2DDLabel");
-  const vertex2DD = document.getElementById("vertex2DD");
-  const edgeWeightLabel = document.getElementById("edgeWeightLabel");
-  const edgeWeight = document.getElementById("edgeWeight");
-  const addEdgeButton = document.getElementById("addEdgeButton");
+const addEdgeDivHeading = document.getElementById("addEdgeDivHeading");
+const vertex1DDLabel = document.getElementById("vertex1DDLabel");
+const vertex1DD = document.getElementById("vertex1DD");
+const vertex2DDLabel = document.getElementById("vertex2DDLabel");
+const vertex2DD = document.getElementById("vertex2DD");
+const edgeWeightLabel = document.getElementById("edgeWeightLabel");
+const edgeWeight = document.getElementById("edgeWeight");
+const addEdgeButton = document.getElementById("addEdgeButton");
 
 const updateEdgeDiv = document.getElementById("updateEdgeDiv");
 const deleteEdgeDiv = document.getElementById("deleteEdgeDiv");
@@ -257,7 +257,7 @@ function doUpdateVertex() {
 
   let newValue = document.getElementById("editVertexValue").value;
 
-  if(colored){
+  if (colored) {
     let newColor = document.getElementById("editVertexColor").value;
   }
 
@@ -428,18 +428,24 @@ function doDeleteEdge() {
 
     let splitted = selected.split(" ");
 
-    let edgeVertex1ID = splitted[1];
-    let edgeVertex2ID = splitted[6];
+    let vertex1ID = parseInt(splitted[1]);
+    let vertex2ID = parseInt(splitted[6]);
 
     if (directed) {
-      graph.removeDirectedEdge(edgeVertex1ID, edgeVertex2ID);
+      if (selectedEdge != null) {
+        graph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+      } else {
+        graph.removeEdge(vertex1ID, vertex2ID);
+      }
     } else {
-      graph.removeEdge(edgeVertex1ID, edgeVertex2ID);
+      if (selectedEdge != null) {
+        graph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+      } else {
+        graph.removeEdge(vertex1ID, vertex2ID);
+      }
     }
-
     populateDropDowns();
     redraw();
-
   } else {
     alert("Please select an edge to delete");
   }
@@ -622,19 +628,14 @@ function setupInterface() {
   switch (questionType) {
     case "bfs":
       colored = false;
-      directedCB.checked = false;
-      weightedCB.checked = false;
       break;
     case "dfs":
       colored = false;
-      directedCB.checked = false;
-      weightedCB.checked = false;
       break;
     case "mwst":
       colored = false;
       weighted = true;
       weightedCB.checked = true;
-      directedCB.checked = false;
       break;
     case "graphcolouring":
       colored = true;
@@ -647,7 +648,6 @@ function setupInterface() {
       colored = false;
       weighted = true;
       weightedCB.checked = true;
-      directedCB.checked = false;
       break;
   }
 
@@ -715,7 +715,7 @@ function setupInterface() {
     vertexDiv.appendChild(deleteVertexDiv);
   }
 
-  if(weighted){
+  if (weighted) {
     addEdgeDiv.appendChild(addEdgeDivHeading);
     addEdgeDiv.appendChild(vertex1DDLabel);
     addEdgeDiv.appendChild(vertex1DD);
@@ -735,7 +735,7 @@ function setupInterface() {
     edgeDiv.appendChild(updateEdgeDiv);
     edgeDiv.appendChild(document.createElement("br"));
     edgeDiv.appendChild(deleteEdgeDiv);
-  }else if (!weighted && colored){
+  } else if (!weighted && colored) {
     addEdgeDiv.appendChild(addEdgeDivHeading);
     addEdgeDiv.appendChild(vertex1DDLabel);
     addEdgeDiv.appendChild(vertex1DD);
@@ -748,7 +748,7 @@ function setupInterface() {
     edgeDiv.appendChild(addEdgeDiv);
     edgeDiv.appendChild(document.createElement("br"));
     edgeDiv.appendChild(deleteEdgeDiv);
-  }else if (!weighted && !colored){
+  } else if (!weighted && !colored) {
     addEdgeDiv.appendChild(addEdgeDivHeading);
     addEdgeDiv.appendChild(vertex1DDLabel);
     addEdgeDiv.appendChild(vertex1DD);

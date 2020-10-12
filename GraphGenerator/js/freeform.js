@@ -256,7 +256,7 @@ function doUpdateVertex() {
 
   let newValue = document.getElementById("editVertexValue").value;
 
-  if(colored){
+  if (colored) {
     let newColor = document.getElementById("editVertexColor").value;
   }
   if (dropDown.selectedIndex != 0) {
@@ -426,18 +426,24 @@ function doDeleteEdge() {
 
     let splitted = selected.split(" ");
 
-    let edgeVertex1ID = splitted[1];
-    let edgeVertex2ID = splitted[6];
+    let vertex1ID = parseInt(splitted[1]);
+    let vertex2ID = parseInt(splitted[6]);
 
     if (directed) {
-      graph.removeDirectedEdge(edgeVertex1ID, edgeVertex2ID);
+      if (selectedEdge != null) {
+        graph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+      } else {
+        graph.removeEdge(vertex1ID, vertex2ID);
+      }
     } else {
-      graph.removeEdge(edgeVertex1ID, edgeVertex2ID);
+      if (selectedEdge != null) {
+        graph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
+      } else {
+        graph.removeEdge(vertex1ID, vertex2ID);
+      }
     }
-
     populateDropDowns();
     redraw();
-
   } else {
     alert("Please select an edge to delete");
   }
@@ -727,21 +733,21 @@ function setupInterface() {
 //When download is clicked
 function doDownload() {
   if (questionTitle != null) {
-      try {
-        //Save graph as text file
-        var stringed = graph.convertGraphToString("freeform", questionType, "freeform");
-        var blob = new Blob([stringed], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "Graph_" + questionTitle + ".txt");
+    try {
+      //Save graph as text file
+      var stringed = graph.convertGraphToString("freeform", questionType, "freeform");
+      var blob = new Blob([stringed], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, "Graph_" + questionTitle + ".txt");
 
-        //Save canvas as png
-        var link = document.getElementById('link');
-        link.setAttribute('download', 'Graph_' + questionTitle + '.png');
-        link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-        link.click();
+      //Save canvas as png
+      var link = document.getElementById('link');
+      link.setAttribute('download', 'Graph_' + questionTitle + '.png');
+      link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+      link.click();
 
-      } catch (err) {
-        alert("Error occured while trying to download graph");
-      }
+    } catch (err) {
+      alert("Error occured while trying to download graph");
+    }
   } else {
     alert("Confirm/enter question title.");
   }
