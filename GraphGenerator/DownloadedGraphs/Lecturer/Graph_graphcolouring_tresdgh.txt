@@ -1,1 +1,0 @@
-{"vertices":[[0,"1",394.02571469635836,163.76902272924514,-1],[1,"1",253.65599389684718,258.0891135634462,-1],[2,"1",416,306,-1]],"adjacency_matrix":[[0,1,1],[1,0,0],[1,0,0]],"source_node":-1,"questionCode":null,"questionType":"graphcolouring","questionUse":"prac"}
