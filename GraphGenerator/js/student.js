@@ -682,7 +682,7 @@ function doCheck() { //When student submits graph
                 break;
             case "dfs":
                 isCorrect = m.markDFS(questionGraph, answerGraph, true);
-                breakgit ;
+                break;
             case "mwst":
                 isCorrect = m.markMWST(questionGraph, answerGraph);
                 break;
