@@ -34,6 +34,8 @@ let colored;
 
 let numTimesLoaded = 0;
 
+var graphImage = document.createElement("img");
+
 const body = document.getElementById("body");
 
 const studentDiv = document.getElementById("studentDiv");
@@ -182,6 +184,14 @@ function doLoadGraph() { //When student enters code and presses the load button
             setupInterface();
             doAddAllEdges();
             redraw();
+
+            var firstImage = document.getElementById("canvas");
+            graphImage.src = firstImage.toDataURL();
+            graphImage.style.border = "5px solid black";
+            graphImage.draggable = false;
+            document.getElementById("canvasDiv").appendChild(document.createElement("br"));
+            document.getElementById("canvasDiv").appendChild(graphImage);
+
 
         };
 
