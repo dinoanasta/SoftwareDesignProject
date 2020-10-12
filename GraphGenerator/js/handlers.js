@@ -485,27 +485,31 @@ function handleKeyDown(event) {
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
+                        populateDropDowns();
+                        redraw();
                     }
                 }else if(weighted){
                     if(selectedEdge != null){
-                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - parseInt(1));
+                        selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - parseInt(1));
+                        populateDropDowns();
+                        redraw();
                     }
                 }
-                populateDropDowns();
-                redraw();
                 break;
             case 39: //Right arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
+                        populateDropDowns();
+                        redraw();
                     }
                 }else if(weighted){
                     if(selectedEdge != null){
-                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - -parseInt(1));
+                        selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - -parseInt(1));
+                        populateDropDowns();
+                        redraw();
                     }
                 }
-                populateDropDowns();
-                redraw();
                 break;
         }
     }else if (userType == "student") {
@@ -516,7 +520,6 @@ function handleKeyDown(event) {
                         answerGraph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     }else{
                         answerGraph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
-
                     }
                 }
                 populateDropDowns();
@@ -526,27 +529,19 @@ function handleKeyDown(event) {
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
-                    }
-                }else if(weighted){
-                    if(selectedEdge != null){
-                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - parseInt(1));
+                        populateDropDowns();
+                        redraw();   
                     }
                 }
-                populateDropDowns();
-                redraw();
                 break;
             case 39: //Right arrow
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
-                    }
-                }else if(weighted){
-                    if(selectedEdge != null){
-                            selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - -parseInt(1));
+                        populateDropDowns();
+                        redraw();
                     }
                 }
-                populateDropDowns();
-                redraw();
                 break;
         }
     }

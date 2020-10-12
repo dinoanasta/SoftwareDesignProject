@@ -241,15 +241,15 @@ function editVertexSelected() {
 function doUpdateVertex() {
     let dropDown = document.getElementById("editVertexDD");
 
-    let newColor = document.getElementById("editvertexColor").value;
-
+    if(colored){
+        let newColor = document.getElementById("editvertexColor").value;
+    }
     if (dropDown.selectedIndex != 0) {
         let vertexID = dropDown.options[dropDown.selectedIndex].value;
 
         if (colored) {
             answerGraph.updateVertexColor(vertexID, newColor);
         }
-        // graph.getVertex(vertexID).setDistance(newDist);
 
         populateDropDowns();
         redraw();
@@ -258,7 +258,6 @@ function doUpdateVertex() {
             if (colored) {
                 answerGraph.getVertex(clickedVertexIndex).setColor(newColor);
             }
-            // graph.getVertex(vertexID).setDistance(newDist);
 
             populateDropDowns();
             redraw();

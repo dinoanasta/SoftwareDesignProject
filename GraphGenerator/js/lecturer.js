@@ -221,7 +221,7 @@ function doAddVertex() {
     if (valueText.value.length != 0) {
       value = valueText.value;
     } else {
-      value = graph.getNumberVertices;
+      value = graph.getNumberVertices();
     }
 
     if (colored) {
@@ -242,49 +242,24 @@ function doAddVertex() {
       redraw();
     }
   }
-  // end
-
-  /*if (valueText.value.length != 0) {
-    value = valueText.value;
-  }else{
-    value = graph.getNumberVertices();
-  }
-
-  let x = Math.random() * 450 + 50;
-  let y = Math.random() * 350 + 50;
-  if (colored) {
-    if (colorText.value.length != 0) {
-      color = colorText.value;
-    } else {
-      color = 0;
-    }
-
-    graph.addVertex(value, x, y, color);
-
-    populateDropDowns();
-    redraw();
-  } else {
-    graph.addVertex(value, x, y, color);
-
-    populateDropDowns();
-    redraw();
-  } */
 }
 
 function editVertexSelected() {
   let dropDown = document.getElementById("editVertexDD");
   let vertexID = dropDown.options[dropDown.selectedIndex].value;
 
-  document.getElementById("editvertexValue").value = graph.getVertex(vertexID).getVertexVal();
-  document.getElementById("editvertexColor").value = graph.getVertex(vertexID).getColor();
+  document.getElementById("editVertexValue").value = graph.getVertex(vertexID).getVertexVal();
+  document.getElementById("editVertexColor").value = graph.getVertex(vertexID).getColor();
 }
 
 function doUpdateVertex() {
   let dropDown = document.getElementById("editVertexDD");
 
-  let newValue = document.getElementById("editvertexValue").value;
-  let newColor = document.getElementById("editvertexColor").value;
-  console.log(newValue, newColor);
+  let newValue = document.getElementById("editVertexValue").value;
+
+  if(colored){
+    let newColor = document.getElementById("editVertexColor").value;
+  }
 
   if (dropDown.selectedIndex != 0) {
     let vertexID = dropDown.options[dropDown.selectedIndex].value;
