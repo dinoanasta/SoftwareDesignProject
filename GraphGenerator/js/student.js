@@ -41,6 +41,7 @@ const body = document.getElementById("body");
 const studentDiv = document.getElementById("studentDiv");
 
 const canvasDiv =  document.getElementById("canvasDiv");
+const mainHeading = document.getElementById("mainHeading")
 
 const editingDiv =  document.getElementById("editingDiv");
 const questionSetupDiv =  document.getElementById("questionSetupDiv");
@@ -53,8 +54,6 @@ const loadGraphButton = document.getElementById("loadGraphButton");
 
 const addAllEdgesButton = document.getElementById("addAllEdgesButton");
 const deleteAllEdgesButton = document.getElementById("deleteAllEdgesButton");
-
-
 
 const editVertexDiv =  document.getElementById("editVertexDiv");
 
@@ -185,14 +184,11 @@ function doLoadGraph() { //When student enters code and presses the load button
             doAddAllEdges();
             redraw();
 
-            var firstImage = document.getElementById("canvas");
-            graphImage.src = firstImage.toDataURL();
+            graphImage.src = canvas.toDataURL();
             graphImage.style.border = "5px solid black";
             graphImage.draggable = false;
             document.getElementById("canvasDiv").appendChild(document.createElement("br"));
             document.getElementById("canvasDiv").appendChild(graphImage);
-
-
         };
 
         reader.onerror = function () {
@@ -564,6 +560,14 @@ function setupInterface() {
         studentDiv.appendChild(canvasDiv);
         studentDiv.appendChild(editingDiv);
     }
+
+    if(canvasDiv != null){
+        while (canvasDiv.firstChild) {
+            canvasDiv.firstChild.remove();
+        }
+    }
+    canvasDiv.appendChild(mainHeading);
+    canvasDiv.appendChild(canvas);
 
     //Clear editing div to add only what is needed
     if(editingDiv != null){
