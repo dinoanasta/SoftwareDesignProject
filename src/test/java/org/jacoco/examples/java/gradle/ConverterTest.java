@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.io.InputStream;
@@ -7,6 +9,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
+
+
 
 public class ConverterTest {
   private final InputStream systemIn = System.in;
@@ -37,7 +42,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void testCase1() { //test Converter on graph colouring case
+  public void testCase1() throws FileNotFoundException{ //test Converter on graph colouring case
     String filename = "Graph_graphcolouring_test_colouring.txt";
     Scanner sc = new Scanner(new File(filename));
     // file has one line in JSON format
@@ -53,8 +58,7 @@ public class ConverterTest {
             "],\n"+
             "edges=[0-1: 1, 0-2: 1, 1-0: 1, 2-0: 1, 2-3: 1, 2-4: 1, 3-2: 1, 4-2: 1]]";
     provideInput(testString);
-
     Converter con = new Converter();
-    assertEquals(testString, getOutput());
+    Assert.assertEquals(testString, getOutput());
   }
 }
