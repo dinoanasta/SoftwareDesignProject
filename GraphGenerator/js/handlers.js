@@ -485,14 +485,12 @@ function handleKeyDown(event) {
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
-                        document.getElementById("editVertexColor").value = selectedVertex.getColor();
                         populateDropDowns();
                         redraw();
                     }
                 }else if(weighted){
                     if(selectedEdge != null){
                         selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - parseInt(1));
-                        document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
                         populateDropDowns();
                         redraw();
                     }
@@ -502,14 +500,12 @@ function handleKeyDown(event) {
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
-                        document.getElementById("editVertexColor").value = selectedVertex.getColor();
                         populateDropDowns();
                         redraw();
                     }
                 }else if(weighted){
                     if(selectedEdge != null){
                         selectedEdge.setWeightEdge(selectedEdge.getWeightEdge() - -parseInt(1));
-                        document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
                         populateDropDowns();
                         redraw();
                     }
@@ -533,7 +529,6 @@ function handleKeyDown(event) {
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
-                        document.getElementById("editvertexColor").value = selectedVertex.getColor();
                         populateDropDowns();
                         redraw();   
                     }
@@ -543,7 +538,6 @@ function handleKeyDown(event) {
                 if(colored){
                     if(clickedVertexIndex != -1){
                         selectedVertex.setColor( selectedVertex.getColor() - -parseInt(1));
-                        document.getElementById("editvertexColor").value = selectedVertex.getColor();
                         populateDropDowns();
                         redraw();
                     }

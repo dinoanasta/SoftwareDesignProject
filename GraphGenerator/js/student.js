@@ -124,7 +124,8 @@ function doLoadGraph() { //When student enters code and presses the load button
             console.log("Weighted: " + weighted);
             console.log("Directed: " + directed);
 
-            let temp = questionGraph.convertGraphToString(questionCode, questionType, questionUse);
+            let temp = questionGraph.convertGraphToString(questionCode, questionType,"");
+            console.log(temp);
             answerGraph = new Graph();
             answerGraph.fillGraphWithString(temp);
 
@@ -134,6 +135,7 @@ function doLoadGraph() { //When student enters code and presses the load button
             }
 
             answerGraph.setSourceNode(questionGraph.getSourceNode());
+            // questionGraph.setSourceNode(-1);
 
             questionLoaded = true;
             populateDropDowns();
@@ -344,20 +346,28 @@ function doDeleteEdge() {
         let vertex2ID = parseInt(splitted[6]);
 
         if (directed) {
-            if(selectedEdge != null){
-                answerGraph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
-            }else{
-                answerGraph.removeDirectedEdge(vertex1ID, vertex2ID);
+            let questionEdge = questionGraph.getDirectedEdge(vertex1ID, vertex2ID);
+
+            let v1ID = questionEdge.getVertexOne().getVertexID();
+            let v2ID = questionEdge.getVertexTwo().getVertexID();
+            if (weighted) {
+                weight = questionEdge.getWeightEdge();
             }
+            answerGraph.removeDirectedEdge(v1ID, v2ID);
         } else {
-            if(selectedEdge != null){
-                answerGraph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
-            }else{
-                answerGraph.removeEdge(vertex1ID, vertex2ID);
+            let questionEdge = questionGraph.getEdge(vertex1ID, vertex2ID);
+
+            let v1ID = questionEdge.getVertexOne().getVertexID();
+            let v2ID = questionEdge.getVertexTwo().getVertexID();
+            if (weighted) {
+                weight = questionEdge.getWeightEdge();
             }
+            answerGraph.removeEdge(v1ID, v2ID);
         }
+
         populateDropDowns();
         redraw();
+
     } else {
         alert("Please select an edge to delete");
     }
@@ -365,7 +375,7 @@ function doDeleteEdge() {
 
 
 function doAddAllEdges() {
-    let temp = questionGraph.convertGraphToString(questionCode, questionType, questionUse);
+    let temp = questionGraph.convertGraphToString(questionCode, questionType);
     answerGraph = new Graph();
     answerGraph.fillGraphWithString(temp);
 
