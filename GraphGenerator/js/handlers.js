@@ -135,7 +135,7 @@ function installMouseHandler() {
                                 selectedEdge = thisEdge;
                                 let index = findEdgeIndex(answerGraph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
-                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;                                
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
                                 }
                             };
                         } else if (ydist < xdist) {
@@ -143,7 +143,7 @@ function installMouseHandler() {
                                 selectedEdge = thisEdge;
                                 let index = findEdgeIndex(answerGraph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
-                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;                                
+                                    document.getElementById("deleteEdgeDD").selectedIndex = index+1;
                                 }
                             };
                         }
@@ -159,19 +159,19 @@ function installMouseHandler() {
 
                         if (xdist < ydist) {
                             if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
-                                selectedEdge = thisEdge;   
+                                selectedEdge = thisEdge;
                                 let index = findEdgeIndex(answerGraph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                }                 
+                                }
                             };
                         } else if (ydist < xdist) {
                             if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
-                                selectedEdge = thisEdge;   
+                                selectedEdge = thisEdge;
                                 let index = findEdgeIndex(answerGraph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("studentDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                }                             
+                                }
                             };
                         }
                     }
@@ -180,13 +180,13 @@ function installMouseHandler() {
                 } else if (userType == "lecturer") {
                     if (document.getElementById("lecturerDiv").contains(document.getElementById("editvertexValue"))) {
                         document.getElementById("editvertexValue").value = "";
-                    }     
+                    }
                     if (document.getElementById("lecturerDiv").contains(document.getElementById("editvertexColor"))) {
                         document.getElementById("editvertexColor").value = "";
-                    }     
+                    }
                     if (document.getElementById("lecturerDiv").contains(document.getElementById("setRootDD"))) {
                         document.getElementById("setRootDD").selectedIndex = 0;
-                    }   
+                    }
 
                     for (let i = 0; i < graph.getEdges().length; ++i) {
                         let thisEdge = graph.getEdges()[i];
@@ -196,17 +196,17 @@ function installMouseHandler() {
 
                         if (xdist < ydist) {
                             if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
-                                selectedEdge = thisEdge;    
+                                selectedEdge = thisEdge;
                                 let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                }     
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                }        
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
 
                             };
                         } else if (ydist < xdist) {
@@ -215,13 +215,13 @@ function installMouseHandler() {
                                 let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
                             };
                         }
                     }
@@ -238,13 +238,13 @@ function installMouseHandler() {
                                 let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
                             };
                         } else if (ydist < xdist) {
                             if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
@@ -252,26 +252,26 @@ function installMouseHandler() {
                                 let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("lecturerDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
                             };
                         }
                     }
                 } else if (userType == "freeform") {
                     if (document.getElementById("freeformDiv").contains(document.getElementById("editvertexValue"))) {
                         document.getElementById("editvertexValue").value = "";
-                    }     
+                    }
                     if (document.getElementById("freeformDiv").contains(document.getElementById("editvertexColor"))) {
                         document.getElementById("editvertexColor").value = "";
-                    }     
+                    }
                     if (document.getElementById("freeformDiv").contains(document.getElementById("setRootDD"))) {
                         document.getElementById("setRootDD").selectedIndex = 0;
-                    }   
+                    }
 
                     for (let i = 0; i < graph.getEdges().length; ++i) {
                         let thisEdge = graph.getEdges()[i];
@@ -281,17 +281,17 @@ function installMouseHandler() {
 
                         if (xdist < ydist) {
                             if (isPointInPoly([[thisEdge.getVertexOne().getXVal() + vertexRadius - 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexOne().getXVal() - vertexRadius + 2, thisEdge.getVertexOne().getYVal()], [thisEdge.getVertexTwo().getXVal() - vertexRadius + 2, thisEdge.getVertexTwo().getYVal()], [thisEdge.getVertexTwo().getXVal() + vertexRadius - 2, thisEdge.getVertexTwo().getYVal()]], { x: x, y: y })) {
-                                selectedEdge = thisEdge;    
+                                selectedEdge = thisEdge;
                                 let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                }     
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                }        
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
 
                             };
                         } else if (ydist < xdist) {
@@ -300,13 +300,13 @@ function installMouseHandler() {
                                 let index = findEdgeIndex(graph.getEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
                             };
                         }
                     }
@@ -323,13 +323,13 @@ function installMouseHandler() {
                                 let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
                             };
                         } else if (ydist < xdist) {
                             if (isPointInPoly([[thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() + vertexRadius - 2], [thisEdge.getVertexOne().getXVal(), thisEdge.getVertexOne().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() - vertexRadius + 2], [thisEdge.getVertexTwo().getXVal(), thisEdge.getVertexTwo().getYVal() + vertexRadius - 2]], { x: x, y: y })) {
@@ -337,13 +337,13 @@ function installMouseHandler() {
                                 let index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("deleteEdgeDD"))) {
                                     document.getElementById("deleteEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("updateEdgeDD"))) {
                                     document.getElementById("updateEdgeDD").selectedIndex = index+1;
-                                } 
+                                }
                                 if (document.getElementById("freeformDiv").contains(document.getElementById("editWeight"))) {
                                     document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                                }   
+                                }
                             };
                         }
                     }
@@ -356,7 +356,7 @@ function installMouseHandler() {
         } else if (evt.button == 2) { //RIGHT BUTTON
             if (userType == "lecturer" || userType == "freeform") {
                 dragging = true;  // (this won't be the case for all mousedowns in all programs)
-    
+
                 creatingEdge = true;
 
                 clickedVertexIndex = getVertexIndex(graph,x,y);
@@ -415,9 +415,9 @@ function installMouseHandler() {
                         selectedVertex.getXVal()+vertexRadius+space, selectedVertex.getYVal()+vertexRadius+space,
                         selectedVertex.getXVal()-vertexRadius-space, selectedVertex.getYVal()+vertexRadius+space);
                     }
-                    
+
                 }
-            } 
+            }
         }
     }
 
@@ -433,23 +433,27 @@ function installMouseHandler() {
         dragging = false;
         document.removeEventListener("mousemove", doMouseMove, false);
         document.removeEventListener("mouseup", doMouseMove, false);
-        
+
         if(userType == "lecturer" || userType == "freeform"){
             if(creatingEdge){
 
                 clickedVertexIndex = getVertexIndex(graph,x,y);
                 endingVertex = graph.getVertex(clickedVertexIndex);
-    
+
                 if (dragging || !dragging) {
                     document.addEventListener("mousemove", doMouseMove, false);
                     document.addEventListener("mouseup", doMouseUp, false);
                 }
-    
+
                 if (clickedVertexIndex != -1) {
-                    if (directed) {
-                        graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), -1);
-                    } else {
-                        graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), -1);
+                    if(!graph.checkEdgeExists(startingVertex.getVertexID(), endingVertex.getVertexID())){
+                      if (directed) {
+                          graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                      } else {
+                          graph.addEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
+                      }
+                    }else{
+                        alert("This edge already exists");
                     }
                 }
                 redraw();
@@ -457,7 +461,7 @@ function installMouseHandler() {
             }
             creatingEdge = false;
         }
- 
+
     }
 
     canvas.addEventListener("mousedown", doMouseDown, false);
@@ -535,7 +539,7 @@ function handleKeyDown(event) {
                         selectedVertex.setColor( selectedVertex.getColor() - parseInt(1));
                         document.getElementById("editvertexColor").value = selectedVertex.getColor();
                         populateDropDowns();
-                        redraw();   
+                        redraw();
                     }
                 }
                 break;
