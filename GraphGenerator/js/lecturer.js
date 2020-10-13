@@ -204,7 +204,7 @@ function doAddVertex() {
     for (var i = 0; i < values.length; i++) {
       value = values[i];
       if (colors.length != 0 && (i < colors.length || i == 0)) {
-        color = colors[i];
+        color = parseInt(colors[i]);
       } else {
         color = 0;
       }
@@ -226,7 +226,7 @@ function doAddVertex() {
 
     if (colored) {
       if (colorText.value.length != 0) {
-        color = colorText.value;
+        color = parseInt(colorText.value);
       } else {
         color = 0;
       }

@@ -465,16 +465,18 @@ function handleKeyDown(event) {
             case 46: //Delete
                 if (clickedVertexIndex != -1) {
                     graph.removeVertex(selectedVertex.getVertexID());
+                    clickedVertexIndex = -1;
                 } else if (selectedEdge != null) {
                     if (directed) {
                         graph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     } else {
                         graph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     }
+                    selectedEdge = null;
                 }
                 populateDropDowns();
                 redraw();
-                break
+                break;
             case 37: //Left arrow
                 if (colored) {
                     if (clickedVertexIndex != -1) {
@@ -549,16 +551,18 @@ function handleKeyDown(event) {
             case 46: //Delete
                 if (clickedVertexIndex != -1) {
                     graph.removeVertex(selectedVertex.getVertexID());
+                    clickedVertexIndex = -1;
                 } else if (selectedEdge != null) {
                     if (directed) {
                         graph.removeDirectedEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     } else {
                         graph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     }
+                    selectedEdge = null;
                 }
                 populateDropDowns();
                 redraw();
-                break
+                break;
             case 37: //Left arrow
                 if (colored) {
                     if (clickedVertexIndex != -1) {
@@ -642,6 +646,7 @@ function handleKeyDown(event) {
                     } else {
                         answerGraph.removeEdge(selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
                     }
+                    selectedEdge = null;
                 }
                 populateDropDowns();
                 redraw();

@@ -41,7 +41,7 @@ class Graph {
   getVertex(index) {
     var numberVertices = this.getNumberVertices();
     if (index < numberVertices) {
-      var v = this.vertices[index];
+      var v = this.vertices[index]; 
       return v;
     } else {
       return null;
@@ -375,7 +375,7 @@ class Graph {
       this.vertices.splice(vertex_id, 1);
 
       //Change all vertex indices to fill hole in array
-      if(userType=="lecturer"){
+      if(userType=="lecturer" || userType =="freeform"){
         for (var i = 0; i < this.vertices.length; i++) {
           var curr_vertex = this.vertices[i];
           curr_vertex.setVertexID(i);
