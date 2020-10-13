@@ -305,7 +305,7 @@ function setRoot() {
   let dropDown = document.getElementById("setRootDD");
 
   if (dropDown.selectedIndex != 0) {
-    let vertexID = dropDown.options[dropDown.selectedIndex].value;
+    let vertexID = parseInt(dropDown.options[dropDown.selectedIndex].value);
     graph.setSourceNode(vertexID);
 
     populateDropDowns();
@@ -333,19 +333,28 @@ function doAddEdge() {
 
   let edgeWeight = document.getElementById("edgeWeight");
 
-  function checkExists(first, second) {
-    for (let i = 0; i < graph.edges.length; ++i) {
-      if ((graph.edges[i].getVertexOne().getVertexID() == first && graph.edges[i].getVertexTwo().getVertexID() == second) || (graph.edges[i].getVertexOne().getVertexID() == second && graph.edges[i].getVertexTwo().getVertexID() == first)) {
-        return true;
-      }
-    }
-  }
+  // function checkExists(first, second) {
+  //   // for (let i = 0; i < graph.edges.length; ++i) {
+  //   //   if ((graph.edges[i].getVertexOne().getVertexID() == first && graph.edges[i].getVertexTwo().getVertexID() == second) || (graph.edges[i].getVertexOne().getVertexID() == second && graph.edges[i].getVertexTwo().getVertexID() == first)) {
+  //   //     return true;
+  //   //   }
+  //   // }
+  //   var undir_edge_fetched = graph.getEdge(first, second);
+  //   var dir_edge_fetched_1 = graph.getDirectedEdge(first, second);
+  //   var dir_edge_fetched_2 = graph.getDirectedEdge(second, first);
+  //
+  //   if(undir_edge_fetched == null && dir_edge_fetched_1 == null && dir_edge_fetched_2 == null){
+  //       return false;
+  //   }
+  //   return true;
+  // }
 
-  if (!checkExists(firstID, secondID)) {
+  if (!graph.checkEdgeExists(firstID, secondID)) {
     if (firstDropDown.selectedIndex != secondDropDown.selectedIndex) {
       if (firstDropDown.selectedIndex != 0) {
         if (secondDropDown.selectedIndex != 0) {
           weight = 1;
+          console.log("Testo: ",weighted,directed,weight);
           if (weighted) {
             if (edgeWeight.value.length != 0) {
 
@@ -383,6 +392,8 @@ function doAddEdge() {
     alert("This edge already exists");
   }
 }
+
+
 
 function editEdgeSelected() {
   let dropDown = document.getElementById("updateEdgeDD");
