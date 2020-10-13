@@ -443,7 +443,10 @@ function installMouseHandler() {
                 }
 
                 if (clickedVertexIndex != -1) {
-                    if (!graph.checkEdgeExists(startingVertex.getVertexID(), endingVertex.getVertexID())) {
+                    if(startingVertex.getVertexID() == endingVertex.getVertexID()){
+                          alert("Cannot add an edge from a node to itself");
+                    }
+                    else if (!graph.checkEdgeExists(startingVertex.getVertexID(), endingVertex.getVertexID())) {
                         if (directed) {
                             graph.addDirectedEdge(startingVertex.getVertexID(), endingVertex.getVertexID(), 1);
                         } else {
@@ -512,7 +515,7 @@ function handleKeyDown(event) {
                         document.getElementById("deleteEdgeDD").selectedIndex = index + 1;
                         document.getElementById("updateEdgeDD").selectedIndex = index + 1;
                         document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-    
+
                     }
                 }
                 break;
@@ -546,7 +549,7 @@ function handleKeyDown(event) {
                         document.getElementById("deleteEdgeDD").selectedIndex = index + 1;
                         document.getElementById("updateEdgeDD").selectedIndex = index + 1;
                         document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                    
+
                     }
                 }
                 break;
@@ -624,7 +627,7 @@ function handleKeyDown(event) {
                         document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
                         populateDropDowns();
                         redraw();
-                        
+
                         let index;
                         if(directed){
                             index = findEdgeIndex(graph.getDirectedEdges(), selectedEdge.getVertexOne().getVertexID(), selectedEdge.getVertexTwo().getVertexID());
@@ -635,7 +638,7 @@ function handleKeyDown(event) {
                         document.getElementById("deleteEdgeDD").selectedIndex = index + 1;
                         document.getElementById("updateEdgeDD").selectedIndex = index + 1;
                         document.getElementById("editWeight").value = selectedEdge.getWeightEdge();
-                    
+
                     }
                 }
                 break;
