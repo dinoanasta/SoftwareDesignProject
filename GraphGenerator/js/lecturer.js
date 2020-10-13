@@ -415,7 +415,7 @@ function editEdgeSelected() {
 function doUpdateEdge() {
   let dropDown = document.getElementById("updateEdgeDD");
 
-  let newWeight = document.getElementById("editWeight").value;
+  let newWeight = parseInt(document.getElementById("editWeight").value);
 
   if (dropDown.selectedIndex != 0) {
     if (directed) {
