@@ -533,7 +533,7 @@ class Graph {
     var is_directed = false;
     for (var i = 0; i < adj_matrix.length; i++) {
       for (var j = 0; j < adj_matrix[i].length; j++) {
-        if(adj_matrix[i][j]>0){
+        if(adj_matrix[i][j]>1){
           is_weighted = true;
         }
         if(adj_matrix[i][j]!=adj_matrix[j][i]){
@@ -652,5 +652,16 @@ class Graph {
       arr.push(val);
     }
     return arr;
+  }
+
+  checkEdgeExists(first, second) {
+    var undir_edge_fetched = this.getEdge(first, second);
+    var dir_edge_fetched_1 = this.getDirectedEdge(first, second);
+    var dir_edge_fetched_2 = this.getDirectedEdge(second, first);
+
+    if(undir_edge_fetched == null && dir_edge_fetched_1 == null && dir_edge_fetched_2 == null){
+        return false;
+    }
+    return true;
   }
 }
