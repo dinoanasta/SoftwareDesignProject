@@ -10,7 +10,7 @@ For instructors, this means that you can set tutorial-type practical questions o
 The [GraphGenerator](GraphGenerator) folder can be deployed on a server for organisational use, anyone who can access a copy of these files can run it in a browser window (preferably Chrome) and use the full functionality of the project. It does not require an internet connection to use.
 
 ## Manuals
-The student manual can be found [here](Manuals/StudentManual.pdf), and the lecturer manual can be found [here](Manuals/LecturerManual.pdf).
+The student manual can be found [here](Manuals/StudentManual.pdf), and the lecturer manual can be found [here](Manuals/LecturerManual.pdf). There is also a standalone, freeform interface, and the manual can be found [here](Manuals/FreeformManual.pdf).
 
 
 ## Continuous Integration and Coverage for JavaScript Code
