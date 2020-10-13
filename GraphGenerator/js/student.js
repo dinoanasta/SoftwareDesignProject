@@ -615,7 +615,7 @@ function setupInterface() {
                 questionSetupDiv.firstChild.remove();
             }
         }
-    
+
         questionSetupDiv.appendChild(questionSetupDivHeading);
         questionSetupDiv.appendChild(fileSelection);
         questionSetupDiv.appendChild(document.createElement("br"));
@@ -625,7 +625,7 @@ function setupInterface() {
         questionSetupDiv.appendChild(questionDetailsLabel);
         questionSetupDiv.appendChild(document.createElement("br"));
         questionSetupDiv.appendChild(loadGraphButton);
-    
+
         iconButton.hidden = false;
 
         editingDiv.appendChild(questionSetupDiv);
@@ -674,7 +674,9 @@ function setupInterface() {
 }
 
 function doCheck() { //When student submits graph
+    // answerGraph.setSourceNode(0);
     console.log(answerGraph);
+
     if (questionLoaded) {
         //Initiliaze marker
         let m = new Marker();
@@ -715,5 +717,5 @@ function doDownload() {
 }
 
 function doOpenLink(){
-        window.open(link, '_blank');         
+        window.open(link, '_blank');
 }
