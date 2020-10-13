@@ -30,17 +30,20 @@ class dfsMarker {
         this.start_node,
         visited_array,
         true,
-        this.student_answer_graph
+        this.student_answer_graph,
+        -1
       );
       var edges_valid = this.areGraphEdgesValid();
       var graphs_same_size = this.areGraphsSameSize();
 
       //console.log("Cycles exist? ",cycles_exist," Edges are valid? ",edges_valid," Graphs are the same size? ",graphs_same_size);
       if (!cycles_exist && edges_valid && graphs_same_size) {
+        // console.log("JesseT1:", cycles_exist, edges_valid, graphs_same_size);
         visited_array = this.getInitialVisitedArray(num_nodes);
         visited_array[this.start_node] = true;
         answer = this.isDFSFromNode(this.start_node, visited_array);
       } else {
+        // console.log("JesseT2:", cycles_exist, edges_valid, graphs_same_size);
         answer = false;
       }
     } else if (this.question_graph == null) {
@@ -56,7 +59,7 @@ class dfsMarker {
 
   areGraphEdgesValid() {
     for (var i = 0; i < this.student_answer_graph.length; i++) {
-      //console.log(this.student_answer_graph,this.student_answer_graph[i].length);
+      // console.log("testt:",this.student_answer_graph, this.question_graph);
       //var curr_graph_length = this.student_answer_graph[i].length;
       for (var j = 0; j < this.student_answer_graph[i].length; j++) {
         if (
@@ -70,22 +73,33 @@ class dfsMarker {
     return true;
   }
 
-  doesGraphHaveCycles(curr_node, visited_array, is_first_node, graph) {
+  doesGraphHaveCycles(curr_node, visited_array, is_first_node, graph, parent_node) {
     visited_array[curr_node] = true;
     var curr_node_neighbours = this.getCurrNodeNeighboursCycleCheck(
       curr_node,
       graph
     );
-    if (!is_first_node) {
-      var num_visited_neighbours = this.getNumNeighboursVisited(
-        curr_node_neighbours,
-        visited_array
-      );
-      //console.log(curr_node, "num_visited_neighbours ",num_visited_neighbours,"curr_node_neighbours ",curr_node_neighbours);
-      if (num_visited_neighbours > 1) {
-        return true;
-      }
+
+    if(is_first_node && curr_node_neighbours.length == 0){
+      return true;
     }
+    // if (!is_first_node) {
+    //   var num_visited_neighbours = this.getNumNeighboursVisited(
+    //     curr_node_neighbours,
+    //     visited_array
+    //   );
+    //   console.log(curr_node, "num_visited_neighbours ",num_visited_neighbours,"curr_node_neighbours ",curr_node_neighbours);
+    //   let tot_vis_const = 0;
+    //   for(var i = 0;i<curr_node_neighbours.length;i++){
+    //       if(curr_node_neighbours[i] == parent_node){
+    //         tot_vis_const = 1;
+    //         break;
+    //       }
+    //   }
+    //   if (num_visited_neighbours > tot_vis_const) {
+    //     return true;
+    //   }
+    // }
 
     for (var i = 0; i < curr_node_neighbours.length; i++) {
       var curr_neighbour = curr_node_neighbours[i];
@@ -95,11 +109,14 @@ class dfsMarker {
           curr_neighbour,
           visited_array,
           false,
-          graph
+          graph,
+          curr_node
         );
         if (cycles_exist) {
           return true;
         }
+      }else if(curr_neighbour != parent_node){
+        return true;
       }
     }
     return false;
