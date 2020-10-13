@@ -105,6 +105,8 @@ function addBindings() {
   document.getElementById("updateVertexButton").onclick = doUpdateVertex;
   document.getElementById("deleteVertexButton").onclick = doDeleteVertex;
   document.getElementById("setRootButton").onclick = setRoot;
+  document.getElementById("clearRootButton").onclick = clearRoot;
+
 
   //Edges
   document.getElementById("addEdgeButton").onclick = doAddEdge;
@@ -125,12 +127,8 @@ function doColored() {
 
   if (coloredCB.checked) {
     colored = true;
-    // document.getElementById("directedCB").disabled = true;
-    // document.getElementById("weightedCB").disabled = true;
   } else if (!coloredCB.checked) {
     colored = false;
-    // document.getElementById("directedCB").disabled = false;
-    // document.getElementById("weightedCB").disabled = false;
   }
 
   setupInterface();
@@ -141,10 +139,8 @@ function doDirected() {
 
   if (directedCB.checked) {
     directed = true;
-    // document.getElementById("coloredCB").disabled = true;
   } else if (!directedCB.checked) {
     directed = false;
-    // document.getElementById("coloredCB").disabled = false;
   }
 
   setupInterface();
@@ -155,10 +151,8 @@ function doWeighted() {
 
   if (weightedCB.checked) {
     weighted = true;
-    // document.getElementById("coloredCB").disabled = true;
   } else if (!weightedCB.checked) {
     weighted = false;
-    // document.getElementById("coloredCB").disabled = false;
   }
 
   setupInterface();
@@ -303,7 +297,7 @@ function setRoot() {
   let dropDown = document.getElementById("setRootDD");
 
   if (dropDown.selectedIndex != 0) {
-    let vertexID = dropDown.options[dropDown.selectedIndex].value;
+    let vertexID = parseInt(dropDown.options[dropDown.selectedIndex].value);
     graph.setSourceNode(vertexID);
 
     populateDropDowns();
@@ -311,6 +305,13 @@ function setRoot() {
   } else {
     alert("Please select a vertex to set as the root");
   }
+}
+
+function clearRoot() {
+    graph.setSourceNode(-1);
+
+    populateDropDowns();
+    redraw();
 }
 
 //Edges
