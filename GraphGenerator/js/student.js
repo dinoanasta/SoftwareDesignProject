@@ -684,7 +684,7 @@ function doCheck() { //When student submits graph
         //Mark Graph
         switch (questionType) {
             case "bfs":
-                isCorrect = m.markShortestPath(questionGraph, answerGraph, true);
+                isCorrect = m.markShortestPath(questionGraph, answerGraph, true, true);
                 break;
             case "dfs":
                 isCorrect = m.markDFS(questionGraph, answerGraph, true);
@@ -696,7 +696,7 @@ function doCheck() { //When student submits graph
                 isCorrect = m.markColour(answerGraph);
                 break;
             case "shortestpath":
-                isCorrect = m.markShortestPath(questionGraph, answerGraph, true);
+                isCorrect = m.markShortestPath(questionGraph, answerGraph, true, false);
                 break;
         }
         if (isCorrect) {
